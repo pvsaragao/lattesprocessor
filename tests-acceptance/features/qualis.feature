@@ -33,10 +33,9 @@ And Eu vejo o Periódico “The Electronic Journal of Linear Algebra” com aval
 
 Scenario: Importar planilha vazia
 Given Eu estou na página “Qualis”
-And Eu vejo o “Periódico” “The Electronic Journal of Linear Algebra” com avaliação “B3”
+And Eu vejo o periódico “The Electronic Journal of Linear Algebra” com avaliação “B3”, que está em um arquivo “periodico_algebra” com somente este periódico
 And O arquivo “publicações_2018.xls” não contém nenhum “Periódico”
-When Eu seleciono a opção “Qualis Import”
-And Eu seleciono o arquivo “publicações_2018.xls”
-Then Eu vejo uma mensagem indicando que nenhum “periódico” foi importado ao sistema
-And Eu vejo o “Periódico” “The Electronic Journal of Linear Algebra” com avaliação “B3”
-And Eu continuo na página “Qualis”
+When Eu seleciono o arquivo “publicações_2018.xls”
+And Eu seleciono a opção Qualis Import
+Then Eu vejo uma mensagem indicando que nenhum periódico foi importado ao sistema
+And Eu vejo o Periódico “The Electronic Journal of Linear Algebra” com avaliação “B3”
