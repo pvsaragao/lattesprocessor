@@ -13,7 +13,7 @@ let getPublicacoes = async (xmlFile) => {
     if (error === null) {
       // implementacao depende do formato xml a ser recebido...
       // retornamos um array de titulos de publicacoes
-      // caso o formato seja inválido, retorne null
+      // caso o formato seja inválido, retorne -1
     } else {
       return (-1);
     }
@@ -225,7 +225,7 @@ defineSupportCode(function ({ Given, When, Then }) {
     let publicacoesArray = getPublicacoes(xmlFile);
     await publicacoesArray;
 
-    expect(publicacoesArray).toEqual(null);
+    expect(publicacoesArray).toEqual(-1);
   });
 
   When(/^eu selecionar para fazer o upload do arquivo "([^\"]*)"$/, async (fileName) => {
