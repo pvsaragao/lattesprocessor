@@ -21,14 +21,14 @@ let getPublicacoes = async (xmlFile) => {
 }
 
 defineSupportCode(function ({ Given, When, Then }) {
-  Given(/^eu estou na tela de Importar Lattes$/, async () => {
+  Given(/^eu estou na tela de "Importar Lattes"$/, async () => {
     await browser.get("http://localhost:4200/");
     await expect(browser.getTitle()).to.eventually.equal('LattesProcessor');
     await $("a[name='importar-lattes']").click();
   })
 
   Given(/^as publicações "([^\"]*)" e "([^\"]*)" estão cadastradas no sistema$/, async (p1, p2) => {
-    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoslist'));
+    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list'));
     await allpublicacoes;
 
     var publi1 = allpublicacoes.filter(elem =>
@@ -56,7 +56,7 @@ defineSupportCode(function ({ Given, When, Then }) {
   });
 
   Then(/^o sistema tem as publicações "([^\"]*)", "([^\"]*)", "([^\"]*)" e "([^\"]*)"$/, async (p1, p2, p3, p4) => {
-    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoslist'));
+    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list'));
     await allpublicacoes;
 
     var publi1 = allpublicacoes.filter(elem =>
@@ -82,7 +82,7 @@ defineSupportCode(function ({ Given, When, Then }) {
 
   // Segundo cenario
   Given(/^as publicações "([^\"]*)" e "([^\"]*)" estão cadastradas no sistema$/, async (p1, p2) => {
-    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoslist'));
+    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list'));
     await allpublicacoes;
 
     var publi1 = allpublicacoes.filter(elem =>
@@ -116,7 +116,7 @@ defineSupportCode(function ({ Given, When, Then }) {
   });
 
   Then(/^o sistema tem as publicações "([^\"]*)", "([^\"]*)", "([^\"]*)" e "([^\"]*)"$/, async (p1, p2, p3, p4) => {
-    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoslist'));
+    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list'));
     await allpublicacoes;
 
     var publi1 = allpublicacoes.filter(elem =>
@@ -138,5 +138,49 @@ defineSupportCode(function ({ Given, When, Then }) {
       elem.getText().then(text => text === p4));
     await publi4;
     await publi4.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+  });
+
+  // Terceiro cenario
+  Given(/^as publicações "([^\"]*)" e "([^\"]*)" estão cadastradas no sistema$/, async (p1, p2) => {
+    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list')).then((itens) => {
+      expect(itens.length).toBe(2);
+    });
+
+    await allpublicacoes;
+
+    var publi1 = allpublicacoes.filter(elem =>
+      elem.getText().then(text => text === p1));
+    await publi1;
+    await publi1.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+
+    var publi2 = allpublicacoes.filter(elem =>
+      elem.getText().then(text => text === p2));
+    await publi2;
+    await publi2.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+  });
+
+  When(/^eu selecionar para fazer o upload, sem nenhum arquivo selecionado$/, async () => {
+    await $("input[name='file-path']").sendKeys(<string>'');
+  });
+
+  Then(/^eu estou na página de "([^\"]*)"$/, async (title) => {
+    expect(browser.getTitle()).to.eventually.equal(title);
+  });
+
+  Then(/^apenas as publicações "([^\"]*)" e "([^\"]*)"$/, async (p1, p2) => {
+    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list')).then((itens) => {
+      expect(itens.length).toBe(2);
+    });
+    await allpublicacoes;
+
+    var publi1 = allpublicacoes.filter(elem =>
+      elem.getText().then(text => text === p1));
+    await publi1;
+    await publi1.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+
+    var publi2 = allpublicacoes.filter(elem =>
+      elem.getText().then(text => text === p2));
+    await publi2;
+    await publi2.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
   });
 })
