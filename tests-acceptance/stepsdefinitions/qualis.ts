@@ -132,5 +132,37 @@ defineSupportCode(function ({Given, When, Then}) {
         await allPeriodicos.filter(elem => pAND(sameNome(elem, periodicoArray), sameAvaliacao(elem, avaliacaoArray))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
     })
 
+    Given(/^Eu vejo o periódico “([^\"]*)” com avaliação “([^\"]*)”, que está em um arquivo “([^\"]*)” com somente este periódico$/, async (periodico, avaliacao, file) => {
+        await $("input[name=Files]").sendKeys(file);
+        await element(by.buttonText('Qualis Import')).click();
+        let periodicoArray = [periodico];
+        let avaliacaoArray = [avaliacao];
+        let allPeriodicos : ElementArrayFinder = element.all(by.name('allPeriodicos'));
+        await allPeriodicos.filter(elem => pAND(sameNome(elem, periodicoArray), sameAvaliacao(elem, avaliacaoArray))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+    })
+
+    Given(/^O arquivo “([^\"]*)” não contém nenhum Periódico$/, async(file) => {
+        let allPeriodicosInFile : Periodico[] = xlsReader.getPeriodicosFromXLS(file);
+        await expect(allPeriodicosInFile.length).to.eventually.equal(0);
+    })
+
+    When(/^Eu seleciono o arquivo “([^\"]*)”$/, async(file) => {
+        await $("input[name=Files]").sendKeys(file);
+    })
     
+    When(/^Eu seleciono a opção Qualis Import$/, async() => {
+        await element(by.buttonText('Qualis Import')).click();
+    })
+
+    Then(/^Eu vejo uma mensagem indicando que nenhum periódico foi importado ao sistema$/, async () => {
+        await element(by.name('ImportStatus')).getText().then(msg => expect(Promise.resolve(msg)).to.eventually.equal('alert: nenhum periodico novo importado'));
+    })
+
+    Then(/^Eu vejo o periódico “([^\"]*)” com avaliação “([^\"]*)”$/, async(periodico1, avaliacao1) => {
+        let periodicoArray = [periodico1];
+        let avaliacaoArray = [avaliacao1];
+        let allPeriodicos : ElementArrayFinder = element.all(by.name('allPeriodicos'));
+        await allPeriodicos.filter(elem => pAND(sameNome(elem, periodicoArray), sameAvaliacao(elem, avaliacaoArray))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+    })
+
 })
