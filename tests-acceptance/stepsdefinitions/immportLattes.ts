@@ -15,7 +15,7 @@ let getPublicacoes = async (xmlFile) => {
         // retornamos um array de titulos de publicacoes
     }
     else {
-        return(null);
+        return([]);
     }
   });
 }
