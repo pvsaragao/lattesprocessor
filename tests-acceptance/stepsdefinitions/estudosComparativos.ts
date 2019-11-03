@@ -38,4 +38,23 @@ defineSupportCode(function ({ Given, And, When, Then }) {
         await expect(lista[1].qtd.to.eventually.equal(qtd2));
     });
 
+    And(/^O professor "([^\"]*)" tem "(\d*)" artigos “([^\"]*)”, "(\d*)" artigos “([^\"]*)” e "(\d*)" artigo “([^\"]*)”$/, async (prof, qtd1, peso1, qtd2, peso2, qtd3, peso3) => {
+        
+    });
+
+    And(/^Eu escolho o método “critérios de avaliação personalizados”$/, async () => {
+        await $("input[name='CriteriosPersonalizados'").click();
+    });
+
+    And(/^And eu atribuo os pesos "(\d*)", "(\d*)", "(\d*)", "(\d*)", "(\d*)", "(\d*)", "(\d*)", "(\d*)", respectivamente. $/, async(A1, A2, B1, B2, B3, B4, B5, C) => {
+        await $("input[name='a1']").sendKeys(A1);
+        await $("input[name='a2']").sendKeys(A2);
+        await $("input[name='b1']").sendKeys(B1);
+        await $("input[name='b2']").sendKeys(B2);
+        await $("input[name='b3']").sendKeys(B3);
+        await $("input[name='b4']").sendKeys(B4);
+        await $("input[name='b5']").sendKeys(B5);
+        await $("input[name='c']").sendKeys(C);
+    });
+
 }) 
