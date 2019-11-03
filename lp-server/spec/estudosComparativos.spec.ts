@@ -16,6 +16,19 @@ describe("O estudo comparativo", () => {
       expect(estudo.b5).toBe(2);
       expect(estudo.c).toBe(1);
     })
+
+    it("entre pesquisadores com mesmo currículo funciona de maneira lexicográfica", () => {
+        var prof1: Professor = new Professor();
+        prof1.nome = 'Paulo';
+        prof1.qtd = 36;
+        var prof2: Professor = new Professor();
+        prof2.nome = 'Sivlio';
+        prof2.qtd = 36;
+        estudo.adicionar(prof1);
+        estudo.adicionar(prof2);
+        expect(estudo.listaQtd[0].nome).toBe('Paulo');
+        expect(estudo.listaQtd[1].nome).toBe('Silvio');
+    })
   
   
   }) 
