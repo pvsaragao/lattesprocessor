@@ -1,7 +1,7 @@
 import { defineSupportCode } from 'cucumber';
 import { browser, $, element, ElementArrayFinder, by } from 'protractor';
 import request = require("request-promise");
-import { xlsReader } from '../../common/xlsReader.';
+import { xlsReader } from '../../common/xlsReader';
 import { Periodico } from '../../common/Periodico';
 
 let chai = require('chai').use(require('chai-as-promised'));
