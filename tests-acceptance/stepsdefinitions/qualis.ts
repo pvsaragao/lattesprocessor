@@ -4,6 +4,8 @@ import request = require("request-promise");
 import { xlsReader } from '../../common/xlsReader';
 import { Periodico } from '../../common/Periodico';
 
+let base_url = "http://localhost:3000/";
+
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
@@ -52,4 +54,52 @@ defineSupportCode(function ({Given, When, Then}) {
         let allPeriodicos : ElementArrayFinder = element.all(by.name('allPeriodicos'));
         await allPeriodicos.filter(elem => pAND(sameNome(elem, periodicoArray), sameAvaliacao(elem, avaliacaoArray))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(3));
     })
+
+    Given(/^Eu vejo o periódico “([^\"]*)” com avaliação “([^\"]*)”, que está em um arquivo “([^\"]*)” com somente este periódico$/, async (periodico, avaliacao, file) => {
+        let periodicoArray = [periodico];
+        let avaliacaoArray = [avaliacao];
+        await $("input[name=Files]").sendKeys(file);
+        await element(by.buttonText('Qualis Import')).click();
+    })
+
+    Given(/^O arquivo “([^\"]*)” contém: “([^\"]*)” com avaliação “([^\"]*)” e “([^\"]*)” com avaliação “([^\"]*)”$/, async (file, periodico1, avaliacao1, periodico2, avaliacao2) => {
+        let allPeriodicosInFile : Periodico[] = xlsReader.getPeriodicosFromXLS(file);
+        await expect(allPeriodicosInFile.length).to.eventually.equal(2);
+        await expect(allPeriodicosInFile[0].nome).to.eventually.equal(periodico1);
+        await expect(allPeriodicosInFile[0].avaliacao).to.eventually.equal(avaliacao1);
+        await expect(allPeriodicosInFile[1].nome).to.eventually.equal(periodico2);
+        await expect(allPeriodicosInFile[1].avaliacao).to.eventually.equal(avaliacao2);
+    })
+
+    Given(/^O arquivo “publicações_2017.xls” contém: “Soft Computing” com avaliação “A2”$/, async(file, periodico, avaliacao) => {
+        let allPeriodicosInFile : Periodico[] = xlsReader.getPeriodicosFromXLS(file);
+        await expect(allPeriodicosInFile.length).to.eventually.equal(1);
+        await expect(allPeriodicosInFile[0].nome).to.eventually.equal(periodico);
+        await expect(allPeriodicosInFile[0].avaliacao).to.eventually.equal(avaliacao);
+    })
+
+    When(/^Eu seleciono o arquivo “([^\"]*)”$/, async(file) => {
+        await $("input[name=Files]").sendKeys(file);
+    })
+
+    When(/^Eu seleciono o arquivo “([^\"]*)”$/, async(file) => {
+        await $("input[name=Files]").sendKeys(file);
+    })
+
+    When(/^Eu seleciono a opção Qualis Import$/, async() => {
+        await element(by.buttonText('Qualis Import')).click();
+    })
+
+    Then(/^Eu vejo uma mensagem de sucesso$/, async () => {
+        await element(by.name('ImportStatus')).getText().then(msg => expect(Promise.resolve(msg)).to.eventually.equal('success'))
+    })
+
+    Then(/^Eu vejo os os periódicos “([^\"]*)” com avaliação “([^\"]*)”, “([^\"]*)” com avaliação “([^\"]*)”, “([^\"]*)” com avaliação “([^\"]*)” e “([^\"]*)” com avaliação “([^\"]*)”$/, 
+            async(periodico1, avaliacao1, periodico2, avaliacao2, periodico3, avaliacao3, periodico4, avaliacao4) => {
+                let periodicoArray = [periodico1, periodico2, periodico3, periodico4];
+                let avaliacaoArray = [avaliacao1, avaliacao2, avaliacao3, avaliacao4];
+                let allPeriodicos : ElementArrayFinder = element.all(by.name('allPeriodicos'));
+                await allPeriodicos.filter(elem => pAND(sameNome(elem, periodicoArray), sameAvaliacao(elem, avaliacaoArray))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(4));
+    })
+    
 })
