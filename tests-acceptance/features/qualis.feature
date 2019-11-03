@@ -30,3 +30,13 @@ When Eu seleciono o arquivo “publicações_2018.pdf”
 And Eu seleciono a opção Qualis Import
 Then Eu vejo uma mensagem de erro indicando o formato inválido do arquivo
 And Eu vejo o Periódico “The Electronic Journal of Linear Algebra” com avaliação “B3”
+
+Scenario: Importar planilha vazia
+Given Eu estou na página “Qualis”
+And Eu vejo o “Periódico” “The Electronic Journal of Linear Algebra” com avaliação “B3”
+And O arquivo “publicações_2018.xls” não contém nenhum “Periódico”
+When Eu seleciono a opção “Qualis Import”
+And Eu seleciono o arquivo “publicações_2018.xls”
+Then Eu vejo uma mensagem indicando que nenhum “periódico” foi importado ao sistema
+And Eu vejo o “Periódico” “The Electronic Journal of Linear Algebra” com avaliação “B3”
+And Eu continuo na página “Qualis”
