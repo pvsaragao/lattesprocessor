@@ -10,3 +10,12 @@ And o arquivo “paulo_lattes.xml” tem as publicações “An extended triangu
 When eu selecionar para fazer o upload do arquivo “paulo_lattes.xml”
 Then eu vejo uma mensagem de sucesso na tela
 And o sistema tem as publicações “Requisitos de software para modelo de cascata”, “Estudo sobre Metodologias de Desenvolvimento Ágil”,  “An extended triangulation to the Marching Cubes 33 algorithm” e “An IoT sensor and scenario survey for data researchers”.
+
+Scenario: Fazer upload de múltiplos xml com sucesso
+Given eu estou na página de “importar Lattes”
+And as publicações “Requisitos de software para modelo de cascata” e “Estudo sobre Metodologias de Desenvolvimento Ágil” estão cadastradas no sistema,
+And o arquivo “a_lattes.xml” tem a publicação “An extended triangulation to the Marching Cubes 33 algorithm”
+And o arquivo “b_lattes.xml” tem a publicação “An IoT sensor and scenario survey for data researchers”
+When eu selecionar para fazer o upload dos arquivos “a_lattes.xml” e “b_lattes.xml”
+Then eu vejo uma mensagem de sucesso na tela
+And o sistema tem as publicações “Requisitos de software para modelo de cascata”, “Estudo sobre Metodologias de Desenvolvimento Ágil”,  “An extended triangulation to the Marching Cubes 33 algorithm” e “An IoT sensor and scenario survey for data researchers”.
