@@ -48,7 +48,7 @@ defineSupportCode(function ({Given, When, Then}) {
         await element(by.name('ImportStatus')).getText().then(msg => expect(Promise.resolve(msg)).to.eventually.equal('success'))
     })
 
-    Then(/^Eu vejo os os periódicos “([^\"]*)” com avaliação “([^\"]*)”, “([^\"]*)” com avaliação “([^\"]*)” e “([^\"]*)” com avaliação “([^\"]*)”$/, async(periodico1, avaliacao1, periodico2, avaliacao2, periodico3, avaliacao3) => {
+    Then(/^Eu vejo os periódicos “([^\"]*)” com avaliação “([^\"]*)”, “([^\"]*)” com avaliação “([^\"]*)” e “([^\"]*)” com avaliação “([^\"]*)”$/, async(periodico1, avaliacao1, periodico2, avaliacao2, periodico3, avaliacao3) => {
         let periodicoArray = [periodico1, periodico2, periodico3];
         let avaliacaoArray = [avaliacao1, avaliacao2, avaliacao3];
         let allPeriodicos : ElementArrayFinder = element.all(by.name('allPeriodicos'));
@@ -56,10 +56,12 @@ defineSupportCode(function ({Given, When, Then}) {
     })
 
     Given(/^Eu vejo o periódico “([^\"]*)” com avaliação “([^\"]*)”, que está em um arquivo “([^\"]*)” com somente este periódico$/, async (periodico, avaliacao, file) => {
-        let periodicoArray = [periodico];
-        let avaliacaoArray = [avaliacao];
         await $("input[name=Files]").sendKeys(file);
         await element(by.buttonText('Qualis Import')).click();
+        let periodicoArray = [periodico];
+        let avaliacaoArray = [avaliacao];
+        let allPeriodicos : ElementArrayFinder = element.all(by.name('allPeriodicos'));
+        await allPeriodicos.filter(elem => pAND(sameNome(elem, periodicoArray), sameAvaliacao(elem, avaliacaoArray))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
     })
 
     Given(/^O arquivo “([^\"]*)” contém: “([^\"]*)” com avaliação “([^\"]*)” e “([^\"]*)” com avaliação “([^\"]*)”$/, async (file, periodico1, avaliacao1, periodico2, avaliacao2) => {
@@ -71,7 +73,7 @@ defineSupportCode(function ({Given, When, Then}) {
         await expect(allPeriodicosInFile[1].avaliacao).to.eventually.equal(avaliacao2);
     })
 
-    Given(/^O arquivo “publicações_2017.xls” contém: “Soft Computing” com avaliação “A2”$/, async(file, periodico, avaliacao) => {
+    Given(/^O arquivo “([^\"]*)” contém: “([^\"]*)” com avaliação “([^\"]*)”$/, async(file, periodico, avaliacao) => {
         let allPeriodicosInFile : Periodico[] = xlsReader.getPeriodicosFromXLS(file);
         await expect(allPeriodicosInFile.length).to.eventually.equal(1);
         await expect(allPeriodicosInFile[0].nome).to.eventually.equal(periodico);
@@ -94,12 +96,41 @@ defineSupportCode(function ({Given, When, Then}) {
         await element(by.name('ImportStatus')).getText().then(msg => expect(Promise.resolve(msg)).to.eventually.equal('success'))
     })
 
-    Then(/^Eu vejo os os periódicos “([^\"]*)” com avaliação “([^\"]*)”, “([^\"]*)” com avaliação “([^\"]*)”, “([^\"]*)” com avaliação “([^\"]*)” e “([^\"]*)” com avaliação “([^\"]*)”$/, 
+    Then(/^Eu vejo os periódicos “([^\"]*)” com avaliação “([^\"]*)”, “([^\"]*)” com avaliação “([^\"]*)”, “([^\"]*)” com avaliação “([^\"]*)” e “([^\"]*)” com avaliação “([^\"]*)”$/, 
             async(periodico1, avaliacao1, periodico2, avaliacao2, periodico3, avaliacao3, periodico4, avaliacao4) => {
                 let periodicoArray = [periodico1, periodico2, periodico3, periodico4];
                 let avaliacaoArray = [avaliacao1, avaliacao2, avaliacao3, avaliacao4];
                 let allPeriodicos : ElementArrayFinder = element.all(by.name('allPeriodicos'));
                 await allPeriodicos.filter(elem => pAND(sameNome(elem, periodicoArray), sameAvaliacao(elem, avaliacaoArray))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(4));
     })
+    
+    Given(/^Eu vejo o periódico “([^\"]*)” com avaliação “([^\"]*)”, que está em um arquivo “([^\"]*)” com somente este periódico$/, async (periodico, avaliacao, file) => {
+        await $("input[name=Files]").sendKeys(file);
+        await element(by.buttonText('Qualis Import')).click();
+        let periodicoArray = [periodico];
+        let avaliacaoArray = [avaliacao];
+        let allPeriodicos : ElementArrayFinder = element.all(by.name('allPeriodicos'));
+        await allPeriodicos.filter(elem => pAND(sameNome(elem, periodicoArray), sameAvaliacao(elem, avaliacaoArray))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+    })
+
+    When(/^Eu seleciono o arquivo “([^\"]*)”$/, async(file) => {
+        await $("input[name=Files]").sendKeys(file);
+    })
+    
+    When(/^Eu seleciono a opção Qualis Import$/, async() => {
+        await element(by.buttonText('Qualis Import')).click();
+    })
+
+    Then(/^Eu vejo uma mensagem de erro indicando o formato inválido do arquivo$/, async () => {
+        await element(by.name('ImportStatus')).getText().then(msg => expect(Promise.resolve(msg)).to.eventually.equal('failure: not a xls'));
+    })
+
+    Then(/^Eu vejo o periódico “([^\"]*)” com avaliação “([^\"]*)”$/, async(periodico1, avaliacao1) => {
+        let periodicoArray = [periodico1];
+        let avaliacaoArray = [avaliacao1];
+        let allPeriodicos : ElementArrayFinder = element.all(by.name('allPeriodicos'));
+        await allPeriodicos.filter(elem => pAND(sameNome(elem, periodicoArray), sameAvaliacao(elem, avaliacaoArray))).then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+    })
+
     
 })
