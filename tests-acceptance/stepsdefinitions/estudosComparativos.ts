@@ -57,4 +57,7 @@ defineSupportCode(function ({ Given, And, When, Then }) {
         await $("input[name='c']").sendKeys(C);
     });
 
+    Then(/^"([^\"]*)" fica na primeira linha com "(\d*)" pontos e "([^\"]*)" na segunda com "(\d*)" pontos, por ordem de prioridade.$/, async (prof1, pontos1, prof2, pontos2) => {
+        
+    });
 }) 
