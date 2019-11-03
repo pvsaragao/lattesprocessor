@@ -13,9 +13,9 @@ let getPublicacoes = async (xmlFile) => {
     if (error === null) {
       // implementacao depende do formato xml a ser recebido...
       // retornamos um array de titulos de publicacoes
-    }
-    else {
-      return ([]);
+      // caso o formato seja inválido, retorne null
+    } else {
+      return (-1);
     }
   });
 }
@@ -51,7 +51,7 @@ defineSupportCode(function ({ Given, When, Then }) {
 
   });
 
-  When(/^Eu selecionar para fazer o upload do arquivo "([^\"]*)"$/, async (fileName) => {
+  When(/^eu selecionar para fazer o upload do arquivo "([^\"]*)"$/, async (fileName) => {
     await $("input[name='file-path']").sendKeys(<string>fileName);
   });
 
@@ -81,6 +81,12 @@ defineSupportCode(function ({ Given, When, Then }) {
   });
 
   // Segundo cenario
+  Given(/^eu estou na tela de "Importar Lattes"$/, async () => {
+    await browser.get("http://localhost:4200/");
+    await expect(browser.getTitle()).to.eventually.equal('LattesProcessor');
+    await $("a[name='importar-lattes']").click();
+  })
+
   Given(/^as publicações "([^\"]*)" e "([^\"]*)" estão cadastradas no sistema$/, async (p1, p2) => {
     var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list'));
     await allpublicacoes;
@@ -141,6 +147,12 @@ defineSupportCode(function ({ Given, When, Then }) {
   });
 
   // Terceiro cenario
+  Given(/^eu estou na tela de "Importar Lattes"$/, async () => {
+    await browser.get("http://localhost:4200/");
+    await expect(browser.getTitle()).to.eventually.equal('LattesProcessor');
+    await $("a[name='importar-lattes']").click();
+  })
+
   Given(/^as publicações "([^\"]*)" e "([^\"]*)" estão cadastradas no sistema$/, async (p1, p2) => {
     var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list')).then((itens) => {
       expect(itens.length).toBe(2);
@@ -167,7 +179,60 @@ defineSupportCode(function ({ Given, When, Then }) {
     expect(browser.getTitle()).to.eventually.equal(title);
   });
 
-  Then(/^apenas as publicações "([^\"]*)" e "([^\"]*)"$/, async (p1, p2) => {
+  Then(/^apenas as publicações "([^\"]*)" e "([^\"]*)" estão cadastradas no sistema$/, async (p1, p2) => {
+    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list')).then((itens) => {
+      expect(itens.length).toBe(2);
+    });
+    await allpublicacoes;
+
+    var publi1 = allpublicacoes.filter(elem =>
+      elem.getText().then(text => text === p1));
+    await publi1;
+    await publi1.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+
+    var publi2 = allpublicacoes.filter(elem =>
+      elem.getText().then(text => text === p2));
+    await publi2;
+    await publi2.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+  });
+
+  // Quarto Cenario
+  Given(/^eu estou na tela de "Importar Lattes"$/, async () => {
+    await browser.get("http://localhost:4200/");
+    await expect(browser.getTitle()).to.eventually.equal('LattesProcessor');
+    await $("a[name='importar-lattes']").click();
+  })
+
+  Given(/^as publicações "([^\"]*)" e "([^\"]*)" estão cadastradas no sistema$/, async (p1, p2) => {
+    var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list')).then((itens) => {
+      expect(itens.length).toBe(2);
+    });
+
+    await allpublicacoes;
+
+    var publi1 = allpublicacoes.filter(elem =>
+      elem.getText().then(text => text === p1));
+    await publi1;
+    await publi1.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+
+    var publi2 = allpublicacoes.filter(elem =>
+      elem.getText().then(text => text === p2));
+    await publi2;
+    await publi2.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1));
+  });
+
+  Given(/^o arquivo "([^\"]*)" tem um formato inválido$/, async (xmlFile) => {
+    let publicacoesArray = getPublicacoes(xmlFile);
+    await publicacoesArray;
+
+    expect(publicacoesArray).toEqual(null);
+  });
+
+  When(/^eu selecionar para fazer o upload do arquivo "([^\"]*)"$/, async (fileName) => {
+    await $("input[name='file-path']").sendKeys(<string>fileName);
+  });
+
+  Then(/^apenas as publicações "([^\"]*)" e "([^\"]*)" estão cadastradas no sistema$/, async (p1, p2) => {
     var allpublicacoes: ElementArrayFinder = element.all(by.name('publicacoes-list')).then((itens) => {
       expect(itens.length).toBe(2);
     });

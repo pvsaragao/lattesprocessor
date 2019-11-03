@@ -27,3 +27,11 @@ When eu selecionar para fazer o upload, sem nenhum arquivo selecionado
 Then eu estou na página de “Importar Lattes”
 And eu vejo uma mensagem de erro na tela
 And apenas as publicações “Requisitos de software para modelo de cascata” e “Estudo sobre Metodologias de Desenvolvimento Ágil” estão cadastradas no sistema.
+
+Scenario: Fazer upload de um xml com formato inválido
+Given eu estou na página de “importar Lattes”
+And as publicações “Requisitos de software para modelo de cascata” e “Estudo sobre Metodologias de Desenvolvimento Ágil” estão cadastradas no sistema
+And o arquivo “teste_lattes.xml” tem um formato inválido
+When eu selecionar para fazer o upload do arquivo “teste_lattes.xml”
+Then eu vejo um alerta de erro na tela
+And apenas as publicações “Requisitos de software para modelo de cascata” e “Estudo sobre Metodologias de Desenvolvimento Ágil” estão cadastradas no sistema.
