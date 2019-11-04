@@ -61,5 +61,44 @@ defineSupportCode(function ({ Given, And, When, Then }) {
         await expect(Promise.resolve(rank_list[1].qtd)).to.eventually.equal(qtd2)
         
     });
+    
+    Given(/^estou na página de “estudos comparativos”$/, async () => {
+        await browser.get("http://localhost:4200/");
+        await expect(browser.getTitle()).to.eventually.equal('LattesProcessor');
+        await $("a[name='estudosComparativos']").click();
+    });
+    
+    Given(/^o atributo “arquivo xml” está como "([^\"]*)"$/, async (xml_file) => {
+        var status_xml: ElementArrayFinder = element.all(by.name('status_xml'));
+	    await expect(status_xml.text).to.eventually.equal(xml_file);
+    });
+    
+    
+    When(/^eu seleciono a opção “critérios de avaliação personalizados”$/, async () => {
+        await $("a[name='criterios_personalizados']").click();
+    });
+    
+    //um dos pesos é uma letra (inválido)
+    When(/^atribui os pesos "(\d+)",  "(\d+)", "(\d+)", "(\d+)", "(\d+)", "(\d+)", "(\d+)" e "(\w+)" respectivamente para “A1”, “A2”, “B1”, “B2”, “B3”, “B4”, “B5”, “B5” e “C”$/, async (peso1,peso2,peso3,peso4,peso5,peso7,peso8) => {
+        await $("input[name='pesoa1']").sendKeys(<string> peso1);
+        await $("input[name='pesoa2']").sendKeys(<string> peso2);
+        await $("input[name='pesob1']").sendKeys(<string> peso3);
+        await $("input[name='pesob2']").sendKeys(<string> peso4);
+        await $("input[name='pesob3']").sendKeys(<string> peso5);
+        await $("input[name='pesob4']").sendKeys(<string> peso6);
+        await $("input[name='pesob5']").sendKeys(<string> peso7);
+        await $("input[name='pesoc']").sendKeys(<string> peso8);
+    });
+    
+    When(/^eu seleciono a “opção executar avaliação”$/, async () => {
+        await $("a[name='executar_avaliacao']").click();
+    });
+    
+
+    Then(/^eu vejo uma mensagem de que os valores para os pesos são inválidos$/, async () => {
+        var msg = ptor.switchTo().alert();
+        await expect(msg.getText()).toEqual('Pesos inválidos');
+    });    
+
 
 }) 
