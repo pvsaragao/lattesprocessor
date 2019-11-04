@@ -26,3 +26,10 @@ And atribui os pesos “3”,  “2”, “1”, “1”, “1”, “1”, “1
 And eu seleciono a “opção executar avaliação” 
 Then eu vejo uma mensagem de que os valores para os pesos são inválidos
 
+Scenario:Ranqueamento com sucesso de departamentos
+
+Given estou na página de “estudos comparativos”
+And eu posso ver “3 “ artigos do departamento “SPG” e “2” artigos do departamento “VOXAR”
+When eu seleciono a opção “ranqueamento de departamentos”
+Then eu vejo uma tabela com o ranking onde “SPG” com “3 artigos” está acima de “VOXAR” com “2 artigos”
+

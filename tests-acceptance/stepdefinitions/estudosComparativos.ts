@@ -101,4 +101,32 @@ defineSupportCode(function ({ Given, And, When, Then }) {
     });    
 
 
+    Given(/^estou na página de “estudos comparativos”$/, async () => {
+        await browser.get("http://localhost:4200/");
+        await expect(browser.getTitle()).to.eventually.equal('LattesProcessor');
+        await $("a[name='estudosComparativos']").click();
+    });
+    
+    Given(/^eu posso ver "(\d+)" artigos do departamento "([^\"]*)" e "(\d+)" artigos do departamento "([^\"]*)"$/, async (qtd1,dpt1,qtd2,dpt2) => {
+        var dpts: ElementArrayFinder = element.all(by.name('dpt'));
+        await expect(Promise.resolve(dpts[0].nome)).to.eventually.equal(dpt1)
+        await expect(Promise.resolve(dpts[1].nome)).to.eventually.equal(dpt2)
+        await expect(Promise.resolve(dpts[0].qtd)).to.eventually.equal(qtd1)
+        await expect(Promise.resolve(dpts[1].qtd)).to.eventually.equal(qtd2)
+    });
+    
+    When(/^ eu seleciono a opção “ranqueamento de departamentos”$/, async () => {
+        await $("a[name='raqueamento de departamentos']").click();
+    });
+    
+    Then(/^eu vejo uma tabela com o ranking onde "([^\"]*)" com "(\d+)" artigos está acima de "([^\"]*)" com "(\d+)" artigos$/, async (dpt1,qtd1,dpt2,qtd2) => {
+        var rank_list: ElementArrayFinder = element.all(by.name('rank_list'));
+        await expect(Promise.resolve(rank_list[0].nome)).to.eventually.equal(dpt1)
+        await expect(Promise.resolve(rank_list[1].nome)).to.eventually.equal(dpt2)
+        await expect(Promise.resolve(rank_list[0].qtd)).to.eventually.equal(qtd1)
+        await expect(Promise.resolve(rank_list[1].qtd)).to.eventually.equal(qtd2)
+        
+    });
+    
+    
 }) 
