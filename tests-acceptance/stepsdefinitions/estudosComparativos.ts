@@ -60,4 +60,63 @@ defineSupportCode(function ({ Given, And, When, Then }) {
     Then(/^"([^\"]*)" fica na primeira linha com "(\d*)" pontos e "([^\"]*)" na segunda com "(\d*)" pontos, por ordem de prioridade.$/, async (prof1, pontos1, prof2, pontos2) => {
         
     });
+
+    Given(/^o atributo “arquivo xml” está como “nenhum arquivo carregado”$/, async () => {
+        var status_xml: ElementArrayFinder = element.all(by.name('status_xml'));
+	    await expect(status_xml.text).to.eventually.equal('nenhum arquivo carregado');
+    });
+
+    Then(/^eu vejo uma mensagem informando que nenhum arquivo .xml foi carregado$/, async () => {
+        await request(options)
+              .then(body => 
+                   expect(JSON.stringify(body)).to.equal(
+                       '{"failure":"Nenhum arquivo .xml foi carregado"}'));
+    });
+
+    Given(/^"2" arquivos .xml contendo "([^\"]*)" com "(\d*)" artigos e "([^\"]*)" com "(\d*)" artigos$/, async (prof1,qtd1,prof2,qtd2) => {
+        var status_xml: ElementArrayFinder = element.all(by.name('status_xml'));
+        await expect(status_xml[0].text).to.eventually.equal('2 arquivos carregados');
+        var professor_list: ElementArrayFinder = element.all(by.name('professores'));
+        await professor_list.filter(elem => pAND(mesmoNome(elem, prof1), mesmaQtd(elem, qtd1))).then
+                    (elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1))
+        await professor_list.filter(elem => pAND(mesmoNome(elem, prof2), mesmaQtd(elem, qtd2))).then
+                    (elems => expect(Promise.resolve(elems.length)).to.eventually.equal(1))
+    });
+
+    Then(/^eu vejo uma tabela de ranking, onde "([^\"]*)" com "(\d*)" artigos está acima de "([^\"]*)" com "(\d*)" artigos$/, async (prof1,qtd1,prof2,qtd2) => {
+        var rank_list: ElementArrayFinder = element.all(by.name('rank_list'));
+        await expect(Promise.resolve(rank_list[0].nome)).to.eventually.equal(prof1)
+        await expect(Promise.resolve(rank_list[1].nome)).to.eventually.equal(prof2)
+        await expect(Promise.resolve(rank_list[0].qtd)).to.eventually.equal(qtd1)
+        await expect(Promise.resolve(rank_list[1].qtd)).to.eventually.equal(qtd2)
+        
+    });
+
+    Given(/^o atributo “arquivo xml” está como "([^\"]*)"$/, async (xml_file) => {
+        var status_xml: ElementArrayFinder = element.all(by.name('status_xml'));
+	    await expect(status_xml.text).to.eventually.equal(xml_file);
+    });
+
+    
+    Given(/^eu posso ver "(\d+)" artigos do departamento "([^\"]*)" e "(\d+)" artigos do departamento "([^\"]*)"$/, async (qtd1,dpt1,qtd2,dpt2) => {
+        var dpts: ElementArrayFinder = element.all(by.name('dpt'));
+        await expect(Promise.resolve(dpts[0].nome)).to.eventually.equal(dpt1)
+        await expect(Promise.resolve(dpts[1].nome)).to.eventually.equal(dpt2)
+        await expect(Promise.resolve(dpts[0].qtd)).to.eventually.equal(qtd1)
+        await expect(Promise.resolve(dpts[1].qtd)).to.eventually.equal(qtd2)
+    });
+    
+    When(/^ eu seleciono a opção “ranqueamento de departamentos”$/, async () => {
+        await $("a[name='raqueamento de departamentos']").click();
+    });
+    
+    Then(/^eu vejo uma tabela com o ranking onde "([^\"]*)" com "(\d+)" artigos está acima de "([^\"]*)" com "(\d+)" artigos$/, async (dpt1,qtd1,dpt2,qtd2) => {
+        var rank_list: ElementArrayFinder = element.all(by.name('rank_list'));
+        await expect(Promise.resolve(rank_list[0].nome)).to.eventually.equal(dpt1)
+        await expect(Promise.resolve(rank_list[1].nome)).to.eventually.equal(dpt2)
+        await expect(Promise.resolve(rank_list[0].qtd)).to.eventually.equal(qtd1)
+        await expect(Promise.resolve(rank_list[1].qtd)).to.eventually.equal(qtd2)
+        
+    });
+
 }) 
