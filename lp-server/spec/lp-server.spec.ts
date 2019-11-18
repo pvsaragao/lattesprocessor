@@ -98,4 +98,14 @@ describe("O servidor", () => {
     });
   })
 
-})
+  it("retorna uma mensagem de erro ao tentar realizar raqueamento ser arquivos carregados", () => {
+    var options:any = {method: 'POST', uri: (base_url + "rank"), body:{tipo: "por_numero_de_artigos"}, json: true};
+    return request(options)
+             .then(body =>
+                expect(body).toEqual({failure: "Nenhum arquivo xml foi carregado"})
+             ).catch(e =>
+                expect(e).toEqual(null)
+             )
+  })
+
+}) 
