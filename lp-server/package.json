@@ -1,14 +1,14 @@
 {
-  "name": "ta-server",
+  "name": "lp-server",
   "version": "0.0.2",
-  "description": "Servidor do teaching assistant",
-  "main": "ta-server.js",
+  "description": "Servidor do Lattes Processor",
+  "main": "lp-server.js",
   "scripts": {
     "test": "npm run tsc && jasmine --config=./spec/support/jasmine.json",
     "tsc": "./node_modules/typescript/bin/tsc",
-    "start": "npm run tsc && node compiledCode/ta-server/lp-server.js"
+    "start": "npm run tsc && node compiledCode/lp-server/lp-server.js"
   },
-  "author": "Paulo Borba",
+  "author": "ejas, mbmt, tbm2, vdj, gbc7",
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.4",
