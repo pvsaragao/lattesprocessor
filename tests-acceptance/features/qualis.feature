@@ -6,7 +6,6 @@ So that: Eu consigo usar o critério qualis de avaliação para o rankeamento do
 Scenario: Importar planilha com sucesso
 Given Eu estou na página Qualis
 And Nenhum periódico está armazenado no sistema
-And O arquivo "publicações_2016.xls" contém: "ACM Transactions on Intelligent Systems and Technology" com ISSN "2157-6904" e avaliação "A1", "Applied Intelligence (Boston)" com ISSN "0924-669X" e avaliação "B1" e "BMC Genomics" com ISSN "1471-2164" e avaliação "B2"
 When Eu seleciono o arquivo "publicações_2016.xls"
 And Eu seleciono a opção "Qualis Import"
 Then Eu vejo uma mensagem de sucesso
