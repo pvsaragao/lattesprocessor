@@ -13,7 +13,11 @@ export class QualisFactory {
     }
     
     makeQualis() {
-        
+        this.qualisTable = new Qualis();
+        let keys = Object.keys(this.fileContent);
+        keys.forEach((key) => {
+            this.qualisTable.addEntry(this.fileContent[key].Título, this.fileContent[key].ISSN, this.fileContent[key].Estrato);
+        });
     }
 
     getFileContent() : JSON {
