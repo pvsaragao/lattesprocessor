@@ -12,7 +12,9 @@ export class Qualis {
     //add methods here
 
     addEntry(periodico : string, issn : string, avaliacao : string) {
-        this.tabela[periodico] = {issn: issn, avaliacao: avaliacao};
+        if (!this.assertKey(periodico)) {
+            this.tabela.set(periodico, {issn: issn, avaliacao: avaliacao});
+        }
     }
 
     assertKey(periodico : string) : boolean {
@@ -29,8 +31,8 @@ export class Qualis {
 
     copyFrom(qualis : Qualis) {
         this.tabela = new Map<string,{issn :string,avaliacao :string}>();
-        for (let key in qualis) {
-            this.tabela[key] = qualis[key];
+        for (let e of qualis.tabela.entries()) {
+            this.tabela.set(e[0], {issn: e[1].issn, avaliacao: e[1].avaliacao});
         }
     }
 
