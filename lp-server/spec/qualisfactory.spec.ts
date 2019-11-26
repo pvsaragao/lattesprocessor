@@ -9,7 +9,7 @@ describe("A tabela qualis", () => {
     it("usa a biblioteca que lê planilhas para adequadamente converter o arquivo excel para um JSON", () => {
         let file : File = new File([],"publicações_2016.xls");
         qualisFactory.readXls(file);
-        expect();
+        expect(qualisFactory.getFileContent()).not.toEqual(null);
     })
 
     it("constroi e retorna um objeto Qualis a partir de um JSON corretamente", () => {
