@@ -1,13 +1,29 @@
 export class Qualis {
-    avaliacao : Map<string,string>;
+    tabela : Map<string,{issn :string,avaliacao :string}>;
 
     constructor() {
         this.clean();
     }
 
     clean() {
-        this.avaliacao = new Map<string,string>();
+        this.tabela = new Map<string,{issn :string,avaliacao :string}>();
     }
     
     //add methods here
+
+    getAvaliacao(periodico : string) : string {
+        return this.tabela.get(periodico).avaliacao;
+    }
+
+    getIssn(periodico : string) : string {
+        return this.tabela.get(periodico).issn;
+    }
+
+    copyFrom() {
+        
+    }
+
+    clone() {
+
+    }
   }
