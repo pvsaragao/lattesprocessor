@@ -28,7 +28,7 @@ export class LattesFactory {
         let bibliography = result['CURRICULO-VITAE']['PRODUCAO-BIBLIOGRAFICA'][0];
         let events = bibliography['TRABALHOS-EM-EVENTOS'][0]['TRABALHO-EM-EVENTOS'];
         let articles = bibliography['ARTIGOS-PUBLICADOS'][0]['ARTIGO-PUBLICADO'];
-        
+
         // Still missing forEach for journals. Needed??
         // let journals = bibliography['TEXTOS-EM-JORNAIS-OU-REVISTAS'][0]['TEXTO-EM-JORNAL-OU-REVISTA'];
 

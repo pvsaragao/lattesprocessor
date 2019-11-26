@@ -34,11 +34,27 @@ lpserver.use(bodyParser.json());
 // add reqs here
 
 lpserver.post('/pesquisador/adicionar', upload.array('lattesFiles', 12), (req: express.Request, res: express.Response) => {
+  let error = false;
+
   for(let i = 0; i < req.files.length; i++) {
     let xml_string = fs.readFileSync(req.files[i].path, 'utf8');
-    let p: Pesquisador =  lattesFactory.importLattes(xml_string);
+    let p =  lattesFactory.importLattes(xml_string);
+
+    if(p === null) {
+      error = true;
+    }
   }
-  // files can be seen under req.files
+
+  if(!error) {
+    res.send({
+      'success': 'Os arquivos foram importados com sucesso!',
+    })
+  }
+
+  res.send({
+    'failure': 'Houve um erro ao importar os arquivos',
+  })
+
 });
 
 lpserver.get('/pesquisadores/', (req: express.Request, res: express.Response) => {
