@@ -45,4 +45,8 @@ export class Qualis {
     getSize() : number {
         return this.tabela.size;
     }
+
+    getQualis() : Map<string,{issn :string,avaliacao :string}> {
+        return this.tabela;
+    }
   }
