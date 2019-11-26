@@ -6,13 +6,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PesquisadoresComponent } from './pesquisador/pesquisadores.component';
+import { PesquisadorService } from './pesquisador/pesquisador.service';
 
 // add project imports
 
 @NgModule({
   
   declarations: [
-    AppComponent
+    AppComponent,
+    PesquisadoresComponent
     //,
     //MetasComponent,
     //AlunosComponent
@@ -23,6 +26,10 @@ import { AppComponent } from './app.component';
     FormsModule,
     HttpClientModule, 
     RouterModule.forRoot([
+      {
+        path: 'pesquisadores',
+        component: PesquisadoresComponent
+      }
       /*{
         path: 'metas',
         component: MetasComponent
@@ -33,7 +40,7 @@ import { AppComponent } from './app.component';
       } */
     ])
   ],
-  providers: [/*PesquisadorService*/],
+  providers: [PesquisadorService],
   bootstrap: [AppComponent]
 
 })

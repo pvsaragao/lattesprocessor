@@ -2,14 +2,19 @@ import express = require('express');
 import bodyParser = require("body-parser");
 
 const multer = require('multer');
-const upload = multer({ dest: '/uploads' });
+const upload = multer({ dest: './uploads' });
+
+const fs = require('fs');
 
 import { CadastroDePesquisadores } from './cadastrodepesquisadores';
-
+import { LattesFactory } from './lattesFactory';
+import { Pesquisador } from '../common/pesquisador';
 
 // add imports here
 
 var lpserver = express();
+let cadatroPesq = new CadastroDePesquisadores();
+const lattesFactory = new LattesFactory(cadatroPesq);
 
 // add services here
 
@@ -24,12 +29,21 @@ lpserver.use(allowCrossDomain);
 
 lpserver.use(bodyParser.json());
 
+// ========== REQUESTS ==========
+
 // add reqs here
 
 lpserver.post('/pesquisador/adicionar', upload.array('lattesFiles', 12), (req: express.Request, res: express.Response) => {
-  console.log(req.files);
+  for(let i = 0; i < req.files.length; i++) {
+    let xml_string = fs.readFileSync(req.files[i].path, 'utf8');
+    let p: Pesquisador =  lattesFactory.importLattes(xml_string);
+  }
   // files can be seen under req.files
-})
+});
+
+lpserver.get('/pesquisadores/', (req: express.Request, res: express.Response) => {
+  res.send(JSON.stringify(cadatroPesq.getPesquisadores()));
+});
 
 var server = lpserver.listen(3000, function () {
   console.log('Example app listening on port 3000!')
