@@ -6,8 +6,8 @@ export class QualisFactory {
     qualisTable : Qualis;
     fileContent : JSON = null;
     // add methods here
-    readXls(file : File) {
-        let workbook : XLSX.WorkBook = XLSX.read(file);
+    readXls(file : string) {
+        let workbook : XLSX.WorkBook = XLSX.read(file, {type : "binary"});
         let worksheet : XLSX.WorkSheet = workbook.Sheets[workbook.SheetNames[0]];
         this.fileContent = JSON.parse(JSON.stringify(XLSX.utils.sheet_to_json(worksheet)));
     }
