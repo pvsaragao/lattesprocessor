@@ -1,5 +1,6 @@
 import {Qualis} from '../../common/qualis';
-import {QualisFactory} from '../qualisfactory';
+import {QualisFactory} from '../qualisfactory';    
+let fs = require('fs');
 
 describe("A tabela qualis", () => {
     let qualisFactory : QualisFactory;
@@ -7,13 +8,13 @@ describe("A tabela qualis", () => {
     beforeEach(() => qualisFactory = new QualisFactory());
 
     it("usa a biblioteca que lê planilhas para adequadamente converter o arquivo excel para um JSON", () => {
-        let file : File = new File([],"publicações_2016.xls");
+        let file : string =  fs.readFileSync('./spec/test.xls', 'binary');
         qualisFactory.readXls(file);
         expect(qualisFactory.getFileContent()).not.toEqual(null);
     })
 
     it("constroi e retorna um objeto Qualis a partir de um JSON corretamente", () => {
-        let file : File = new File([],"publicações_2016.xls");
+        let file : string =  fs.readFileSync('./spec/test.xls', 'binary');
         qualisFactory.readXls(file);
         qualisFactory.makeQualis();
         let qualis : Qualis = qualisFactory.getQualis().clone();
