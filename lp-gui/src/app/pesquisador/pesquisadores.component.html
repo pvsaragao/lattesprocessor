@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
-  <form method="post">
-    <input type="file" name="file" id="file" ng-file-model="files" accept=".xml" (change)="uploadLattes($event.target.files)" multiple>
-  </form>
-</body>
-</html>
+<div *ngFor="let p of pesquisadores" class="pesquisadores-container">
+  <p>{{ p.nome }}</p>
+  <ul>
+    <li *ngFor="let publi of p.publicacoes">
+      <ul>{{ publi.titulo }}</ul>
+    </li>
+  </ul>
+</div>

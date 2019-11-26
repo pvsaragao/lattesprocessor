@@ -49,6 +49,8 @@ lpserver.post('/pesquisador/adicionar', upload.array('lattesFiles', 12), (req: e
     res.send({
       success: 'Os arquivos foram importados com sucesso!',
     })
+
+    return;
   }
 
   res.send({
