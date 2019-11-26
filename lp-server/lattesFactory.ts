@@ -12,15 +12,13 @@ export class LattesFactory {
     this.cadastroPesq = c;
   }
 
+  // Read publicacoes from a xml of a lattes
   importLattes(xml_string: string): Pesquisador {
     let resp = null;
 
     let parser = new xml2js.Parser({ attrkey: "ATTR" });
     parser.parseString(xml_string, (error: any, result: any) => {
       if (error === null) {
-        // implementacao depende do formato xml a ser recebido...
-        // retornamos um array de titulos de publicacoes
-        // caso o formato seja inválido, retorne -1
         let tempPesquisador = new Pesquisador();
 
         // gets name from xml and sets on temporary pesquisador
