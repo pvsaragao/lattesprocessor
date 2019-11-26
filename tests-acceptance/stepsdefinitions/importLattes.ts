@@ -5,22 +5,22 @@ let expect = chai.expect;
 let xml2js = require('xml2js');
 let fs = require('fs');
 
-let getPublicacoes = async (xmlFile) => {
-  let parser = new xml2js.Parser({ attrkey: "ATTR" });
-  let xml_string = fs.readFileSync(xmlFile, "utf8");
-
-  parser.parseString(xml_string, function (error, result) {
-    if (error === null) {
-      // implementacao depende do formato xml a ser recebido...
-      // retornamos um array de titulos de publicacoes
-      // caso o formato seja inválido, retorne -1
-    } else {
-      return (-1);
-    }
-  });
-}
-
 // IMPORTANT: Remember to change to Pesquisador!
+
+// let getPublicacoes = async (xmlFile) => {
+//   let parser = new xml2js.Parser({ attrkey: "ATTR" });
+//   let xml_string = fs.readFileSync(xmlFile, "utf8");
+
+//   parser.parseString(xml_string, function (error, result) {
+//     if (error === null) {
+//       // implementacao depende do formato xml a ser recebido...
+//       // retornamos um array de titulos de publicacoes
+//       // caso o formato seja inválido, retorne -1
+//     } else {
+//       return (-1);
+//     }
+//   });
+// }
 
 // defineSupportCode(function ({ Given, When, Then }) {
 //   Given(/^eu estou na tela de "Importar Lattes"$/, async () => {
