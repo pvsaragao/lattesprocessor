@@ -11,6 +11,14 @@ export class Qualis {
     
     //add methods here
 
+    addEntry(periodico : string, issn : string, avaliacao : string) {
+
+    }
+
+    assertKey(periodico : string) : boolean {
+        return null;
+    }
+
     getAvaliacao(periodico : string) : string {
         return this.tabela.get(periodico).avaliacao;
     }
@@ -19,11 +27,15 @@ export class Qualis {
         return this.tabela.get(periodico).issn;
     }
 
-    copyFrom() {
+    copyFrom(qualis : Qualis) {
         
     }
 
-    clone() {
+    clone() : Qualis {
+        return null;
+    }
 
+    getSize() : number {
+        return null;
     }
   }

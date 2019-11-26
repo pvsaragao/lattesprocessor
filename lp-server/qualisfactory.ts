@@ -14,7 +14,7 @@ export class QualisFactory {
         
     }
 
-    getQualis() {
+    getQualis() : Qualis {
         return this.qualisTable;
     }
 }
