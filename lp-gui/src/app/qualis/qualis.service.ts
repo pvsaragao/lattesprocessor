@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { retry, map } from 'rxjs/operators';
 
-import { Qualis } from '../../../../common/qualis';
 
 @Injectable()
 export class QualisService {
@@ -15,4 +14,20 @@ export class QualisService {
 
   //methods go here
 
+  sendFile(file: File): Observable<boolean> {
+    let formData = new FormData();
+    formData.append('qualisFile', file, file.name);
+    return this.http.post<any>(this.taURL + "/qualis/adicionar/", formData, {headers: this.headers})
+              .pipe(
+                retry(2),
+                map(res => {if (res.success) {return true;} else {return false}})
+              );
+  }
+
+  getQualis() : Observable<Map<string,{issn :string,avaliacao :string}>> {
+    return this.http.get<Map<string,{issn :string,avaliacao :string}>>(this.taURL + "/qualis/")
+            .pipe(
+              retry(2)
+            );
+  }
 }

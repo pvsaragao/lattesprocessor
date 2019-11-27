@@ -1,1 +1,10 @@
-html go here
+ 
+<form method="post">
+    <input type="file" name="file" id="file" ng-file-model="files" accept=".xls" (change)="sendFile($event.target.files)">
+</form>
+
+<div *ngFor="let e of qualisTable.entries()" class="qualisTable-container">
+    <p>{{ e[0] }}</p>
+    <p>{{ e[1].isss }}</p>
+    <p>{{ e[1].avaliacao }}</p>
+</div>

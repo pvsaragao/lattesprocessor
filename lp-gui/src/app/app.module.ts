@@ -7,12 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { QualisComponent } from './qualis/qualis.component'
+import { QualisService } from './qualis/qualis.service';
 // add project imports
 
 @NgModule({
   
   declarations: [
-    AppComponent
+    AppComponent,
+    QualisComponent
     //,
     //MetasComponent,
     //AlunosComponent
@@ -31,9 +34,13 @@ import { AppComponent } from './app.component';
         path: 'alunos',
         component: AlunosComponent
       } */
+      {
+        path: 'qualis',
+        component: QualisComponent
+      }
     ])
   ],
-  providers: [/*PesquisadorService*/],
+  providers: [QualisService],
   bootstrap: [AppComponent]
 
 })
