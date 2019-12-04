@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { retry, map } from 'rxjs/operators';
+import { Qualis } from '../../../../common/qualis';
 
 
 @Injectable()
@@ -24,8 +25,8 @@ export class QualisService {
               );
   }
 
-  getQualis() : Observable<Map<string,{issn :string,avaliacao :string}>> {
-    return this.http.get<Map<string,{issn :string,avaliacao :string}>>(this.taURL + "/qualis/")
+  getQualis() : Observable<Qualis> {
+    return this.http.get<Qualis>(this.taURL + "/qualis/")
             .pipe(
               retry(2)
             );

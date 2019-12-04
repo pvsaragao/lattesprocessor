@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QualisService } from './qualis.service';
-
+import { Qualis } from '../../../../common/qualis';
 @Component({
   selector: 'app-import',
   templateUrl:'./qualis.component.html',
@@ -8,20 +8,16 @@ import { QualisService } from './qualis.service';
 })
 export class QualisComponent implements OnInit {
 
-    private qualisTable : Map<string,{issn :string,avaliacao :string}> = null;
-    private path : File;
+    private qualisTable : Qualis;
 
   constructor(private qualisService: QualisService) { }
   
-  sendFile(file: File): void {
-    // let reader = new FileReader();
-    // reader.onload = (e) =>  {
-    //   let text = reader.result;
-    // }
-    // reader.readAsText(file, "binary"); 
+  sendFile(file: File): void { 
     this.qualisService.sendFile(file).subscribe(
       (status) => {
-            this.getTable();  
+          if (status) {
+            this.getTable(); 
+          }
       },
       msg => {
         alert(msg.message);

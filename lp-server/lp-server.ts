@@ -1,6 +1,11 @@
 import express = require('express');
 import bodyParser = require("body-parser");
 
+const multer = require('multer');
+const upload = multer({ dest: './uploads' });
+
+const fs = require('fs');
+
 import { QualisFactory } from './qualisfactory';
 import { Qualis } from '../common/qualis';
 // add imports here
@@ -25,9 +30,9 @@ lpserver.use(bodyParser.json());
 
 // add reqs here
 
-lpserver.post('/qualis/adicionar/', (req: express.Request, res: express.Response) => {
-    let file : string = req.params.file;
-    qualisFactory.readXls(file);
+lpserver.post('/qualis/adicionar/', upload.single('qualisFile'), (req: express.Request, res: express.Response) => {
+    let fileEnconding : string = fs.readFileSync(req.file.path, 'binary');
+    qualisFactory.readXls(fileEnconding);
     qualisFactory.makeQualis();
     qualisService.copyFrom(qualisFactory.getQualis());
     if (qualisService.getQualis()) {
@@ -36,7 +41,7 @@ lpserver.post('/qualis/adicionar/', (req: express.Request, res: express.Response
 })
 
 lpserver.get('/qualis/', (req: express.Request, res: express.Response) => {
-    res.send(JSON.stringify(qualisService.getQualis()));
+    res.send(JSON.stringify(qualisService));
 })
 
 lpserver.get('/qualis/avaliacao/', (req: express.Request, res: express.Response) => {
