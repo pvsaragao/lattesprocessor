@@ -30,7 +30,7 @@ lpserver.use(bodyParser.json());
 
 // add reqs here
 
-lpserver.post('/qualis/adicionar/', upload.single('qualisFile'), (req: express.Request, res: express.Response) => {
+lpserver.post('/qualis/adicionar', upload.single('qualisFile'), (req: express.Request, res: express.Response) => {
     let fileEnconding : string = fs.readFileSync(req.file.path, 'binary');
     qualisFactory.readXls(fileEnconding);
     qualisFactory.makeQualis();
@@ -40,11 +40,11 @@ lpserver.post('/qualis/adicionar/', upload.single('qualisFile'), (req: express.R
     } else res.send({"failure" : "planilha nao foi cadastrada"});
 })
 
-lpserver.get('/qualis/', (req: express.Request, res: express.Response) => {
+lpserver.get('/qualis', (req: express.Request, res: express.Response) => {
     res.send(JSON.stringify(qualisService));
 })
 
-lpserver.get('/qualis/avaliacao/', (req: express.Request, res: express.Response) => {
+lpserver.get('/qualis/avaliacao', (req: express.Request, res: express.Response) => {
   let periodico : string = req.params.periodico;  
   if (qualisService.assertKey(periodico)) {
     res.send({"success" : qualisService.getAvaliacao(periodico)});
