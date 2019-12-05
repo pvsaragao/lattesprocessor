@@ -18,7 +18,7 @@ export class QualisService {
   sendFile(file: File): Observable<boolean> {
     let formData = new FormData();
     formData.append('qualisFile', file, file.name);
-    return this.http.post<any>(this.taURL + "/qualis/adicionar/", formData, {headers: this.headers})
+    return this.http.post<any>(this.taURL + "/qualis/adicionar", formData)
               .pipe(
                 retry(2),
                 map(res => {if (res.success) {return true;} else {return false}})
@@ -26,7 +26,7 @@ export class QualisService {
   }
 
   getQualis() : Observable<Qualis> {
-    return this.http.get<Qualis>(this.taURL + "/qualis/")
+    return this.http.get<Qualis>(this.taURL + "/qualis")
             .pipe(
               retry(2)
             );

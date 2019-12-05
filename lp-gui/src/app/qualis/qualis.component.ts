@@ -8,12 +8,12 @@ import { Qualis } from '../../../../common/qualis';
 })
 export class QualisComponent implements OnInit {
 
-    private qualisTable : Qualis;
+    private qualisTable : Qualis = new Qualis();
 
   constructor(private qualisService: QualisService) { }
   
   sendFile(file: File): void { 
-    this.qualisService.sendFile(file).subscribe(
+    this.qualisService.sendFile(file[0]).subscribe(
       (status) => {
           if (status) {
             this.getTable(); 
