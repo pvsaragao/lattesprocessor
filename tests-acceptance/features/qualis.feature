@@ -17,16 +17,16 @@ And Eu vejo o periódico "ACM Transactions on Intelligent Systems and Technology
 When Eu seleciono a opção "Clear Qualis"
 Then Eu vejo nenhum periódico cadastrado no sistema
 
-Scenario: Importar planilha com extensão inválida
+Scenario: Importar planilha com formáto inválido
 Given Eu estou na página Qualis
 And Nenhum periódico está armazenado no sistema
 When Eu seleciono o arquivo "publicações_2018.pdf"
 And Eu seleciono a opção "Qualis Import"
-Then Eu vejo uma mensagem de erro indicando o formato inválido do arquivo
+Then Eu vejo uma mensagem de erro indicando formatação errada na planilha
 
 Scenario: Importar planilha vazia
 Given Eu estou na página Qualis
 And Nenhum periódico está armazenado no sistema
 When Eu seleciono o arquivo "publicações_2018.xls"
 And Eu seleciono a opção "Qualis Import"
-Then Eu vejo uma mensagem de erro indicando indicando que nenhum periódico foi cadastrado no sistema
+Then Eu vejo uma mensagem de erro indicando que nenhum periódico foi cadastrado no sistema
