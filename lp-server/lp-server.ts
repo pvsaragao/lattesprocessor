@@ -41,7 +41,7 @@ lpserver.post('/qualis/adicionar', upload.single('qualisFile'), (req: express.Re
 })
 
 lpserver.get('/qualis', (req: express.Request, res: express.Response) => {
-    res.send(JSON.stringify(qualisService));
+  res.send(JSON.stringify(Array.from(qualisService.getQualis())));
 })
 
 lpserver.get('/qualis/avaliacao', (req: express.Request, res: express.Response) => {

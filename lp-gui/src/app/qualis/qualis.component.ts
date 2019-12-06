@@ -8,32 +8,43 @@ import { Qualis } from '../../../../common/qualis';
 })
 export class QualisComponent implements OnInit {
 
-    private qualisTable : Qualis = new Qualis();
+  private qualisTable : Qualis = new Qualis();
+  private file : File = null;
 
   constructor(private qualisService: QualisService) { }
   
-  sendFile(file: File): void { 
-    this.qualisService.sendFile(file[0]).subscribe(
-      (status) => {
-          if (status) {
-            this.getTable(); 
-          }
-      },
-      msg => {
-        alert(msg.message);
-      }
-    );
+  setFile(file: FileList): void { 
+    this.file = file[0];
   }
 
-  getTable() {
+  sendFile(): void { 
+    if (this.file) {
+      this.qualisService.sendFile(this.file).subscribe(
+        (status) => {
+            if (status) {
+              this.getTable(); 
+            }
+        },
+        msg => {
+          alert(msg.message);
+        }
+      );
+    } else alert("Selecione um arquivo");
+  }
+
+  getTable() {  
     this.qualisService.getQualis().subscribe(
         (table) => {
-            this.qualisTable = table;
+            this.qualisTable.tabela = table;
         },
         msg => {
             alert(msg.message);
         }
     )
+  }
+
+  clearQualis() {
+    this.qualisTable = new Qualis();
   }
 
   onMove(): void {

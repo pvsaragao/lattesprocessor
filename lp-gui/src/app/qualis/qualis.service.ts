@@ -25,10 +25,14 @@ export class QualisService {
               );
   }
 
-  getQualis() : Observable<Qualis> {
-    return this.http.get<Qualis>(this.taURL + "/qualis")
+  getQualis() : Observable<Map<string,{issn :string,avaliacao :string}>> {
+    return this.http.get<Map<string,{issn :string,avaliacao :string}>>(this.taURL + "/qualis")
             .pipe(
               retry(2)
             );
+  }
+
+  clearQualis() {
+
   }
 }
