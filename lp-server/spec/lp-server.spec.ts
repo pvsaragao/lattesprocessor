@@ -12,4 +12,22 @@ describe("O servidor", () => {
 
   // add server tests here
 
+  //Qualis
+
+  it("Inicialmente a tabela está vazia", () => {
+
+  })
+
+  it("Cadastra uma planilha corretamente", () => {
+    
+  })
+
+  it("Retorna a avaliação esperada de cada periódico", () => {
+    
+  })
+
+  it("Limpa a tabela", () => {
+    
+  })
+
 })

@@ -40,6 +40,11 @@ lpserver.post('/qualis/adicionar', upload.single('qualisFile'), (req: express.Re
     } else res.send({"failure" : "planilha nao foi cadastrada"});
 })
 
+lpserver.post('/qualis/apagar', (req: express.Request, res: express.Response) => {
+  qualisService = new Qualis();
+  res.send({"success" : "Tabela qualis apagada"});
+})
+
 lpserver.get('/qualis', (req: express.Request, res: express.Response) => {
   res.send(JSON.stringify(Array.from(qualisService.getQualis())));
 })
