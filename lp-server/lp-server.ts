@@ -42,7 +42,9 @@ lpserver.post('/qualis/adicionar', upload.single('qualisFile'), (req: express.Re
 
 lpserver.post('/qualis/apagar', (req: express.Request, res: express.Response) => {
   qualisService = new Qualis();
-  res.send({"success" : "Tabela qualis apagada"});
+  if (qualisService.getQualis().size == 0) {
+    res.send({"success" : "Tabela qualis apagada"});
+  } else res.send({"failure" : "Erro ao apagar a tabela"});
 })
 
 lpserver.get('/qualis', (req: express.Request, res: express.Response) => {
@@ -50,7 +52,7 @@ lpserver.get('/qualis', (req: express.Request, res: express.Response) => {
 })
 
 lpserver.get('/qualis/avaliacao', (req: express.Request, res: express.Response) => {
-  let periodico : string = req.params.periodico;  
+  let periodico : string = req.params.periodico;
   if (qualisService.assertKey(periodico)) {
     res.send({"success" : qualisService.getAvaliacao(periodico)});
   } else res.send({"failure" : "periodico nao possui avaliacao"});
