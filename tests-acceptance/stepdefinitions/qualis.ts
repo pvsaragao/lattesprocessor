@@ -16,7 +16,7 @@ defineSupportCode(function ({Given, When, Then}) {
     //Scenario: Importar planilha com sucesso
     Given(/^Eu estou na página Qualis$/, async () => {
         await browser.get("http://localhost:4200/");
-        await expect(browser.getTitle()).to.eventually.equal("lattesprocessor");
+        await expect(browser.getTitle()).to.eventually.equal("Lattes Processor");
         await $("a[name='qualis']").click();
     })
 
@@ -26,7 +26,7 @@ defineSupportCode(function ({Given, When, Then}) {
     })
 
     When(/^Eu seleciono o arquivo “([^\"]*)"$/, async (filePath : string) => {
-        await $("input[name=Files]").sendKeys(filePath);
+        await $("input[name=QualisFile]").sendKeys(filePath);
     })
 
     When(/^Eu seleciono a opção “([^\"]*)"$/, async (option : string) => {
@@ -80,7 +80,7 @@ defineSupportCode(function ({Given, When, Then}) {
     })
 
     Then(/^Eu vejo uma mensagem de erro indicando o formato inválido do arquivo$/, async () => {
-        await element(by.name('ImportStatus')).getText().then(msg => expect(Promise.resolve(msg)).to.eventually.equal('failure: not a xls'));
+        await element(by.name('ImportStatus')).getText().then(msg => expect(Promise.resolve(msg)).to.eventually.equal('planilha não possui formatação adequada'));
     })
     //Scenario: Importar planilha vazia
     Given(/^Nenhum periódico está armazenado no sistema$/, async () => {
@@ -98,6 +98,6 @@ defineSupportCode(function ({Given, When, Then}) {
 
     Then(/^Eu vejo uma mensagem indicando que nenhum periódico foi importado ao sistema$/, async () => {
         await element(by.name('ImportStatus')).getText()
-            .then(msg => expect(Promise.resolve(msg)).to.eventually.equal('alert: nenhum periodico novo importado'));
+            .then(msg => expect(Promise.resolve(msg)).to.eventually.equal('nenhum periodico importado!'));
     })
 })
