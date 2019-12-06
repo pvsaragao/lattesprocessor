@@ -24,5 +24,8 @@
     "request": "^2.34",
     "request-promise": "^4.2.2",
     "@types/request-promise": "^4.1.38"
+  },
+  "dependencies": {
+    "path": "^0.12.7"
   }
 }

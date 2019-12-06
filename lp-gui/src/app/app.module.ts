@@ -35,10 +35,6 @@ import { ImportLattesComponent } from './pesquisador/importLattes.component';
       {
         path: 'pesquisadores',
         component: PesquisadoresComponent
-      },
-      {
-        path: 'importar',
-        component: ImportLattesComponent
       }
       /*{
         path: 'metas',
