@@ -32,15 +32,18 @@ lpserver.use(bodyParser.json());
 
 lpserver.post('/qualis/adicionar', upload.single('qualisFile'), (req: express.Request, res: express.Response) => {
     let fileEnconding : string = fs.readFileSync(req.file.path, 'binary');
+    qualisFactory = new QualisFactory();
     qualisFactory.readXls(fileEnconding);
-    qualisFactory.makeQualis();
-    qualisService.copyFrom(qualisFactory.getQualis());
-    if (qualisService.getQualis()) {
-        res.send({"success" : "planilha cadastrada com sucesso"});
-    } else res.send({"failure" : "planilha nao foi cadastrada"});
+    if (qualisFactory.fileContent) {
+      qualisFactory.makeQualis();
+      qualisService.copyFrom(qualisFactory.getQualis());
+      if (qualisService.getQualis().size > 0) {
+          res.send({"success" : "planilha cadastrada com sucesso"});
+      } else res.send({"failure" : "nenhuma entrada adicionada"});
+    } else res.send({"failure" : "planilha com formatacao invalida"});
 })
 
-lpserver.post('/qualis/apagar', (req: express.Request, res: express.Response) => {
+lpserver.delete('/qualis/apagar', (req: express.Request, res: express.Response) => {
   qualisService = new Qualis();
   if (qualisService.getQualis().size == 0) {
     res.send({"success" : "Tabela qualis apagada"});
@@ -51,8 +54,8 @@ lpserver.get('/qualis', (req: express.Request, res: express.Response) => {
   res.send(JSON.stringify(Array.from(qualisService.getQualis())));
 })
 
-lpserver.get('/qualis/avaliacao', (req: express.Request, res: express.Response) => {
-  let periodico : string = req.params.periodico;
+lpserver.post('/qualis/avaliacao', (req: express.Request, res: express.Response) => {
+  let periodico : string = req.body.periodico;
   if (qualisService.assertKey(periodico)) {
     res.send({"success" : qualisService.getAvaliacao(periodico)});
   } else res.send({"failure" : "periodico nao possui avaliacao"});
