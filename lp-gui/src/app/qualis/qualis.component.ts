@@ -12,6 +12,7 @@ export class QualisComponent implements OnInit {
   private file : File = null;
   private statusReport = false;
   private importStatus = "";
+  private avaliacao = "";
 
   constructor(private qualisService: QualisService) { }
   
@@ -56,6 +57,22 @@ export class QualisComponent implements OnInit {
         alert(msg.message);
       }
     );
+  }
+
+  getAvaliacao() : string {
+    return this.avaliacao;
+  }
+
+  setAvaliacao(periodico : string) {
+    console.log(periodico);
+    this.qualisService.getAvaliacao(periodico).subscribe(
+      (res : string) => {
+        this.avaliacao = res;
+      },
+      msg => {
+        alert(msg.message);
+      }
+    )
   }
 
   onMove(): void {
