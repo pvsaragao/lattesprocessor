@@ -15,13 +15,13 @@ export class QualisService {
 
   //methods go here
 
-  sendFile(file: File): Observable<boolean> {
+  sendFile(file: File): Observable<String> {
     let formData = new FormData();
     formData.append('qualisFile', file, file.name);
     return this.http.post<any>(this.taURL + "/qualis/adicionar", formData)
               .pipe(
                 retry(2),
-                map(res => {if (res.success) {return true;} else {return false}})
+                map(res => {if (res.success) {return res.success;} else {return res.failure}})
               );
   }
 
@@ -32,7 +32,19 @@ export class QualisService {
             );
   }
 
-  clearQualis() {
+  clearQualis(): Observable<boolean> {
+    return this.http.delete<any>(this.taURL + "/qualis/apagar")
+              .pipe(
+                retry(2),
+                map(res => {if (res.success) {return true;} else {return false}})
+              );
+  }
 
+  getAvaliacao(periodico : String) : Observable<String> {
+    return this.http.post<any>(this.taURL + "/qualis/avaliacao", {"periodico": periodico})
+              .pipe(
+                retry(2),
+                map(res => {if (res.success) {return res.success;} else {return null}})
+              );
   }
 }

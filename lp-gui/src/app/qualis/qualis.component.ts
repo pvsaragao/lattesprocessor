@@ -10,6 +10,8 @@ export class QualisComponent implements OnInit {
 
   private qualisTable : Qualis = new Qualis();
   private file : File = null;
+  private statusReport = false;
+  private importStatus = "";
 
   constructor(private qualisService: QualisService) { }
   
@@ -20,10 +22,10 @@ export class QualisComponent implements OnInit {
   sendFile(): void { 
     if (this.file) {
       this.qualisService.sendFile(this.file).subscribe(
-        (status) => {
-            if (status) {
-              this.getTable(); 
-            }
+        (status : string) => {
+            this.getTable();   
+            this.importStatus = status;
+            this.statusReport = true; 
         },
         msg => {
           alert(msg.message);
@@ -44,14 +46,23 @@ export class QualisComponent implements OnInit {
   }
 
   clearQualis() {
-    this.qualisTable = new Qualis();
+    this.qualisService.clearQualis().subscribe(
+      (status) => {
+        if (status) {
+          this.getTable(); 
+        }
+      },
+      msg => {
+        alert(msg.message);
+      }
+    );
   }
 
   onMove(): void {
-
+    this.statusReport = false;
   }
 
   ngOnInit(): void {
-
+    this.getTable();
   }
 }
