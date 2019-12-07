@@ -98,4 +98,6 @@ defineSupportCode(function ({ Given, When, Then }) {
     // time to upload
     await wait(500);
   });
+
+  // Removi o cenário de enviar arquivo vazio pois isso é impossível de acontecer pelo HTML.
 })
