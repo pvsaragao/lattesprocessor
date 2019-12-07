@@ -11,16 +11,13 @@ import { MatButtonModule, MatIconModule } from '@angular/material';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { PesquisadorService } from './pesquisador/pesquisador.service';
-import { PesquisadoresComponent } from './pesquisador/pesquisadores.component';
 import { ImportLattesComponent } from './pesquisador/importLattes.component';
 
 // add project imports
 
 @NgModule({
-  
   declarations: [
     AppComponent,
-    PesquisadoresComponent,
     NavbarComponent,
     ImportLattesComponent
   ],
@@ -34,7 +31,7 @@ import { ImportLattesComponent } from './pesquisador/importLattes.component';
     RouterModule.forRoot([
       {
         path: 'pesquisadores',
-        component: PesquisadoresComponent
+        component: ImportLattesComponent
       }
       /*{
         path: 'metas',

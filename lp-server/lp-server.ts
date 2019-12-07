@@ -36,8 +36,6 @@ lpserver.use(bodyParser.json());
 lpserver.post('/pesquisador/adicionar', upload.array('lattesFiles', 12), (req: express.Request, res: express.Response) => {
   let error = false;
 
-  console.log(req.files)
-
   for(let i = 0; i < req.files.length; i++) {
     let xml_string = fs.readFileSync(req.files[i].path, 'utf8');
     let p =  lattesFactory.importLattes(xml_string);

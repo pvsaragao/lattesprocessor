@@ -13,15 +13,24 @@ export class ImportLattesComponent implements OnInit {
   // IMPORTANT: Only server will create pesquisador when uploading lattes
 
   // variable to alert if an error occoured during the processing of a lattes file
-  errorLattes: boolean = false;
+  statusLattes: string = '';
+  pesquisadores: Pesquisador[];
+
 
   constructor(private pesquisadorService: PesquisadorService) { }
 
   uploadLattes(files: FileList): void {
     this.pesquisadorService.uploadLattes(files).subscribe(
       (status) => {
-        if (!status) {
-          this.errorLattes = true;
+        if (status === true) {
+          this.statusLattes = 'sucesso';
+          this.pesquisadorService.getPesquisadores()
+          .subscribe(
+            ps => { this.pesquisadores = ps; },
+            msg => { alert(msg.message); }
+          );
+        } else {
+          this.statusLattes = 'erro'
         }
       },
 
@@ -34,15 +43,15 @@ export class ImportLattesComponent implements OnInit {
   }
 
   onMove(): void {
-    this.errorLattes = false;
+    this.statusLattes = '';
   }
 
   ngOnInit(): void {
-    // this.pesquisadorService.getPesquisadores()
-    //   .subscribe(
-    //     ps => { this.pesquisadores = ps; },
-    //     msg => { alert(msg.message); }
-    //   );
+    this.pesquisadorService.getPesquisadores()
+      .subscribe(
+        ps => { this.pesquisadores = ps; },
+        msg => { alert(msg.message); }
+      );
   }
 
 }
