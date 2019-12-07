@@ -12,6 +12,20 @@ export class LattesFactory {
     this.cadastroPesq = c;
   }
 
+  getEvent(e: any): Publicacao {
+    let publiName = e['DADOS-BASICOS-DO-TRABALHO'][0].ATTR['TITULO-DO-TRABALHO'];
+    let publiPeriodic = e['DETALHAMENTO-DO-TRABALHO'][0].ATTR['NOME-DO-EVENTO'];
+    let publi = new Publicacao(publiName, publiPeriodic);
+    return publi;
+  }
+
+  getArticle(a: any): Publicacao {
+    let publiName = a['DADOS-BASICOS-DO-ARTIGO'][0].ATTR['TITULO-DO-ARTIGO'];
+    let publiPeriodic = a['DETALHAMENTO-DO-ARTIGO'][0].ATTR['TITULO-DO-PERIODICO-OU-REVISTA'];
+    let publi = new Publicacao(publiName, publiPeriodic);
+    return publi;
+  }
+
   // Read publicacoes from a xml of a lattes
   importLattes(xml_string: string): Pesquisador {
     let resp = null;
@@ -35,17 +49,11 @@ export class LattesFactory {
   
           // Create publicacoes by the xml and add them to the pesquisador
           events.forEach((e: any) => {
-            let publiName = e['DADOS-BASICOS-DO-TRABALHO'][0].ATTR['TITULO-DO-TRABALHO'];
-            let publiPeriodic = e['DETALHAMENTO-DO-TRABALHO'][0].ATTR['NOME-DO-EVENTO'];
-            let publi = new Publicacao(publiName, publiPeriodic);
-            tempPesquisador.addPublicacao(publi);
+            tempPesquisador.addPublicacao(this.getEvent(e));
           });
   
           articles.forEach((a: any) => {
-            let publiName = a['DADOS-BASICOS-DO-ARTIGO'][0].ATTR['TITULO-DO-ARTIGO'];
-            let publiPeriodic = a['DETALHAMENTO-DO-ARTIGO'][0].ATTR['TITULO-DO-PERIODICO-OU-REVISTA'];
-            let publi = new Publicacao(publiName, publiPeriodic);
-            tempPesquisador.addPublicacao(publi);
+            tempPesquisador.addPublicacao(this.getArticle(a));
           });
   
           resp = this.cadastroPesq.addPesquisador(tempPesquisador);
