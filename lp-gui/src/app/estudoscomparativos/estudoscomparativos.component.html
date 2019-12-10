@@ -24,11 +24,11 @@
             <input [(ngModel)] = "pesos[4]" type="text" name="b3" placeholder="B3" size="2" class="inputpeso" id="4">
             <input [(ngModel)] = "pesos[5]" type="text" name="b4" placeholder="B4" size="2" class="inputpeso" id="5">
             <input [(ngModel)] = "pesos[6]" type="text" name="b5" placeholder="B5" size="2" class="inputpeso" id="6">
-            <input [(ngModel)] = "pesos[7]" type="text" name="c" placeholder="C" size="2" class="inputpeso" id="7">
+            <input [(ngModel)] = "pesos[7]" type="text" name="c"  placeholder="C"  size="2" class="inputpeso" id="7">
     </div>
     <button (click)="gerarEstudo()">Gerar Ranking</button>
     <table>
-        <tr *ngIf="pesquisadores.length > 0">
+        <tr *ngIf="pesquisadores.length() > 0">
             <th>Posição</th>
             <th>Nome</th>
             <th>Pontuação</th>

@@ -12,9 +12,15 @@ import { PesquisadorService } from '../pesquisador/pesquisador.service';
 
 export class estudoscomparativosComponent {
 
+<<<<<<< HEAD
     tabela: Pesquisador[] = [];
     xlscarregado: boolean = false;
     pesos: any[] = [1, 1, 1, 1, 1, 1, 1, 1];
+=======
+    pesquisadores: Pesquisador[] =  [];
+    xlscarregado: boolean = true;
+    pesos: any[] = [1,1,1,1,1,1,1,1];
+>>>>>>> 818cde3fcd8efaef269296e1e83ae34d613dfe90
 
     constructor(private ecService: EstudosComparativosService, private pqService: PesquisadorService) { }
 
@@ -67,8 +73,14 @@ export class estudoscomparativosComponent {
         }
     }
 
+<<<<<<< HEAD
     setPadrao(): void {
         this.pesos = [1, 1, 1, 1, 1, 1, 1];
     }
+=======
+     setPadrao(): void{
+        this.pesos = [1,1,1,1,1,1,1,1];
+     }
+>>>>>>> 818cde3fcd8efaef269296e1e83ae34d613dfe90
 }
 
