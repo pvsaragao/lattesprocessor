@@ -27,6 +27,6 @@ export let config: Config = {
         compiler: "ts:ts-node/register",
         strict: true,
         format: ['pretty'],
-        require: ['../../stepsdefinitions/*.ts'],
+        require: ['../../stepdefinitions/*.ts'],
     }
 };
