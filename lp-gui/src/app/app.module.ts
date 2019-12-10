@@ -6,42 +6,43 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatIconModule } from '@angular/material';
+
+import { NavbarComponent } from './navbar/navbar.component';
+import { PesquisadorService } from './pesquisador/pesquisador.service';
+import { ImportLattesComponent } from './pesquisador/importLattes.component';
 
 import { QualisComponent } from './qualis/qualis.component'
 import { QualisService } from './qualis/qualis.service';
 // add project imports
 
 @NgModule({
-  
   declarations: [
     AppComponent,
-    QualisComponent
-    //,
-    //MetasComponent,
-    //AlunosComponent
+    QualisComponent,
+    NavbarComponent,
+    ImportLattesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule, 
+    HttpClientModule,
+    MatButtonModule,
+    MatIconModule,
     RouterModule.forRoot([
-      /*{
-        path: 'metas',
-        component: MetasComponent
-      },
       {
-        path: 'alunos',
-        component: AlunosComponent
-      } */
+        path: 'pesquisadores',
+        component: ImportLattesComponent
+      },
       {
         path: 'qualis',
         component: QualisComponent
       }
-    ])
+    ]), BrowserAnimationsModule
   ],
-  providers: [QualisService],
+  providers: [QualisService, PesquisadorService],
   bootstrap: [AppComponent]
-
 })
 export class AppModule { }
