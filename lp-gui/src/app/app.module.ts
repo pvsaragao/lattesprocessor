@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 
+import { estudoscomparativosComponent } from './estudoscomparativos/estudoscomparativos.component';
+import { EstudosComparativosService } from './estudoscomparativos/estudoscomparativos.service';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { PesquisadorService } from './pesquisador/pesquisador.service';
 import { ImportLattesComponent } from './pesquisador/importLattes.component';
@@ -22,7 +25,8 @@ import { QualisService } from './qualis/qualis.service';
     AppComponent,
     QualisComponent,
     NavbarComponent,
-    ImportLattesComponent
+    ImportLattesComponent,
+    estudoscomparativosComponent
   ],
   imports: [
     BrowserModule,
@@ -39,10 +43,14 @@ import { QualisService } from './qualis/qualis.service';
       {
         path: 'qualis',
         component: QualisComponent
+      },
+      {
+        path: 'estudoscomparativos',
+        component: estudoscomparativosComponent
       }
     ]), BrowserAnimationsModule
   ],
-  providers: [QualisService, PesquisadorService],
+  providers: [QualisService, PesquisadorService, EstudosComparativosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
