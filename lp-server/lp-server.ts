@@ -10,7 +10,6 @@ import { QualisFactory } from './qualisfactory';
 import { Qualis } from '../common/qualis';
 import { CadastroDePesquisadores } from './cadastrodepesquisadores';
 import { LattesFactory } from './lattesFactory';
-import { Pesquisador } from '../common/pesquisador';
 
 // add imports here
 
