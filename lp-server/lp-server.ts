@@ -96,36 +96,22 @@ lpserver.get('/pesquisadores/', (req: express.Request, res: express.Response) =>
   res.send(JSON.stringify(cadatroPesq.getPesquisadores()));
 });
 
-lpserver.get('/estudos-comparativos', (req: express.Request, res: express.Response) => {
+lpserver.get('/estudos-comparativos/', (req: express.Request, res: express.Response) => {
   let pesquisadores: Pesquisador[] = cadatroPesq.getPesquisadores();
-  //let pesquisadores: any = [{"nome":"Paulo Henrique Monteiro Borba","orgao":"","publicacoes":[{"titulo":"States as Specifications","periodico":"I Simp�sio Brasileiro de Linguagens de Programa��o (SBLP 1996)"},{"titulo":"An Operational Semantics for FOOPS","periodico":"Information Systems Correctness And Reusability (ISCORE 1994)"}]}, {"nome":"Eidson Jaco","orgao":"","publicacoes":[{"titulo":"States as Specifications","periodico":"I Simp�sio Brasileiro de Linguagens de Programa��o (SBLP 1996)"},{"titulo":"An Operational Semantics for FOOPS","periodico":"Information Systems Correctness And Reusability (ISCORE 1994)"}]}];
-  let pesos: number[] = <number[]> req.body;
-  let ranking: any = [];
 
-  if(typeof pesos[0] != "number"||typeof pesos[1] != "number"||typeof pesos[2] != "number" || typeof pesos[3] != "number"|| typeof pesos[4] != "number"|| typeof pesos[5] != "number"|| typeof pesos[6] != "number"|| typeof pesos[7] != "number"){
-    res.send("Pesos inválidos");
-  }
+  let queryPartial = req.query.pesos.split(',');
+  queryPartial.forEach((element:string, i:any) => {
+    queryPartial[i] = parseInt(element);
+  });
+
+  let pesos: number[] = queryPartial;
+  let ranking: any = [];
 
   pesquisadores.forEach((pesq: any) => {
     let sumPont = 0;
     pesq.publicacoes.forEach((publi: any) => {
-      let currentPont = 0
-      let nota = qualisService.getAvaliacao(publi.periodico)
-      // let nota;
-      // // inicio codigo imbecil para teste
-      //   if (publi.periodico == "I Simp�sio Brasileiro de Linguagens de Programa��o (SBLP 1996)"){
-      //     nota = 'A2'
-      //   }
-      //   else if (publi.periodico == "Information Systems Correctness And Reusability (ISCORE 1994)"){
-      //     nota = 'A1'
-      //   }
-      //   else if (publi.periodico == "I Simp�sio Brasileiro de Linguagens de Programa��o (SBLP 1996)"){
-      //     nota = 'C'
-      //   }
-      //   else if (publi.periodico == "Information Systems Correctness And Reusability (ISCORE 1994)"){
-      //     nota = 'B2'
-      //   }
-      // // fim codigo imbecil para teste
+      let currentPont = 0;
+      let nota = qualisService.getAvaliacao(publi.periodico);
 
       if (nota == 'A1'){
         currentPont = pesos[0];
@@ -155,7 +141,24 @@ lpserver.get('/estudos-comparativos', (req: express.Request, res: express.Respon
     })
 
   });
-  ranking.sort((a: any, b: any) => (a.pontos > b.pontos) ? 1 : (a.pontos == b.pontos) ? ((a.pesquisador > b.pesquisador) ? 1 : -1) : -1)
+
+  ranking.sort((a: any, b: any) => {
+    if(a.pontos > b.pontos) {
+      return -1;
+    } else if(b.pontos > a.pontos) {
+      return 1;
+    }
+
+    // equal pontos
+    if(a.pesquisador.name > b.pesquisador.name) {
+      return 1;
+    } else if(b.pesquisador.name > a.pesquisador.name) {
+      return -1
+    }
+
+    return 0;
+
+  })
 
   res.send(ranking)
 })
