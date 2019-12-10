@@ -11,7 +11,7 @@ import { EstudosComparativosService } from './estudoscomparativos.service'
 
 export class estudoscomparativosComponent {
 
-    tabela: Pesquisador[] =  [];
+    pesquisadores: Pesquisador[] =  [];
     xlscarregado: boolean = true;
     pesos: any[] = [1,1,1,1,1,1,1,1];
 
@@ -52,7 +52,7 @@ export class estudoscomparativosComponent {
      }
 
      setPadrao(): void{
-        this.pesos = [1,1,1,1,1,1,1];
+        this.pesos = [1,1,1,1,1,1,1,1];
      }
 }
 
