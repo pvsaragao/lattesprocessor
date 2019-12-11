@@ -99,7 +99,17 @@ lpserver.get('/pesquisadores/', (req: express.Request, res: express.Response) =>
 lpserver.get('/estudos-comparativos/', (req: express.Request, res: express.Response) => {
   let pesquisadores: Pesquisador[] = cadatroPesq.getPesquisadores();
 
-  let queryPartial = req.query.pesos.split(',');
+  let queryPartial = req.query.pesos;
+  
+  console.log(queryPartial);
+
+  if (!queryPartial){
+    res.send('[]')
+    return;
+  }
+
+  queryPartial = queryPartial.split(',');
+  
   queryPartial.forEach((element:string, i:any) => {
     queryPartial[i] = parseInt(element);
   });

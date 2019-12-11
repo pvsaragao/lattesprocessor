@@ -16,31 +16,19 @@ describe("O servidor", () => {
   afterAll(() => { server.closeServer() });
 
   it("inicialmente retorna um ranking vazio", () => {
-    return request.get(base_url + "/estudoscomparativos")
-            .then(body => 
-               expect(body).toBe("[]")
-             )
-            .catch(e => 
-               expect(e).toEqual(null)
-             );
-  });
-
-  it("realiza a comparação entre todos os pesquisadores", () => {
-    let cadastroPesq = new CadastroDePesquisadores();
-    let pesquisadores: Pesquisador[] = cadastroPesq.getPesquisadores();
-    return request(base_url + "/estudoscomparativos")
+    return request.get(base_url + "estudos-comparativos/")
             .then(body =>
-                expect(body.length).toBe(pesquisadores.length)
-              )
-            .catch(e => 
-              expect(e).toEqual(null)
+              expect(body).toBe("[]")
             )
+            .catch(e =>
+              expect(e).toEqual(null)
+             );
   });
 
   //Qualis
 
   // it("Inicialmente a tabela está vazia", () => {
-  //   return request.get(base_url + "qualis").then(body => expect(body).toBe("[]"))
+  //   return request.get(base_url + "qualis").then(body =>  expect(body).toBe("[]"))
   //                 .catch(e => expect(e).toBe(null));
   // })
 
@@ -52,7 +40,7 @@ describe("O servidor", () => {
   //   let options : any = {method: 'POST', uri: (base_url + "qualis/adicionar"), file: qualisFile};
   //   return request(options).then(body => expect(body)
   //                 .toEqual({success : "planilha cadastrada com sucesso"}))
-  //                         .catch(e => expect(e).toBe(null));
+  //                         .catch(e => exp.catch.e ect(e).toBe(null));
   // })
 
   // it("Retorna a avaliação esperada de cada periódico", () => {
