@@ -34,7 +34,7 @@ export class PesquisadorService {
   }
 
   getPesquisadores(): Observable<Pesquisador[]> {
-    return this.http.get<Pesquisador[]>(this.taURL + "/pesquisadores")
+    return this.http.get<Pesquisador[]>(this.taURL + "/pesquisadores", {headers:this.headers})
       .pipe(
         retry(2)
       );
