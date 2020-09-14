@@ -18,6 +18,7 @@ import { ImportLattesComponent } from './pesquisador/importLattes.component';
 
 import { QualisComponent } from './qualis/qualis.component'
 import { QualisService } from './qualis/qualis.service';
+import { GruposComponent } from './grupos/grupos.component';
 // add project imports
 
 @NgModule({
@@ -26,7 +27,8 @@ import { QualisService } from './qualis/qualis.service';
     QualisComponent,
     NavbarComponent,
     ImportLattesComponent,
-    estudoscomparativosComponent
+    estudoscomparativosComponent,
+    GruposComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,10 @@ import { QualisService } from './qualis/qualis.service';
       {
         path: 'estudoscomparativos',
         component: estudoscomparativosComponent
+      },
+      {
+        path: 'grupos',
+        component: GruposComponent
       }
     ]), BrowserAnimationsModule
   ],
