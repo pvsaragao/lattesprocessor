@@ -18,3 +18,11 @@ Scenario: Upload do arquivo XML de um pesquisador já cadastrado
     And escolho o arquivo “paulo-borba.xml”
     Then a mensagem de erro “Pesquisador já cadastrado!” é exibida
     And o pesquisador “Paulo Henrique Monteiro Borba” não é cadastrado novamente no sistema
+
+Scenario: Upload de um arquivo em formato inválido
+    Given que estou na página “Pesquisadores”
+    And o pesquisador “Paulo Henrique Monteiro Borba” não está na lista de pesquisadores
+    When seleciono a opção de “Upload”
+    And escolho o arquivo “paulo-borba-error.xml”
+    Then a mensagem de erro “Arquivo em formato inválido!” é exibida
+    And o pesquisador “Paulo Henrique Monteiro Borba” não é cadastrado no sistema
