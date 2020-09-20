@@ -26,3 +26,11 @@ Scenario: Upload de um arquivo em formato inválido
     And escolho o arquivo “paulo-borba-error.xml”
     Then a mensagem de erro “Arquivo em formato inválido!” é exibida
     And o pesquisador “Paulo Henrique Monteiro Borba” não é cadastrado no sistema
+
+Scenario: Atualizar informações de um pesquisador cadastrado no sistema
+    Given que estou na página “Pesquisadores”
+    And o pesquisador “Paulo Henrique Monteiro Borba” está na lista de pesquisadores com as publicações “Privacy and security constraints for code contributions” e “Partially safe evolution of software product lines”
+    When seleciono a opção de “Atualizar currículo”
+    And escolho o arquivo “paulo-borba-atualizado.xml” com as novas informações
+    Then a mensagem de confirmação “Currículo atualizado com sucesso!” é exibida
+    And o pesquisador “Paulo Henrique Monteiro Borba” está na lista de pesquisadores com as publicações “Understanding predictive factors for merge conflicts”, “Privacy and security constraints for code contributions” e “Partially safe evolution of software product lines”
