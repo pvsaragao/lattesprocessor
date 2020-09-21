@@ -46,7 +46,7 @@ export class QualisFactory {
     }
 
     assertType (type: string): boolean {
-      return (this.typesAvailable.includes(type)) ? true : false;
+      return (this.typesAvailable.includes(type.toLowerCase())) ? true : false;
     }
 
     assertYear (year: string): boolean {
