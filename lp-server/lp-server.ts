@@ -26,16 +26,17 @@ lpserver.use(bodyParser.json());
 
 lpserver.post('/qualis/adicionar', upload.single('qualisFile'), (req: express.Request, res: express.Response) => {
     let fileEnconding : string = fs.readFileSync(req.file.path, 'binary');
-    let typeQualis: string = req.body.typeQualis;
-    let year: number = req.body.year;
+    let qualisType: string = req.body.qualisType;
+    let qualisYear: number = Number(req.body.qualisYear);
 
-    qualisFactory.readXls(typeQualis,year,fileEnconding);
+    qualisFactory.readXls(qualisType,qualisYear,fileEnconding);
     if (qualisFactory.fileContent) {
       qualisFactory.makeQualis();
+      qualisFactory.fileContent = null
       res.send({"success" : "planilha cadastrada com sucesso"});
     } else {
       res.send({"failure" : "planilha com formatacao invalida"});
-    } 
+    }
 })
 
 lpserver.delete('/qualis/apagar/:type/:year', (req: express.Request, res: express.Response) => {
@@ -49,7 +50,7 @@ lpserver.delete('/qualis/apagar/:type/:year', (req: express.Request, res: expres
 })
 
 lpserver.get('/qualis', (_, res: express.Response) => {
-  res.status(200).json({ qualis: qualisFactory.get() })
+  res.status(200).json(qualisFactory.get())
 })
 
 var server = lpserver.listen(3000, function () {
