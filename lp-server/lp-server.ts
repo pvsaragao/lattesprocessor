@@ -32,16 +32,15 @@ lpserver.post('/qualis/adicionar', upload.single('qualisFile'), (req: express.Re
     qualisFactory.readXls(qualisType,qualisYear,fileEnconding);
     if (qualisFactory.fileContent) {
       qualisFactory.makeQualis();
-      qualisFactory.fileContent = null
       res.send({"success" : "planilha cadastrada com sucesso"});
     } else {
       res.send({"failure" : "planilha com formatacao invalida"});
     }
 })
 
-lpserver.delete('/qualis/apagar/:type/:year', (req: express.Request, res: express.Response) => {
+lpserver.delete('/qualis/apagar/', (req: express.Request, res: express.Response) => {
   if (typeof Number(req.params.year) === "number") {
-    qualisFactory.delete(Number(req.params.year), <string>req.params.type)
+    qualisFactory.clean( <string>req.query.type, Number(req.query.year))
     res.send({"success" : "qualis deletados com sucesso!"});
   } else {
     res.send({"failure" : "ano passado nao e valido"});
