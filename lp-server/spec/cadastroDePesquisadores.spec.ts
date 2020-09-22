@@ -18,7 +18,7 @@ describe("A classe CadastroDePesquisadores", () => {
 
         cadastro.addPesquisador(pesq);
 
-        expect(cadastro.getPesquisadores.length).toBe(0);
+        expect(cadastro.getPesquisadores().length).toBe(1);
     })
 
     it("checagem correta de um pesquisador já cadastrado", () => {
