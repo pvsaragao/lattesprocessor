@@ -1,0 +1,5 @@
+Feature: gerar relatórios
+          As a pesquisador
+          I want to gerar relatórios baseados em pesquisadores e/ou um intervalo de tempo determinado.
+ 		  So that eu posso analisar as publicações.
+
