@@ -1,4 +1,4 @@
-import { Qualis } from 'Qualis';
+import { Qualis } from './Qualis';
 import { Pesquisador } from './pesquisador';
 
 function getNota(nota: string): number {
@@ -8,6 +8,8 @@ function getNota(nota: string): number {
         return ( 9 - parseInt(nota.charAt(1)))
     }else if(nota.charAt(0) == 'b'){
         return ( 5 - parseInt(nota.charAt(1)))
+    }else{
+        return 0;
     }
     
 }
@@ -70,10 +72,11 @@ export class Relatorio {
          for(let qual of qualis){
              if(qual.ano >= AnoIni && qual.ano <= AnoFin){
                 let pesq = this.pesquisadores.find( (atual) => {
-                    return atual.publicacoes.findIndex( (publiatual) => {publiatual.issn == qual.issn} ) != -1;
-                } ) 
-                let pesqIndex = this.pesquisadores.findIndex( (atual) => { atual.nome == pesq.nome});
                 
+                    return atual.publicacoes.findIndex( (publiatual) => { return publiatual.issn == qual.issn} ) != -1;
+                } )
+                if(pesq){
+                let pesqIndex = this.pesquisadores.findIndex( (atual) => {return atual.nome == pesq.nome});
                 let tempNota = getNota(qual.avaliacao);
                 medias[pesqIndex] += tempNota;
                 if(tempNota == 8){
@@ -81,8 +84,10 @@ export class Relatorio {
                 }
                 artigos[pesqIndex]++;
 
-             }
+               }
+            }
          }
+
          for(let i = 0; i < medias.length; i++){
              medias[i] /= artigos[i];
          }
@@ -102,20 +107,19 @@ export class Relatorio {
         for (let i = 0; i < notasmaximas.length; i++) {
             if (notasmaximas[i] == maiormaxima) this.maisMaximas.push(this.pesquisadores[i])
         }
-        for (let i = 0; i < maisartigos.length; i++) {
+        for (let i = 0; i < artigos.length; i++) {
             if (artigos[i] == maisartigos) this.maisPublicacoes.push(this.pesquisadores[i])
         }
      
 
-        // Build helper object: {Canada: 2, Macau: 5, Sweden: 3, France: 1, China: 4}
-        var mediasMap = {};
+        /*var mediasMap = {};
         medias.forEach(function (el, i) {
             mediasMap[this.classificacao[i].nome] = el;
         });
 
         this.classificacao.sort(function (a, b) {
             return mediasMap[b.nome] - mediasMap[a.nome];
-        });
+        });*/
 
         
 

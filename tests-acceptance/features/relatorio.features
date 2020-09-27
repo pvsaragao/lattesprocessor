@@ -3,3 +3,9 @@ Feature: gerar relatórios
           I want to gerar relatórios baseados em pesquisadores e/ou um intervalo de tempo determinado.
  		  So that eu posso analisar as publicações.
 
+Scenario: Relatório geral gerado com sucesso.
+         Given que estou ná página “Relatórios”
+         When eu clico no botão “Gerar relatório”
+         Then vai ser gerado um relatório informando o pesquisador com mais artigos, o pesquisador com maior média entre os artigos,  o pesquisador com mais notas máximas, e uma lista com todos os pesquisadores e suas respectivas notas.	
+         And a mensagem “Relatório gerado com sucesso”.
+         And a opção para visualizar o relatório é exibida.
