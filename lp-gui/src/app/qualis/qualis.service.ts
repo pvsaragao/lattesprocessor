@@ -32,8 +32,8 @@ export class QualisService {
             );
   }
 
-  clearQualis(): Observable<boolean> {
-    return this.http.delete<any>(this.taURL + "/qualis/apagar")
+  clearQualis(type?: string, year?: string): Observable<boolean> {
+    return this.http.delete<any>(this.taURL + "/qualis/apagar?type=" + type + "&year=" + year)
               .pipe(
                 retry(2),
                 map(res => {if (res.success) {return true;} else {return false}})

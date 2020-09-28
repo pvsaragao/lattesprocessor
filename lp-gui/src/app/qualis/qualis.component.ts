@@ -41,7 +41,6 @@ export class QualisComponent implements OnInit {
             this.handleMessage(status);
         },
         msg => {
-          console.log(msg)
           this.handleMessage(msg);
         }
       );
@@ -58,9 +57,14 @@ export class QualisComponent implements OnInit {
   } 
 
   filter() {
-    console.log(this.yearQualisFilter, this.typeQualisFilter)
     this.qualis = this.qualisTable.filter(q => (q.ano === (Number(this.yearQualisFilter) || q.ano))  && (q.tipo === (this.typeQualisFilter || q.tipo)) )
-    console.log(this.qualis)
+  }
+
+  remove() {
+    this.qualisService.clearQualis(this.typeQualisFilter, this.yearQualisFilter).subscribe(
+    data => {
+      this.getTable()
+    })
   }
 
   getTable() {  
@@ -72,6 +76,8 @@ export class QualisComponent implements OnInit {
           this.yearsFilter = this.yearsFilter.filter((q, i) => this.yearsFilter.indexOf(q) === i);
           this.typesFilter = this.qualisTable.map(q => q.tipo);
           this.typesFilter = this.typesFilter.filter((q, i) => this.typesFilter.indexOf(q) === i);
+          this.yearQualisFilter = ""
+          this.typeQualisFilter = ""
         },
         msg => {
             alert(msg.message);

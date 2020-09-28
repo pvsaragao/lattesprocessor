@@ -34,9 +34,12 @@
         </select>
         Tipos:
         <select class="select-filter" id="filterType" [(ngModel)]="typeQualisFilter" (change)="filter()">
-          <option value=""> Todos </option>
+          <option value="" selected> Todos </option>
           <option *ngFor="let t of typesFilter" value="{{t}}"> {{ t }} </option>
         </select>
+        <span id="clean-button" (click)="remove()">
+          excluir
+        </span>
       </span> 
       <tr>
         <th>Periódico</th>
