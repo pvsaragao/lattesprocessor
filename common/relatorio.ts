@@ -19,12 +19,13 @@ function getIndexes(element: number, elements: number[]) {
 
 export class Relatorio {
     pesquisadores: Pesquisador[];
-    dataInicial: Date;
-    dataFinal: Date;
+    dataInicial: number;
+    dataFinal: number;
     classificacao: Pesquisador[];
     maisPublicacoes: Pesquisador[];
     melhorMedia: Pesquisador[];
     maisMaximas: Pesquisador[];
+ 
 
 
     constructor() {
@@ -39,6 +40,7 @@ export class Relatorio {
         this.maisPublicacoes = [];
         this.melhorMedia = [];
         this.maisMaximas = [];
+   
     }
 
     clone(): Relatorio {
@@ -57,7 +59,14 @@ export class Relatorio {
         this.maisMaximas = from.maisMaximas.slice(0);
         //this.copyClassAndMediaFrom(from.classificacao, from.medias);
     }
+  
+
+
     generate(qualis: Qualis[]): void {
+        this.classificacao = [];
+        this.maisPublicacoes = [];
+        this.melhorMedia = [];
+        this.maisMaximas = [];
         this.classificacao = this.pesquisadores.slice(0);
         let AnoFin;
         let AnoIni;
@@ -67,8 +76,8 @@ export class Relatorio {
         artigos.fill(0);
         notasmaximas.fill(0);
         medias.fill(0);
-        if(this.dataFinal == null) AnoFin = Infinity; else AnoFin = this.dataFinal.getFullYear;
-        if(this.dataInicial == null) AnoIni = -Infinity; else AnoIni = this.dataInicial.getFullYear;
+        if(this.dataFinal == null) AnoFin = Infinity; else AnoFin = this.dataFinal;
+        if(this.dataInicial == null) AnoIni = -Infinity; else AnoIni = this.dataInicial;
          for(let qual of qualis){
              if(qual.ano >= AnoIni && qual.ano <= AnoFin){
                 let pesq = this.pesquisadores.find( (atual) => {
@@ -111,20 +120,14 @@ export class Relatorio {
             if (artigos[i] == maisartigos) this.maisPublicacoes.push(this.pesquisadores[i])
         }
      
+     
 
-        /*var mediasMap = {};
-        medias.forEach(function (el, i) {
-            mediasMap[this.classificacao[i].nome] = el;
-        });
-
-        this.classificacao.sort(function (a, b) {
-            return mediasMap[b.nome] - mediasMap[a.nome];
-        });*/
+      
 
         
 
-
     }
+    
 
     
 
