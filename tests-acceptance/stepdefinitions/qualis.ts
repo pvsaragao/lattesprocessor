@@ -100,6 +100,10 @@ defineSupportCode(function ({Given, When, Then, After, setDefaultTimeout}) {
         await element(by.buttonText(option)).click();
     })
 
+    When(/^clico no botao de excluir$/, async () => {
+      await $('#clean-button').click();
+    })
+
     Then(/^Eu vejo nenhum periódico cadastrado no sistema$/, async () => {
         let qualisTable : ElementArrayFinder = element.all(by.name('qualisTable'));
         await qualisTable.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(0));
