@@ -39,7 +39,7 @@ lpserver.post('/qualis/adicionar', upload.single('qualisFile'), (req: express.Re
 })
 
 lpserver.delete('/qualis/apagar/', (req: express.Request, res: express.Response) => {
-  if (typeof Number(req.params.year) === "number") {
+  if (typeof Number(req.query.year) === "number") {
     qualisFactory.clean( <string>req.query.type, Number(req.query.year))
     res.send({"success" : "qualis deletados com sucesso!"});
   } else {

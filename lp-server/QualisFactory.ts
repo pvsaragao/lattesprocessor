@@ -40,7 +40,6 @@ export class QualisFactory {
     }
 
     assertColumnsEvents(range : XLSX.Range) : boolean {
-      console.log(range)
       let refSigla = XLSX.utils.encode_cell({c:0, r:0});
       let refTitulo = XLSX.utils.encode_cell({c:1, r:0});
       let refEstrato = XLSX.utils.encode_cell({c:8, r:0});
