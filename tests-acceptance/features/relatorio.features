@@ -7,5 +7,18 @@ Scenario: Relatório geral gerado com sucesso.
          Given que estou ná página “Relatórios”
          When eu clico no botão “Gerar relatório”
          Then vai ser gerado um relatório informando o pesquisador com mais artigos, o pesquisador com maior média entre os artigos,  o pesquisador com mais notas máximas, e uma lista com todos os pesquisadores e suas respectivas notas.	
-         And a mensagem “Relatório gerado com sucesso”.
+         And a mensagem “Relatório gerado com sucesso” é exibida.
          And a opção para visualizar o relatório é exibida.
+Scenario: Deletar um relatório com sucesso.
+        Given que estou ná página "Relatórios"
+        And consigo ver a lista de relatórios gerados.
+        When eu clico no botão "Deletar" no relatório de ID "30"
+        And confirmo a exclusão aceitando a mensagem de confirmação
+        Then o relatório de ID "30" não está mais na lista
+Scenario: Atualizar um relatório
+        Given que estou ná página "Relatórios"
+        And consigo ver a lista de relatórios gerados.
+        When eu clico no botão "Atualizar" no relatório de ID "31"
+        Then o relatório de ID "31" vai ser atualizado com infomações atualizadas de o pesquisador com mais artigos, o pesquisador com maior média entre os artigos,  o pesquisador com mais notas máximas, e uma lista com todos os pesquisadores e suas respectivas notas.	
+        And a mensagem “Relatório atualizado com sucesso” é exibida.
+        And a opção para visualizar o relatório é exibida.
