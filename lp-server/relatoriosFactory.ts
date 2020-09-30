@@ -27,7 +27,6 @@ export class RelatorioFactory {
             rela.id = this.counter;
             this.counter++;
             this.relatorios.push(rela);
-          
             return rela;
         }
        

@@ -57,6 +57,7 @@ export class Relatorio {
         this.pesquisadores = from.pesquisadores.slice(0);
         this.dataInicial = from.dataInicial;
         this.dataFinal = from.dataFinal;
+        this.id = from.id;
         this.classificacao = from.classificacao.slice(0);
         this.maisPublicacoes = from.maisPublicacoes.slice(0);
         this.melhorMedia = from.melhorMedia.slice(0);

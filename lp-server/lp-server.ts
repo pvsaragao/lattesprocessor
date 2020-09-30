@@ -17,6 +17,7 @@ var lpserver = express();
 var relatorios: RelatorioFactory = new RelatorioFactory();
 var qualisFactory: QualisFactory = new QualisFactory();
 var pesquisadores: Pesquisador[] = [];
+gerarDados();
 
 // add services here
 var allowCrossDomain = function(req: any, res: any, next: any) {
@@ -36,10 +37,11 @@ lpserver.get('/relatorios', function (req: express.Request, res: express.Respons
 })
 
 lpserver.post('/relatorios', function (req: express.Request, res: express.Response) {
-  var relatorio: Relatorio = <Relatorio>req.body; //verificar se � mesmo Aluno!
+
+  var relatorio: Relatorio = <Relatorio>req.body; 
   var result = relatorios.addRelatorio(relatorio, qualisFactory.getQualis());
   if (result) {
-    res.send({ "success": JSON.stringify(result) });
+    res.send(result);
   } else {
     relatorios.findRelatorio(relatorio).generate(qualisFactory.qualis)
     res.send({ "failure": "O relatorio ja foi gerado." });
@@ -53,7 +55,7 @@ lpserver.put('/relatorios/:id', function (req: express.Request, res: express.Res
      relatorio = relatorios.updateRelatorio(relaId, qualisFactory.getQualis());
   }
   if(relatorio){
-    res.send({ "success": JSON.stringify(relatorio)})
+    res.send(relatorio)
   }else {
     res.send({ "failure": "O relatorio nao pode ser deletado" });
   }
@@ -67,7 +69,8 @@ lpserver.delete('/relatorios/:id', function (req: express.Request, res: express.
   var retId = relatorios.deleteRelatorio(relaId);
   }
   if(retId >= 0){
-    res.send({ "success": "O relatorio foi deletado com sucesso" });
+    
+    res.send({ "success": "O relatorio foi deletado com sucesso." });
   } else {
     res.send({ "failure": "O relatorio nao pode ser deletado" });
   }
@@ -82,7 +85,7 @@ function closeServer(): void {
 }
 
 function gerarDados(): void{
-  var pesq1 = new Pesquisador();
+  /*var pesq1 = new Pesquisador();
   var pesq2 = new Pesquisador();
   var pesq3 = new Pesquisador();
 
@@ -139,7 +142,7 @@ function gerarDados(): void{
   pesq3p3.issn = "0009"
   pesq3p4.titulo = "Publicacao J"
   pesq3p4.periodico = "Publicacao JJJ"
-  pesq3p4.issn = "0010"
+  pesq3p4.issn = "0010"*/
   let pesq1q1 = new Qualis();
   let pesq1q2 = new Qualis();
   let pesq1q3 = new Qualis();
@@ -170,6 +173,7 @@ function gerarDados(): void{
   qualisFactory.qualis.push(pesq3q2)
   qualisFactory.qualis.push(pesq3q3)
   qualisFactory.qualis.push(pesq3q4);
+  
 
 
 

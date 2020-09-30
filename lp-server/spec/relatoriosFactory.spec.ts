@@ -120,8 +120,6 @@ describe("A classe relatorio", () => {
         let rela = gerarRelatorio("A", "B", "C","A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
         relatorios.addRelatorio(rela, qualis);
         rela = null;
-        console.log(relatorios.getRelatorios())
-        console.log(relatorios.getRelatorios().length)
         expect(relatorios.relatorios[0]).not.toBe(null)
         expect(relatorios.relatorios.length).toBe(1)
         rela = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");

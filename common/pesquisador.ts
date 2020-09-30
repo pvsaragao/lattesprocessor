@@ -19,6 +19,9 @@ export class Pesquisador {
         }
         
     }
+    getNome(): string {
+        return this.nome;
+    }
 
 
     gerarString(length: number): string {

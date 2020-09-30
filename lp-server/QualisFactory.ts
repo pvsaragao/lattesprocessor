@@ -5,7 +5,7 @@ export class QualisFactory {
     qualis: Qualis[] = new Array();
 
     constructor(){
-       
+       this.qualis = [];
     }
 
     getQualis(): Qualis[] {
