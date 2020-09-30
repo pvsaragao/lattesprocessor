@@ -4,6 +4,8 @@ import { Qualis } from '../../common/Qualis';
 import { Relatorio } from '../../common/relatorio';
 import { RelatorioFactory } from '../relatoriosFactory'
 
+
+
 function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: string, n3: string, n4: string, n5: string, n6: string, n7: string, n8: string, n9: string, n10: string,): Relatorio{
     var pesq1 = new Pesquisador();
     var pesq2 = new Pesquisador();
@@ -99,6 +101,7 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
     relatorio.pesquisadores.push(pesq2);
     relatorio.pesquisadores.push(pesq3);
     relatorio.generate(qualis);
+   
 
     return relatorio;
 }
@@ -111,6 +114,7 @@ describe("A classe relatorio", () => {
 
     it("inicializacao correta de uma nova factory", () => {
         expect(relatorios.relatorios.length).toBe(0);
+        expect(relatorios.counter).toBe(0);
     })
     it("adicionando um relatorio corretamente", () => {       
         let rela = gerarRelatorio("A", "B", "C","A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
@@ -123,59 +127,64 @@ describe("A classe relatorio", () => {
         rela = null;
         expect(relatorios.getRelatorios()[1]).not.toBe(null)
         expect(relatorios.getRelatorios().length).toBe(2)
+        expect(relatorios.relatorios[0].id).toBe(0)
     })
     it("nao adicionar relatorio duplicado", () => {
         let rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela);
+        rela.id = relatorios.addRelatorio(rela);
     
         let rela1 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1");
-        relatorios.addRelatorio(rela1);
+        rela1.id = relatorios.addRelatorio(rela1);
         
         let rela5 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela5);
+        rela5.id = relatorios.addRelatorio(rela5);
 
         let rela2 = gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela2);
+        rela2.id = relatorios.addRelatorio(rela2);
      
         let rela3 = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela3);
+        rela3.id = relatorios.addRelatorio(rela3);
     
         let rela4 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela4);
+        rela4.id = relatorios.addRelatorio(rela4);
 
     
         
         expect(relatorios.relatorios.length).toBe(3)
         expect(relatorios.relatorios).toContain(rela)
+        expect(relatorios.relatorios[0].id).toBe(0)
         expect(relatorios.relatorios).toContain(rela1)
+        expect(relatorios.relatorios[1].id).toBe(1)
         expect(relatorios.relatorios).toContain(rela2)
+        expect(relatorios.relatorios[2].id).toBe(2)
        
     })
     it("getRelatorio retornando corretamente", () => {
         let rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela);
+        rela.id = relatorios.addRelatorio(rela);
 
         let rela1 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1");
-        relatorios.addRelatorio(rela1);
+        rela1.id = relatorios.addRelatorio(rela1);
 
         let rela5 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela5);
+        rela5.id = relatorios.addRelatorio(rela5);
 
         let rela2 = gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela2);
+        rela2.id = relatorios.addRelatorio(rela2);
 
         let rela3 = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela3);
+        rela3.id = relatorios.addRelatorio(rela3);
 
         let rela4 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela4);
-
-
+        rela4.id = relatorios.addRelatorio(rela4);
 
         expect(relatorios.getRelatorios().length).toBe(3)
         expect(relatorios.getRelatorios()).toContain(rela)
+        expect(relatorios.relatorios[0].id).toBe(0)
         expect(relatorios.getRelatorios()).toContain(rela1)
+        expect(relatorios.relatorios[1].id).toBe(1)
         expect(relatorios.getRelatorios()).toContain(rela2)
+        expect(relatorios.relatorios[2].id).toBe(2)
     })
     it("findRelatorio funcionando corretamente", () => {
         let rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
@@ -187,13 +196,33 @@ describe("A classe relatorio", () => {
         let rela2 = gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1");
         relatorios.addRelatorio(rela2);
 
-        expect(relatorios.findRelatorio(gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).toBe(true);
-        expect(relatorios.findRelatorio(gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1"))).toBe(true);
-        expect(relatorios.findRelatorio(gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).toBe(true);
-        expect(relatorios.findRelatorio(gerarRelatorio("DSA", "DAA", "C", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).toBe(false);
-        expect(relatorios.findRelatorio(gerarRelatorio("ABC", "Bde", "C", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).toBe(false);
-        expect(relatorios.findRelatorio(gerarRelatorio("ABC", "B", "CC", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).toBe(false);
+        expect(relatorios.findRelatorio(gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).not.toBe(undefined);
+        expect(relatorios.findRelatorio(gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1"))).not.toBe(undefined);
+        expect(relatorios.findRelatorio(gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).not.toBe(undefined);
+        expect(relatorios.findRelatorio(gerarRelatorio("DSA", "DAA", "C", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).toBe(undefined);
+        expect(relatorios.findRelatorio(gerarRelatorio("ABC", "Bde", "C", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).toBe(undefined);
+        expect(relatorios.findRelatorio(gerarRelatorio("ABC", "B", "CC", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).toBe(undefined);
+        expect(relatorios.relatorios[0].id).toBe(0)
+        expect(relatorios.relatorios[1].id).toBe(1)
+        expect(relatorios.relatorios[2].id).toBe(2)
 
+    })
+    it("deletando relatorio corretamente", () => {
+        let rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
+        rela.id  = relatorios.addRelatorio(rela);
+
+        let rela1 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1");
+        rela1.id = relatorios.addRelatorio(rela1);
+
+        let rela2 = gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1");
+        rela2.id = relatorios.addRelatorio(rela2);
+
+        relatorios.deleteRelatorio(1);
+
+        expect(relatorios.getRelatorios().length).toBe(2);
+        expect(relatorios.getRelatorios()).toContain(rela)
+        expect(relatorios.getRelatorios()).toContain(rela2)
+        expect(relatorios.getRelatorios()).not.toContain(rela1)
     })
   
 })

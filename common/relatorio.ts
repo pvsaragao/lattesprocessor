@@ -18,6 +18,7 @@ function getIndexes(element: number, elements: number[]) {
 }
 
 export class Relatorio {
+
     pesquisadores: Pesquisador[];
     dataInicial: number;
     dataFinal: number;
@@ -25,6 +26,8 @@ export class Relatorio {
     maisPublicacoes: Pesquisador[];
     melhorMedia: Pesquisador[];
     maisMaximas: Pesquisador[];
+    id: number;
+    
  
 
 
@@ -40,6 +43,7 @@ export class Relatorio {
         this.maisPublicacoes = [];
         this.melhorMedia = [];
         this.maisMaximas = [];
+        this.id = -1;
    
     }
 
