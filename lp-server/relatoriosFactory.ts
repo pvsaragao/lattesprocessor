@@ -1,4 +1,5 @@
 import { Relatorio } from '../common/relatorio';
+import { Qualis } from '../common/Qualis'
 
 export class RelatorioFactory {
     relatorios: Relatorio[];
@@ -16,20 +17,22 @@ export class RelatorioFactory {
     getRelatorios(): Relatorio[] {
         return this.relatorios;
     }
+    
 
-    addRelatorio(p: Relatorio): number {
+    addRelatorio(p: Relatorio, qualis: Qualis[]): Relatorio {
         var rela = new Relatorio();
         rela.copyFrom(p);
+        rela.generate(qualis)
         if (!this.findRelatorio(rela)){
             rela.id = this.counter;
             this.counter++;
             this.relatorios.push(rela);
           
-            return rela.id;
+            return rela;
         }
        
 
-        return -1;
+        return null;
     }
 
     findRelatorio(r: Relatorio): Relatorio {
@@ -47,8 +50,23 @@ export class RelatorioFactory {
             return -1;
         } else{
             let relaIndex = this.relatorios.findIndex( (n) => {return n.id == id})
-            if(relaIndex >= 0)
+            if(relaIndex >= 0){
             this.relatorios.splice(relaIndex, 1);
+            return relaIndex;
+            }else{
+                return -1;
+            }
+            
+        }
+    }
+    updateRelatorio(id: number, qualis: Qualis[]): Relatorio {
+        let relaIndex = this.relatorios.findIndex((n) => { return n.id == id })
+        if(relaIndex >= 0){
+            let relatorio = this.relatorios[relaIndex];
+            relatorio.generate(qualis)
+            return relatorio;
+        }else{
+            return null;
         }
     }
 }

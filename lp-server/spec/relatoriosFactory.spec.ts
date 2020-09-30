@@ -4,7 +4,7 @@ import { Qualis } from '../../common/Qualis';
 import { Relatorio } from '../../common/relatorio';
 import { RelatorioFactory } from '../relatoriosFactory'
 
-
+var qualis: Qualis[] = [];
 
 function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: string, n3: string, n4: string, n5: string, n6: string, n7: string, n8: string, n9: string, n10: string,): Relatorio{
     var pesq1 = new Pesquisador();
@@ -64,7 +64,7 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
     pesq3p4.titulo = "Publicacao J"
     pesq3p4.periodico = "Publicacao JJJ"
     pesq3p4.issn = "0010"
-    let qualis: Qualis[] = [];
+    qualis = [];
     let pesq1q1 = new Qualis();
     let pesq1q2 = new Qualis();
     let pesq1q3 = new Qualis();
@@ -100,9 +100,9 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
     relatorio.pesquisadores.push(pesq1);
     relatorio.pesquisadores.push(pesq2);
     relatorio.pesquisadores.push(pesq3);
-    relatorio.generate(qualis);
    
-
+   
+    
     return relatorio;
 }
 
@@ -118,35 +118,38 @@ describe("A classe relatorio", () => {
     })
     it("adicionando um relatorio corretamente", () => {       
         let rela = gerarRelatorio("A", "B", "C","A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela);
+        relatorios.addRelatorio(rela, qualis);
         rela = null;
-        expect(relatorios.getRelatorios()[0]).not.toBe(null)
-        expect(relatorios.addRelatorio.length).toBe(1)
+        console.log(relatorios.getRelatorios())
+        console.log(relatorios.getRelatorios().length)
+        expect(relatorios.relatorios[0]).not.toBe(null)
+        expect(relatorios.relatorios.length).toBe(1)
         rela = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela);
+        relatorios.addRelatorio(rela, qualis);
         rela = null;
-        expect(relatorios.getRelatorios()[1]).not.toBe(null)
-        expect(relatorios.getRelatorios().length).toBe(2)
+       
+        expect(relatorios.relatorios[1]).not.toBe(null)
+        expect(relatorios.relatorios.length).toBe(2)
         expect(relatorios.relatorios[0].id).toBe(0)
     })
     it("nao adicionar relatorio duplicado", () => {
         let rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        rela.id = relatorios.addRelatorio(rela);
+        rela = relatorios.addRelatorio(rela, qualis);
     
         let rela1 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1");
-        rela1.id = relatorios.addRelatorio(rela1);
+        rela1 = relatorios.addRelatorio(rela1, qualis);
         
         let rela5 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        rela5.id = relatorios.addRelatorio(rela5);
+        rela5 = relatorios.addRelatorio(rela5, qualis);
 
         let rela2 = gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1");
-        rela2.id = relatorios.addRelatorio(rela2);
+        rela2 = relatorios.addRelatorio(rela2, qualis);
      
         let rela3 = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        rela3.id = relatorios.addRelatorio(rela3);
+        rela3 = relatorios.addRelatorio(rela3,qualis);
     
         let rela4 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        rela4.id = relatorios.addRelatorio(rela4);
+        rela4 = relatorios.addRelatorio(rela4,qualis);
 
     
         
@@ -161,22 +164,22 @@ describe("A classe relatorio", () => {
     })
     it("getRelatorio retornando corretamente", () => {
         let rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        rela.id = relatorios.addRelatorio(rela);
+        rela = relatorios.addRelatorio(rela, qualis);
 
         let rela1 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1");
-        rela1.id = relatorios.addRelatorio(rela1);
+        rela1 = relatorios.addRelatorio(rela1, qualis);
 
         let rela5 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        rela5.id = relatorios.addRelatorio(rela5);
+        rela5 = relatorios.addRelatorio(rela5, qualis);
 
         let rela2 = gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1");
-        rela2.id = relatorios.addRelatorio(rela2);
+        rela2 = relatorios.addRelatorio(rela2, qualis);
 
         let rela3 = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        rela3.id = relatorios.addRelatorio(rela3);
+        rela3 = relatorios.addRelatorio(rela3, qualis);
 
         let rela4 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        rela4.id = relatorios.addRelatorio(rela4);
+        rela4 = relatorios.addRelatorio(rela4, qualis);
 
         expect(relatorios.getRelatorios().length).toBe(3)
         expect(relatorios.getRelatorios()).toContain(rela)
@@ -188,13 +191,13 @@ describe("A classe relatorio", () => {
     })
     it("findRelatorio funcionando corretamente", () => {
         let rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela);
+        relatorios.addRelatorio(rela, qualis);
 
         let rela1 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1");
-        relatorios.addRelatorio(rela1);
+        relatorios.addRelatorio(rela1, qualis);
 
         let rela2 = gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1");
-        relatorios.addRelatorio(rela2);
+        relatorios.addRelatorio(rela2, qualis);
 
         expect(relatorios.findRelatorio(gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1"))).not.toBe(undefined);
         expect(relatorios.findRelatorio(gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1"))).not.toBe(undefined);
@@ -209,13 +212,13 @@ describe("A classe relatorio", () => {
     })
     it("deletando relatorio corretamente", () => {
         let rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
-        rela.id  = relatorios.addRelatorio(rela);
+        rela   = relatorios.addRelatorio(rela, qualis);
 
         let rela1 = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A2", "A1");
-        rela1.id = relatorios.addRelatorio(rela1);
+        rela1  = relatorios.addRelatorio(rela1, qualis);
 
         let rela2 = gerarRelatorio("E", "F", "G", "A1", "A1", "A1", "A2", "A1", "A1", "A3", "A1", "A1", "A1");
-        rela2.id = relatorios.addRelatorio(rela2);
+        rela2 = relatorios.addRelatorio(rela2, qualis);
 
         relatorios.deleteRelatorio(1);
 
