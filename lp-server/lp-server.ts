@@ -37,10 +37,11 @@ lpserver.get('/relatorios', function (req: express.Request, res: express.Respons
 })
 
 lpserver.post('/relatorios', function (req: express.Request, res: express.Response) {
-
+  console.log(req.body)
   var relatorio: Relatorio = <Relatorio>req.body; 
   var result = relatorios.addRelatorio(relatorio, qualisFactory.getQualis());
   if (result) {
+    console.log(result);
     res.send(result);
   } else {
     relatorios.findRelatorio(relatorio).generate(qualisFactory.qualis)
@@ -57,7 +58,7 @@ lpserver.put('/relatorios/:id', function (req: express.Request, res: express.Res
   if(relatorio){
     res.send(relatorio)
   }else {
-    res.send({ "failure": "O relatorio nao pode ser deletado" });
+    res.send({ "failure": "O relatorio nao pode ser atualizado" });
   }
 
 
@@ -152,7 +153,7 @@ function gerarDados(): void{
   let pesq3q1 = new Qualis();
   let pesq3q2 = new Qualis();
   let pesq3q3 = new Qualis();
-  let pesq3q4 = new Qualis();
+  //let pesq3q4 = new Qualis();
   pesq1q1.montar("Publicacao A", 0, "Estudo", "0001", "A1")
   pesq1q2.montar("Publicacao B", 0, "Estudo", "0002", "A1")
   pesq1q3.montar("Publicacao C", 0, "Estudo", "0003", "B4")
@@ -162,7 +163,7 @@ function gerarDados(): void{
   pesq3q1.montar("Publicacao G", 0, "Estudo", "0007", "A3")
   pesq3q2.montar("Publicacao H", 0, "Estudo", "0008", "A2")
   pesq3q3.montar("Publicacao I", 0, "Estudo", "0009", "A2")
-  pesq3q4.montar("Publicacao J", 0, "Estudo", "0010", "A2")
+  //pesq3q4.montar("Publicacao J", 0, "Estudo", "0010", "A2")
   qualisFactory.qualis.push(pesq1q1)
   qualisFactory.qualis.push(pesq1q2)
   qualisFactory.qualis.push(pesq1q3)
@@ -172,7 +173,7 @@ function gerarDados(): void{
   qualisFactory.qualis.push(pesq3q1)
   qualisFactory.qualis.push(pesq3q2)
   qualisFactory.qualis.push(pesq3q3)
-  qualisFactory.qualis.push(pesq3q4);
+  //qualisFactory.qualis.push(pesq3q4);
   
 
 
