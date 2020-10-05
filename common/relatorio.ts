@@ -26,6 +26,8 @@ export class Relatorio {
     maisPublicacoes: Pesquisador[];
     melhorMedia: Pesquisador[];
     maisMaximas: Pesquisador[];
+    notasMaximas: number[];
+    artigos: number[];
     id: number;
     
  
@@ -34,7 +36,9 @@ export class Relatorio {
     constructor() {
         this.clean();
     }
-
+    changeId(id: number):void {
+        this.id = id;
+    }
     clean(): void {
         this.pesquisadores = [];
         this.dataInicial =  null;
@@ -76,10 +80,10 @@ export class Relatorio {
         let AnoFin;
         let AnoIni;
         let medias = new Array(this.pesquisadores.length);
-        let notasmaximas = new Array(this.pesquisadores.length);
-        let artigos = new Array(this.pesquisadores.length);
-        artigos.fill(0);
-        notasmaximas.fill(0);
+        this.notasMaximas = new Array(this.pesquisadores.length);
+        this.artigos = new Array(this.pesquisadores.length);
+        this.artigos.fill(0);
+        this.notasMaximas.fill(0);
         medias.fill(0);
         if(this.dataFinal == null) AnoFin = Infinity; else AnoFin = this.dataFinal;
         if(this.dataInicial == null) AnoIni = -Infinity; else AnoIni = this.dataInicial;
@@ -94,35 +98,35 @@ export class Relatorio {
                 let tempNota = getNota(qual.avaliacao);
                 medias[pesqIndex] += tempNota;
                 if(tempNota == 8){
-                    notasmaximas[pesqIndex]++;
+                    this.notasMaximas[pesqIndex]++;
                 }
-                artigos[pesqIndex]++;
+                this.artigos[pesqIndex]++;
 
                }
             }
          }
 
          for(let i = 0; i < medias.length; i++){
-             medias[i] /= artigos[i];
+             medias[i] /= this.artigos[i];
          }
 
         let maiormedia = medias.reduce(function (a, b) {
             return Math.max(a, b);
         });
-        let maiormaxima = notasmaximas.reduce(function (a, b) {
+        let maiormaxima = this.notasMaximas.reduce(function (a, b) {
             return Math.max(a, b);
         });
-        let maisartigos = artigos.reduce(function (a, b) {
+        let maisartigos = this.artigos.reduce(function (a, b) {
             return Math.max(a, b);
         });
         for (let i = 0; i < medias.length; i++){
             if(medias[i] == maiormedia) this.melhorMedia.push(this.pesquisadores[i])
         }
-        for (let i = 0; i < notasmaximas.length; i++) {
-            if (notasmaximas[i] == maiormaxima) this.maisMaximas.push(this.pesquisadores[i])
+        for (let i = 0; i < this.notasMaximas.length; i++) {
+            if (this.notasMaximas[i] == maiormaxima) this.maisMaximas.push(this.pesquisadores[i])
         }
-        for (let i = 0; i < artigos.length; i++) {
-            if (artigos[i] == maisartigos) this.maisPublicacoes.push(this.pesquisadores[i])
+        for (let i = 0; i < this.artigos.length; i++) {
+            if (this.artigos[i] == maisartigos) this.maisPublicacoes.push(this.pesquisadores[i])
         }
      
      

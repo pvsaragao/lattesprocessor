@@ -9,24 +9,23 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 
-import { estudoscomparativosComponent } from './estudoscomparativos/estudoscomparativos.component';
-import { EstudosComparativosService } from './estudoscomparativos/estudoscomparativos.service';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { PesquisadorService } from './pesquisador/pesquisador.service';
 import { ImportLattesComponent } from './pesquisador/importLattes.component';
 
-import { QualisComponent } from './qualis/qualis.component'
-import { QualisService } from './qualis/qualis.service';
+import { RelatorioComponent } from './relatorio/relatorio.component'
+import { RelatorioService } from './relatorio/relatorio.service'
+
+
 // add project imports
 
 @NgModule({
   declarations: [
     AppComponent,
-    QualisComponent,
+    RelatorioComponent,
     NavbarComponent,
     ImportLattesComponent,
-    estudoscomparativosComponent
   ],
   imports: [
     BrowserModule,
@@ -35,22 +34,18 @@ import { QualisService } from './qualis/qualis.service';
     HttpClientModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule.forRoot([
+    RouterModule.forRoot([    
+      {
+        path: 'relatorios',
+        component: RelatorioComponent
+      },
       {
         path: 'pesquisadores',
         component: ImportLattesComponent
-      },
-      {
-        path: 'qualis',
-        component: QualisComponent
-      },
-      {
-        path: 'estudoscomparativos',
-        component: estudoscomparativosComponent
       }
     ]), BrowserAnimationsModule
   ],
-  providers: [QualisService, PesquisadorService, EstudosComparativosService],
+  providers: [ PesquisadorService, RelatorioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

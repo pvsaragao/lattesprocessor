@@ -14,32 +14,34 @@ export class RelatorioService {
     constructor(private http: HttpClient) { }
 
     criar(relatorio: Relatorio): Observable<Relatorio> {
-        return this.http.post<any>(this.taURL + "/aluno", relatorio, { headers: this.headers })
+        return this.http.post<any>(this.taURL + "/relatorios", relatorio, { headers: this.headers })
             .pipe(
                 retry(2),
                 map(res => {
-                    if (res.success) { return res.body; } else {
-                        throw new Error(res.failure);
+                    if (res.failure) { throw new Error(res.failure) } else {
+ 
+                        return res;
+                        
                     }
                 })
             );
     }
 
     atualizar(relatorio: number): Observable<Relatorio> {
-        return this.http.put<any>(this.taURL + "/aluno/"+relatorio, { headers: this.headers }).pipe(
+        return this.http.put<any>(this.taURL + "/relatorios/"+relatorio, { headers: this.headers }).pipe(
             retry(2),
             map(res => { if (res.success) { return res.body; } else { throw new Error(res.failure); } })
         );
     }
     deletar(relatorio: number): Observable<string> {
-        return this.http.delete<any>(this.taURL + "/aluno/" + relatorio, { headers: this.headers }).pipe(
+        return this.http.delete<any>(this.taURL + "/relatorios/" + relatorio, { headers: this.headers }).pipe(
             retry(2),
             map(res => { if (res.success) { return res.success; } else { return res.failure; } })
         );
     }
 
-    getAlunos(): Observable<Relatorio[]> {
-        return this.http.get<Relatorio[]>(this.taURL + "/alunos")
+    getRelatorios(): Observable<Relatorio[]> {
+        return this.http.get<Relatorio[]>(this.taURL + "/relatorios")
             .pipe(
                 retry(2)
             );
