@@ -11,8 +11,8 @@ import { MatButtonModule, MatIconModule } from '@angular/material';
 
 
 import { NavbarComponent } from './navbar/navbar.component';
-import { PesquisadorService } from './pesquisador/pesquisador.service';
-import { ImportLattesComponent } from './pesquisador/importLattes.component';
+import { PesquisadorService } from './relatorio/pesquisador.service';
+
 
 import { RelatorioComponent } from './relatorio/relatorio.component'
 import { RelatorioService } from './relatorio/relatorio.service'
@@ -24,8 +24,7 @@ import { RelatorioService } from './relatorio/relatorio.service'
   declarations: [
     AppComponent,
     RelatorioComponent,
-    NavbarComponent,
-    ImportLattesComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -38,11 +37,8 @@ import { RelatorioService } from './relatorio/relatorio.service'
       {
         path: 'relatorios',
         component: RelatorioComponent
-      },
-      {
-        path: 'pesquisadores',
-        component: ImportLattesComponent
       }
+   
     ]), BrowserAnimationsModule
   ],
   providers: [ PesquisadorService, RelatorioService],

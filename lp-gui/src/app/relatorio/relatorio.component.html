@@ -1,12 +1,6 @@
 <html>
-    <td><input [(ngModel)]="nome1" name="cpfbox"></td>
-    <td><input [(ngModel)]="nome2" name="cpfbox"></td>
-    <td><input [(ngModel)]="nome3" name="cpfbox"></td>
 
-    <td><input [(ngModel)]="index" name="cpfbox"></td>
-    <td><input [(ngModel)]="id" name="cpfbox"></td>
-
-    <button (click)="montarRelatorio(nome1, nome2, nome3)">Criar</button>
+    <button (click)="montarRelatorio()">Criar</button>
     <button (click)="logar()">Logar</button>
 
     <div *ngFor="let r of relatorios" class="relatorio">

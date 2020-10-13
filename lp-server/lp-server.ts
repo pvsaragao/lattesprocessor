@@ -35,6 +35,10 @@ lpserver.use(bodyParser.json());
 lpserver.get('/relatorios', function (req: express.Request, res: express.Response) {
   res.send(JSON.stringify(relatorios.getRelatorios()));
 })
+lpserver.get('/pesquisadores', function (req: express.Request, res: express.Response) {
+  res.send(JSON.stringify(pesquisadores));
+})
+
 
 lpserver.post('/relatorios', function (req: express.Request, res: express.Response) {
   console.log(req.body)
@@ -86,14 +90,14 @@ function closeServer(): void {
 }
 
 function gerarDados(): void{
-  /*var pesq1 = new Pesquisador();
+  var pesq1 = new Pesquisador();
   var pesq2 = new Pesquisador();
   var pesq3 = new Pesquisador();
 
   pesquisadores.push(pesq1, pesq2, pesq3)
-  pesq1.nome = "Caio Fazio"
-  pesq2.nome = "Paulo Borba"
-  pesq3.nome = "Jana Ina"
+  pesq1.nome = "Joao"
+  pesq2.nome = "Breno"
+  pesq3.nome = "Alice"
   let pesq1p1 = new Publicacao();
   let pesq1p2 = new Publicacao();
   let pesq1p3 = new Publicacao();
@@ -143,7 +147,7 @@ function gerarDados(): void{
   pesq3p3.issn = "0009"
   pesq3p4.titulo = "Publicacao J"
   pesq3p4.periodico = "Publicacao JJJ"
-  pesq3p4.issn = "0010"*/
+  pesq3p4.issn = "0010"
   let pesq1q1 = new Qualis();
   let pesq1q2 = new Qualis();
   let pesq1q3 = new Qualis();
