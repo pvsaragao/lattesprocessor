@@ -1,0 +1,14 @@
+$navbar-color: #203354;
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.navbar {
+    background-color: $navbar-color;
+    color: #ffffff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}

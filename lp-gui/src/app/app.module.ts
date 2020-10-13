@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule }   from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,15 +9,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 
-import { NavbarComponent } from './navbar/navbar.component';
-import { PesquisadorService } from './pesquisador/pesquisador.service';
-import { ImportLattesComponent } from './pesquisador/importLattes.component';
+import { PesquisadoresComponent } from './pesquisadores/pesquisadores.component';
+import { PesquisadoresService } from './pesquisadores/pesquisadores.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    ImportLattesComponent,
+    PesquisadoresComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,11 +27,11 @@ import { ImportLattesComponent } from './pesquisador/importLattes.component';
     RouterModule.forRoot([
       {
         path: 'pesquisadores',
-        component: ImportLattesComponent
-      },
+        component: PesquisadoresComponent
+      }
     ]), BrowserAnimationsModule
   ],
-  providers: [PesquisadorService],
+  providers: [PesquisadoresService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
