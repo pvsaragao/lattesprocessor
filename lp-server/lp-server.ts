@@ -41,11 +41,9 @@ lpserver.get('/pesquisadores', function (req: express.Request, res: express.Resp
 
 
 lpserver.post('/relatorios', function (req: express.Request, res: express.Response) {
-  console.log(req.body)
   var relatorio: Relatorio = <Relatorio>req.body; 
   var result = relatorios.addRelatorio(relatorio, qualisFactory.getQualis());
   if (result) {
-    console.log(result);
     res.send(result);
   } else {
     relatorios.findRelatorio(relatorio).generate(qualisFactory.qualis)
@@ -74,9 +72,10 @@ lpserver.delete('/relatorios/:id', function (req: express.Request, res: express.
   var retId = relatorios.deleteRelatorio(relaId);
   }
   if(retId >= 0){
-    
+    console.log('Deletou')
     res.send({ "success": "O relatorio foi deletado com sucesso." });
   } else {
+    console.log('N Deletou')
     res.send({ "failure": "O relatorio nao pode ser deletado" });
   }
 

@@ -20,7 +20,6 @@ export class RelatorioFactory {
     
 
     addRelatorio(p: Relatorio, qualis: Qualis[]): Relatorio {
-        console.log(p.pesquisadores);
         var rela = new Relatorio();
         rela.copyFrom(p);
         rela.generate(qualis)
@@ -28,7 +27,6 @@ export class RelatorioFactory {
             rela.id = this.counter;
             this.counter++;
             this.relatorios.push(rela);
-            console.log('Criado')
             return rela;
         }
        

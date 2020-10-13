@@ -23,11 +23,9 @@ export class RelatorioComponent implements OnInit {
     constructor(private RelatorioService: RelatorioService, private PesquisadorService: PesquisadorService) { }
   
 
-    montarRelatorio(): void {
-    
-
-
-
+    montarRelatorio(): void {   
+    console.log('Montou')
+    this.relatorio.pesquisadores = this.pesquisadores;
     this.criarRelatorio(this.relatorio)
     }
     logar():void {
@@ -57,10 +55,10 @@ export class RelatorioComponent implements OnInit {
         this.RelatorioService.deletar(relatorioid)
             .subscribe(
                 ar => {
-                    //SUCESSO
+                    this.relatorios.splice(this.relatorios.findIndex( (rel) => {return rel.id == relatorioid}), 1)
                 },
                 error => {
-                    //FALHOU
+                    alert("O relatorio nao existe")
                 }
             )
     }

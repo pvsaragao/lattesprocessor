@@ -36,7 +36,7 @@ export class RelatorioService {
     deletar(relatorio: number): Observable<string> {
         return this.http.delete<any>(this.taURL + "/relatorios/" + relatorio, { headers: this.headers }).pipe(
             retry(2),
-            map(res => { if (res.success) { return res.success; } else { return res.failure; } })
+            map(res => { if (res.success) { return res.success; } else { throw new Error (res.failure); } })
         );
     }
 
