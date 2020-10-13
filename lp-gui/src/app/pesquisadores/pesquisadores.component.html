@@ -1,0 +1,18 @@
+<h2>Importar arquivo XML</h2>
+<form method="post">
+    <input type="file" name="file" id="file" ng-file-model="files" accept=".xml"
+        (change)="uploadLattes($event.target.files)" multiple>
+</form>
+
+<h2>Lista de pesquisadores cadastrados</h2>
+<div *ngFor="let p of pesquisadores" name="pesquisadoreslist">
+    <div class="pesquisador">
+        <p class="nome" name="nomeslist">{{ p.nome }}</p>
+        <ul *ngFor="let publi of p.publicacoes">
+            <li attr.parent="{{ p.nome }}">
+                <span class="publicacao-titulo" name="publicacoeslist">{{ publi.titulo }}</span>,
+                <span class="publicacao-periodico">{{ publi.periodico }}</span>
+            </li>
+        </ul>
+    </div>
+</div>
