@@ -9,19 +9,18 @@ import { Pesquisador } from '../../../../common/pesquisador';
 export class PesquisadorService {
 
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  private taURL = 'http://localhost:3000';
+  private lpURL = 'http://localhost:3000';
 
   constructor(private http: HttpClient) { }
 
-  // methods go here
   uploadLattes(files: FileList): Observable<boolean> {
 
     let formData = new FormData();
-    for(let i = 0; i < files.length; i++) {
-      formData.append('lattesFiles', files[i]);
+    for (let i = 0; i < files.length; i++) {
+      formData.append('xmlFiles', files[i]);
     }
-    
-    return this.http.post<any>(this.taURL + '/pesquisador/adicionar', formData).pipe(
+
+    return this.http.post<any>(this.lpURL + '/pesquisador/adicionar', formData).pipe(
       retry(2),
       map(res => {
         if (res.success) {
@@ -34,7 +33,7 @@ export class PesquisadorService {
   }
 
   getPesquisadores(): Observable<Pesquisador[]> {
-    return this.http.get<Pesquisador[]>(this.taURL + "/pesquisadores", {headers:this.headers})
+    return this.http.get<Pesquisador[]>(this.lpURL + "/pesquisadores", { headers: this.headers })
       .pipe(
         retry(2)
       );
