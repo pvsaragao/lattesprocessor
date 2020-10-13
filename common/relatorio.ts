@@ -47,6 +47,8 @@ export class Relatorio {
         this.maisPublicacoes = [];
         this.melhorMedia = [];
         this.maisMaximas = [];
+        this.notasMaximas = [];
+        this.artigos = [];
         this.id = -1;
    
     }
@@ -66,6 +68,8 @@ export class Relatorio {
         this.maisPublicacoes = from.maisPublicacoes.slice(0);
         this.melhorMedia = from.melhorMedia.slice(0);
         this.maisMaximas = from.maisMaximas.slice(0);
+        this.notasMaximas = from.notasMaximas.slice(0);
+        this.artigos = from.artigos.slice(0);
         //this.copyClassAndMediaFrom(from.classificacao, from.medias);
     }
   

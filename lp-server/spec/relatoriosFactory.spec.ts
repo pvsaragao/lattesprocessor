@@ -107,7 +107,7 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
 }
 
 
-describe("A classe relatorio", () => {
+describe("A classe relatorioFactory", () => {
     var relatorios: RelatorioFactory;
 
     beforeEach(() => relatorios = new RelatorioFactory());
