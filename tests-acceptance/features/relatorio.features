@@ -4,19 +4,22 @@ Feature: gerar relatórios
  		  So that eu posso analisar as publicações.
 
 Scenario: Relatório geral gerado com sucesso.
-         Given que estou ná página “Relatórios” e temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas A1, A1, B4, "Breno" com 3 artigos cadastrados com notas A2, A2, A2, "Alice" com 4 artigos cadastrados com notas A3, A2, A2, A2.
+         Given que estou ná página “Relatórios” 
+         And temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas "A1", "A1", "B4", "Breno" com 3 artigos cadastrados com notas "A2", "A2", "A2", "Alice" com 4 artigos cadastrados com notas "A3", "A2", "A2", "A2".
          When eu clico no botão “Gerar relatório”
          Then vai ser gerado um relatório informando "Alice" como o pesquisador com mais artigos, "Breno" como o pesquisador com maior média entre os artigos e "Joao" como o pesquisador com mais notas máximas, e uma lista com todos os pesquisadores e suas estatisticas.	
          And a mensagem “Relatório gerado com sucesso” é exibida.
          And a opção para visualizar o relatório é exibida.
 Scenario: Deletar um relatório com sucesso.
-        Given que estou ná página “Relatórios” e temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas A1, A1, B4, "Breno" com 3 artigos cadastrados com notas A2, A2, A2, "Alice" com 4 artigos cadastrados com notas A3, A2, A2, A2.
+        Given que estou ná página “Relatórios” 
+        And temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas "A1", "A1", "B4", "Breno" com 3 artigos cadastrados com notas "A2", "A2", "A2", "Alice" com 4 artigos cadastrados com notas "A3", "A2", "A2", "A2".
         And consigo ver a lista de relatórios gerados.
         When eu clico no botão "Deletar" no relatório de ID "0"
         And confirmo a exclusão aceitando a mensagem de confirmação
         Then o relatório de ID "0" não está mais na lista
 Scenario: Atualizar um relatório
-        Given que estou ná página “Relatórios” e temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas A1, A1, B4, "Breno" com 3 artigos cadastrados com notas A2, A2, A2, "Alice" com 4 artigos cadastrados com notas A3, A2, A2, A2.
+        Given que estou ná página “Relatórios” 
+        And temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas "A1", "A1", "B4", "Breno" com 3 artigos cadastrados com notas "A2", "A2", "A2", "Alice" com 4 artigos cadastrados com notas "A3", "A2", "A2", "A2".
         And consigo ver a lista de relatórios gerados.
         When eu clico no botão "Atualizar" no relatório de ID "0"
         Then o relatório de ID "0" vai ser atualizado com infomações atualizadas mostrando "Alice" como o pesquisador com mais artigos, "Breno" como o pesquisador com maior média entre os artigos e "Joao" como o pesquisador com mais notas máximas, e uma lista com todos os pesquisadores e suas estatisticas.	

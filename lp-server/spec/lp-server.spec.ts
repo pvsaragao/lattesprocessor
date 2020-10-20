@@ -208,9 +208,6 @@ describe("O servidor", () => {
                 temp1.copyFrom(temp);
                 let expected: Relatorio = gerarRelatorio('Caio', 'Paulo', 'Pedro', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2');
                 expected.id = 0;
-                console.log('+++++++')
-                console.log(JSON.stringify(temp1))
-                console.log(JSON.stringify(expected))
                 expect(JSON.stringify(temp1)).toEqual(JSON.stringify(expected))
                 })
                 .catch(e => {
