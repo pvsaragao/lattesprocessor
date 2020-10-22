@@ -75,16 +75,16 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
     let pesq3q2 = new Qualis();
     let pesq3q3 = new Qualis();
     let pesq3q4 = new Qualis();
-    pesq1q1.montar("Publicacao A", 0, "Estudo", "0001", n1)
-    pesq1q2.montar("Publicacao B", 0, "Estudo", "0002", n2)
-    pesq1q3.montar("Publicacao C", 0, "Estudo", "0003", n3)
-    pesq2q1.montar("Publicacao D", 0, "Estudo", "0004", n4)
-    pesq2q2.montar("Publicacao E", 0, "Estudo", "0005", n5)
-    pesq2q3.montar("Publicacao F", 0, "Estudo", "0006", n6)
-    pesq3q1.montar("Publicacao G", 0, "Estudo", "0007", n7)
-    pesq3q2.montar("Publicacao H", 0, "Estudo", "0008", n8)
-    pesq3q3.montar("Publicacao I", 0, "Estudo", "0009", n9)
-    pesq3q4.montar("Publicacao J", 0, "Estudo", "0010", n10)
+    pesq1q1.montar("Publicacao A", 11, "Estudo", "0001", n1)
+    pesq1q2.montar("Publicacao B", 12, "Estudo", "0002", n2)
+    pesq1q3.montar("Publicacao C", 13, "Estudo", "0003", n3)
+    pesq2q1.montar("Publicacao D", 14, "Estudo", "0004", n4)
+    pesq2q2.montar("Publicacao E", 15, "Estudo", "0005", n5)
+    pesq2q3.montar("Publicacao F", 16, "Estudo", "0006", n6)
+    pesq3q1.montar("Publicacao G", 17, "Estudo", "0007", n7)
+    pesq3q2.montar("Publicacao H", 18, "Estudo", "0008", n8)
+    pesq3q3.montar("Publicacao I", 19, "Estudo", "0009", n9)
+    pesq3q4.montar("Publicacao J", 20, "Estudo", "0010", n10)
     qualis.push(pesq1q1)
     qualis.push(pesq1q2)
     qualis.push(pesq1q3)
@@ -224,6 +224,34 @@ describe("A classe relatorioFactory", () => {
         expect(relatorios.getRelatorios()).toContain(rela)
         expect(relatorios.getRelatorios()).toContain(rela2)
         expect(relatorios.getRelatorios()).not.toContain(rela1)
+    })
+    it("adicionando relatorio com data corretamente", () => {
+        let rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
+        rela.dataFinal = 20;
+        rela.dataInicial = 12;
+        relatorios.addRelatorio(rela, qualis);
+        rela = null;
+
+        rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
+        rela.dataFinal = 20;
+        rela.dataInicial = 12;
+        relatorios.addRelatorio(rela, qualis);
+        rela = null;
+
+        rela = gerarRelatorio("A", "B", "C", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
+        rela.dataFinal = 11;
+        rela.dataInicial = 16;
+        relatorios.addRelatorio(rela, qualis);
+        rela = null;
+
+        rela = gerarRelatorio("A", "B", "D", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1");
+        rela.dataFinal = 11;
+        rela.dataInicial = 16;
+        relatorios.addRelatorio(rela, qualis);
+        rela = null;
+
+        expect(relatorios.relatorios.length).toBe(3)
+        expect(relatorios.relatorios[0].id).toBe(0)
     })
   
 })
