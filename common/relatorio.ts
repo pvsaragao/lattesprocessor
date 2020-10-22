@@ -109,11 +109,14 @@ export class Relatorio {
                }
             }
          }
-
+         
          for(let i = 0; i < medias.length; i++){
              medias[i] /= this.artigos[i];
+             if(isNaN(medias[i])){
+                 medias[i] = 0;
+             }
          }
-
+        console.log(medias)
         let maiormedia = medias.reduce(function (a, b) {
             return Math.max(a, b);
         });
