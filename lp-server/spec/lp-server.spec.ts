@@ -9,7 +9,7 @@ import bodyParser = require("body-parser");
 
 var base_url = "http://localhost:3000/";
 
-function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: string, n3: string, n4: string, n5: string, n6: string, n7: string, n8: string, n9: string, n10: string,): Relatorio {
+function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: string, n3: string, n4: string, n5: string, n6: string, n7: string, n8: string, n9: string, n10: string, ai: number, af: number): Relatorio {
     var pesq1 = new Pesquisador();
     var pesq2 = new Pesquisador();
     var pesq3 = new Pesquisador();
@@ -78,16 +78,16 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
     let pesq3q2 = new Qualis();
     let pesq3q3 = new Qualis();
     let pesq3q4 = new Qualis();
-    pesq1q1.montar("Publicacao A", 0, "Estudo", "0001", n1)
-    pesq1q2.montar("Publicacao B", 0, "Estudo", "0002", n2)
-    pesq1q3.montar("Publicacao C", 0, "Estudo", "0003", n3)
-    pesq2q1.montar("Publicacao D", 0, "Estudo", "0004", n4)
-    pesq2q2.montar("Publicacao E", 0, "Estudo", "0005", n5)
-    pesq2q3.montar("Publicacao F", 0, "Estudo", "0006", n6)
-    pesq3q1.montar("Publicacao G", 0, "Estudo", "0007", n7)
-    pesq3q2.montar("Publicacao H", 0, "Estudo", "0008", n8)
-    pesq3q3.montar("Publicacao I", 0, "Estudo", "0009", n9)
-    pesq3q4.montar("Publicacao J", 0, "Estudo", "0010", n10)
+    pesq1q1.montar("Publicacao A", 11, "Estudo", "0001", n1)
+    pesq1q2.montar("Publicacao B", 12, "Estudo", "0002", n2)
+    pesq1q3.montar("Publicacao C", 13, "Estudo", "0003", n3)
+    pesq2q1.montar("Publicacao D", 14, "Estudo", "0004", n4)
+    pesq2q2.montar("Publicacao E", 15, "Estudo", "0005", n5)
+    pesq2q3.montar("Publicacao F", 16, "Estudo", "0006", n6)
+    pesq3q1.montar("Publicacao G", 17, "Estudo", "0007", n7)
+    pesq3q2.montar("Publicacao H", 18, "Estudo", "0008", n8)
+    pesq3q3.montar("Publicacao I", 19, "Estudo", "0009", n9)
+    pesq3q4.montar("Publicacao J", 20, "Estudo", "0010", n10)
     qualis.push(pesq1q1)
     qualis.push(pesq1q2)
     qualis.push(pesq1q3)
@@ -100,6 +100,8 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
     qualis.push(pesq3q4);
 
     var relatorio = new Relatorio();
+    relatorio.dataInicial = ai;
+    relatorio.dataFinal = af;
     relatorio.pesquisadores.push(pesq1);
     relatorio.pesquisadores.push(pesq2);
     relatorio.pesquisadores.push(pesq3);
@@ -206,9 +208,23 @@ describe("O servidor", () => {
                 let temp: Relatorio = <Relatorio>body;
                 let temp1 = new Relatorio;
                 temp1.copyFrom(temp);
-                let expected: Relatorio = gerarRelatorio('Caio', 'Paulo', 'Pedro', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2');
+                let expected: Relatorio = gerarRelatorio('Caio', 'Paulo', 'Pedro', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', null, null);
                 expected.id = 0;
                 expect(JSON.stringify(temp1)).toEqual(JSON.stringify(expected))
+                    relatorio = montarRelatorio('Caio', 'Paulo', 'Pedro')
+                    relatorio.dataInicial = 11;
+                    relatorio.dataFinal = 18;
+                    var options: any = { method: 'POST', uri: (base_url + "relatorios"), body: relatorio, json: true };
+                    return request(options)
+                        .then(body => {
+                            let temp: Relatorio = <Relatorio>body;
+
+                            let temp1 = new Relatorio;
+                            temp1.copyFrom(temp);
+                            let expected: Relatorio = gerarRelatorio('Caio', 'Paulo', 'Pedro', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', 11, 18);
+                            expected.id = 1;
+                            expect(JSON.stringify(temp1)).toEqual(JSON.stringify(expected))
+                        })
                 })
                 .catch(e => {
                 expect(e).toEqual(null)
@@ -223,12 +239,11 @@ describe("O servidor", () => {
         var options: any = { method: 'POST', uri: (base_url + "relatorios"), body: relatorio1, json: true };
         return request(options)
             .then(body => {
-                let expected: Relatorio = gerarRelatorio('Caio', 'Paulo', 'Pedro', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2');
+                let expected: Relatorio = gerarRelatorio('Caio', 'Paulo', 'Pedro', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', null, null);
                 expect(body).toEqual({ failure: "O relatorio ja foi gerado." });
                         return request.get(base_url + "relatorios")
                             .then(body => {
-                                console.log(JSON.parse(body))
-                                expect(JSON.parse(body).length).toBe(1);
+                                expect(JSON.parse(body).length).toBe(2);
                             });
                     
             })
@@ -243,29 +258,29 @@ describe("O servidor", () => {
         var options: any = { method: 'POST', uri: (base_url + "relatorios"), body: relatorio1, json: true };
         return request(options)
             .then(body => {
-                var expected: Relatorio = gerarRelatorio('Dale', 'Dele', 'Doli', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2');
-                expected.id = 1;
+                var expected: Relatorio = gerarRelatorio('Dale', 'Dele', 'Doli', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', null, null);
+                expected.id = 2;
                 expect(JSON.stringify(body, null, 4)).toEqual(JSON.stringify(expected, null, 4))
                 var relatorio2 = montarRelatorio('Xesque', 'Bresque', 'Vraulen')
                 var options1: any = { method: 'POST', uri: (base_url + "relatorios"), body: relatorio2, json: true };
                 return request(options1)
                     .then(body => {
-                        var expected1: Relatorio = gerarRelatorio('Xesque', 'Bresque', 'Vraulen', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2');
-                        expected1.id = 2;
+                        var expected1: Relatorio = gerarRelatorio('Xesque', 'Bresque', 'Vraulen', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', null, null);
+                        expected1.id = 3;
                         expect(JSON.stringify(body, null, 4)).toEqual(JSON.stringify(expected1, null, 4))
                         var relatorio3 = montarRelatorio('Pedro', 'Padre', 'Pedra')
                         var options2: any = { method: 'POST', uri: (base_url + "relatorios"), body: relatorio3, json: true };
                         return request(options2)
                             .then(body => {
-                                var expected2: Relatorio = gerarRelatorio('Pedro', 'Padre', 'Pedra', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2');
-                                expected2.id = 3;
+                                var expected2: Relatorio = gerarRelatorio('Pedro', 'Padre', 'Pedra', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', null, null);
+                                expected2.id = 4;
                                 expect(JSON.stringify(body, null, 4)).toEqual(JSON.stringify(expected2, null, 4))
-                                return request.delete(base_url + "relatorios/" + '2')
+                                return request.delete(base_url + "relatorios/" + '3')
                                     .then(body => {
                                         expect(body).toEqual(JSON.stringify({ success: "O relatorio foi deletado com sucesso." }))
                                         return request.get(base_url + "relatorios")
                                             .then(body => {
-                                                expect(JSON.parse(body).length).toBe(3)
+                                                expect(JSON.parse(body).length).toBe(4)
                                                 expect(body).toContain(JSON.stringify(expected));
                                                 expect(body).not.toContain(JSON.stringify(expected1));
                                                 expect(body).toContain(JSON.stringify(expected2));
@@ -286,29 +301,29 @@ describe("O servidor", () => {
         var options: any = { method: 'POST', uri: (base_url + "relatorios"), body: relatorio1, json: true };
         return request(options)
             .then( body => {
-                var expected: Relatorio = gerarRelatorio('Heitor', 'Paulo', 'Pedro', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2');
-                expected.id = 4;
+                var expected: Relatorio = gerarRelatorio('Heitor', 'Paulo', 'Pedro', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', null, null);
+                expected.id = 5;
                 expect(JSON.stringify(body, null, 4)).toEqual(JSON.stringify(expected, null, 4))
                 var relatorio2 = montarRelatorio('Luan', 'Luna', 'Paula')
                 var options1: any = { method: 'POST', uri: (base_url + "relatorios"), body: relatorio2, json: true };
                 return request(options1)
                     .then( body => {
-                        var expected1: Relatorio = gerarRelatorio('Luan', 'Luna', 'Paula', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2');
-                        expected1.id = 5;
+                        var expected1: Relatorio = gerarRelatorio('Luan', 'Luna', 'Paula', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', null, null);
+                        expected1.id = 6;
                         expect(JSON.stringify(body, null, 4)).toEqual(JSON.stringify(expected1, null, 4))
                         var relatorio3 = montarRelatorio('Luana', 'BrUNO', 'Leo')
                         var options2: any = { method: 'POST', uri: (base_url + "relatorios"), body: relatorio3, json: true };
                         return request(options2)
                             .then ( body => {
-                                var expected2: Relatorio = gerarRelatorio('Luana', 'BrUNO', 'Leo', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2');
-                                expected2.id = 6;
+                                var expected2: Relatorio = gerarRelatorio('Luana', 'BrUNO', 'Leo', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', null, null);
+                                expected2.id = 7;
                                 expect(JSON.stringify(body, null, 4)).toEqual(JSON.stringify(expected2, null, 4))
-                                return request.delete(base_url + "relatorios/" + '7')
+                                return request.delete(base_url + "relatorios/" + '8')
                                     .then(body => {
                                         expect(body).toEqual(JSON.stringify({ failure: "O relatorio nao pode ser deletado" }))
                                             return request.get(base_url + "relatorios")
                                                 .then(body => {
-                                                    expect(JSON.parse(body).length).toBe(6)
+                                                    expect(JSON.parse(body).length).toBe(7)
                                                     expect(body).toContain(JSON.stringify(expected));
                                                     expect(body).toContain(JSON.stringify(expected1));
                                                     expect(body).toContain(JSON.stringify(expected2));

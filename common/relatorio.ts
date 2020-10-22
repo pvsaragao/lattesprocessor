@@ -18,7 +18,7 @@ function getIndexes(element: number, elements: number[]) {
 }
 
 export class Relatorio {
-
+    id: number;
     pesquisadores: Pesquisador[];
     dataInicial: number;
     dataFinal: number;
@@ -28,7 +28,7 @@ export class Relatorio {
     maisMaximas: Pesquisador[];
     notasMaximas: number[];
     artigos: number[];
-    id: number;
+    
     
  
 
@@ -40,6 +40,7 @@ export class Relatorio {
         this.id = id;
     }
     clean(): void {
+        this.id = -1;
         this.pesquisadores = [];
         this.dataInicial =  null;
         this.dataFinal = null;
@@ -49,7 +50,7 @@ export class Relatorio {
         this.maisMaximas = [];
         this.notasMaximas = [];
         this.artigos = [];
-        this.id = -1;
+        
    
     }
 
@@ -116,7 +117,6 @@ export class Relatorio {
                  medias[i] = 0;
              }
          }
-        console.log(medias)
         let maiormedia = medias.reduce(function (a, b) {
             return Math.max(a, b);
         });

@@ -178,7 +178,7 @@ describe("A classe relatorio", () => {
         relatorio.dataInicial = 14;
         relatorio.dataFinal = 19;
         gerarRelatorio();
-        console.log(relatorio)
+
 
         expect(relatorio.maisMaximas.length).toBe(3)
         expect(relatorio.melhorMedia.length).toBe(1)

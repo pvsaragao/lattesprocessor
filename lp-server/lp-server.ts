@@ -72,10 +72,8 @@ lpserver.delete('/relatorios/:id', function (req: express.Request, res: express.
   var retId = relatorios.deleteRelatorio(relaId);
   }
   if(retId >= 0){
-    console.log('Deletou')
     res.send({ "success": "O relatorio foi deletado com sucesso." });
   } else {
-    console.log('N Deletou')
     res.send({ "failure": "O relatorio nao pode ser deletado" });
   }
 
@@ -157,16 +155,16 @@ function gerarDados(): void{
   let pesq3q2 = new Qualis();
   let pesq3q3 = new Qualis();
   let pesq3q4 = new Qualis();
-  pesq1q1.montar("Publicacao A", 0, "Estudo", "0001", "A1")
-  pesq1q2.montar("Publicacao B", 0, "Estudo", "0002", "A1")
-  pesq1q3.montar("Publicacao C", 0, "Estudo", "0003", "B4")
-  pesq2q1.montar("Publicacao D", 0, "Estudo", "0004", "A2")
-  pesq2q2.montar("Publicacao E", 0, "Estudo", "0005", "A2")
-  pesq2q3.montar("Publicacao F", 0, "Estudo", "0006", "A2")
-  pesq3q1.montar("Publicacao G", 0, "Estudo", "0007", "A3")
-  pesq3q2.montar("Publicacao H", 0, "Estudo", "0008", "A2")
-  pesq3q3.montar("Publicacao I", 0, "Estudo", "0009", "A2")
-  pesq3q4.montar("Publicacao J", 0, "Estudo", "0010", "A2")
+  pesq1q1.montar("Publicacao A", 11, "Estudo", "0001", "A1")
+  pesq1q2.montar("Publicacao B", 12, "Estudo", "0002", "A1")
+  pesq1q3.montar("Publicacao C", 13, "Estudo", "0003", "B4")
+  pesq2q1.montar("Publicacao D", 14, "Estudo", "0004", "A2")
+  pesq2q2.montar("Publicacao E", 15, "Estudo", "0005", "A2")
+  pesq2q3.montar("Publicacao F", 16, "Estudo", "0006", "A2")
+  pesq3q1.montar("Publicacao G", 17, "Estudo", "0007", "A3")
+  pesq3q2.montar("Publicacao H", 18, "Estudo", "0008", "A2")
+  pesq3q3.montar("Publicacao I", 19, "Estudo", "0009", "A2")
+  pesq3q4.montar("Publicacao J", 20, "Estudo", "0010", "A2")
   qualisFactory.qualis.push(pesq1q1)
   qualisFactory.qualis.push(pesq1q2)
   qualisFactory.qualis.push(pesq1q3)
