@@ -1,11 +1,14 @@
 <html>
 
+    Data inicial: <input [(ngModel)]="relatorio.dataInicial" type="number">
+    Data final: <input [(ngModel)]="relatorio.dataFinal" type="number">
     <button (click)="montarRelatorio()">Criar</button>
-    <button (click)="logar()">Logar</button>
     <div class="avisos" (click)="removerAvisos()"> 
         <span *ngIf="relatorioJaCriado">Esse relatorio já foi criado. Mude os pesquisadores ou atualize o relatorio ja existente.</span>
         <span *ngIf="relatorioJaDeletado">Esse relatorio não pode ser deletado, pois ele não existe.</span>
         <span *ngIf="relatorioNaoAtualizado">Esse relatorio não pode ser atualizado, pois ele não existe.</span>
+        <span *ngIf="DataFinalMenor">A data final deve ser maior que a data inicial.</span>
+        <span *ngIf="datasInvalidas">Data invalida.</span>
     </div>
 
     <div *ngFor="let r of relatorios" class="relatorio">

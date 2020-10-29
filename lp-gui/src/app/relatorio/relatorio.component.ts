@@ -20,6 +20,8 @@ export class RelatorioComponent implements OnInit {
     relatorioJaCriado: Boolean = false;
     relatorioJaDeletado: Boolean = false;
     relatorioNaoAtualizado: Boolean = false;
+    dataFinalMenor: Boolean = false;
+    datasInvalidas: Boolean = false;
 
  
 
@@ -34,8 +36,29 @@ export class RelatorioComponent implements OnInit {
     logar():void {
         console.log(this.relatorios)
     }
+    validarDatas(relatorio: Relatorio): boolean{
+        if(relatorio.dataInicial == null || relatorio.dataFinal == null){
+            if (relatorio.dataInicial < 0 || relatorio.dataFinal < 0 || ((new Date).getFullYear() < relatorio.dataInicial)) {
+                    this.datasInvalidas = false;
+                    console.log(2)
+                    return false;
+                }else {
+                return true;
+            }
+        }
+        if (relatorio.dataFinal < relatorio.dataInicial) {
+            this.dataFinalMenor = true;
+            console.log(1)
+            return false;
+        
+        }else{
+            return true;
+        }
+    }
     criarRelatorio(relatorio: Relatorio): void {
-     
+        if(this.validarDatas(this.relatorio)){
+
+
         this.RelatorioService.criar(relatorio)
             .subscribe(
                 ar => {
@@ -52,7 +75,7 @@ export class RelatorioComponent implements OnInit {
 
                 }
             );
-
+        }
     }
     deletarRelatorio(relatorioid: number): void {
         this.RelatorioService.deletar(relatorioid)
