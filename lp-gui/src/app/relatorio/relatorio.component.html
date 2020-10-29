@@ -14,6 +14,8 @@
     <div *ngFor="let r of relatorios" class="relatorio">
         <div class="relatorioHeader">
             <p>{{r.id}}</p>
+            <p>Data inicial: {{r.dataInicial}}</p>
+            <p>Data final: {{r.dataFinal}}</p>
             <div>
                 <button class="relButton" (click)="atualizarRender(r.id)">Mostrar</button>
                 <button class="relButton" (click)="atualizarRelatorio(r.id)">Atualizar</button>               
