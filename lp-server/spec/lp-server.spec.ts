@@ -342,5 +342,34 @@ describe("O servidor", () => {
         
 
     })
+    it("atualizar um relatorio", () => {
+        var options: any = { method: 'PUT', uri: (base_url + "relatorios/7"), json: true };
+        return request(options)
+            .then(body => {
+
+                let temp: Relatorio = <Relatorio>body;
+                let temp1 = new Relatorio;
+                temp1.copyFrom(temp);
+                var expected2: Relatorio = gerarRelatorio('Luana', 'BrUNO', 'Leo', 'A1', 'A1', 'B4', 'A2', 'A2', 'A2', 'A3', 'A2', 'A2', 'A2', null, null);
+                expected2.id = 7;
+                expect(JSON.stringify(temp1)).toEqual(JSON.stringify(expected2))
+            })
+            .catch(e => {
+                expect(e).toEqual(null)
+            }
+            )
+    });
+    it("não atualizar um relatorio quando ID passado não existe", () => {
+        var options: any = { method: 'PUT', uri: (base_url + "relatorios/8"), json: true };
+        return request(options)
+            .then(body => {
+                expect(body).toEqual({ failure: "O relatorio nao pode ser atualizado"})
+            })
+            .catch(e => {
+                expect(e).toEqual(null)
+            }
+            )
+    });
+
 
 }) 
