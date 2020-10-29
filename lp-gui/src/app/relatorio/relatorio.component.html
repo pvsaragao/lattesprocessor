@@ -2,12 +2,18 @@
 
     <button (click)="montarRelatorio()">Criar</button>
     <button (click)="logar()">Logar</button>
+    <div class="avisos" (click)="removerAvisos()"> 
+        <span *ngIf="relatorioJaCriado">Esse relatorio já foi criado. Mude os pesquisadores ou atualize o relatorio ja existente.</span>
+        <span *ngIf="relatorioJaDeletado">Esse relatorio não pode ser deletado, pois ele não existe.</span>
+        <span *ngIf="relatorioNaoAtualizado">Esse relatorio não pode ser atualizado, pois ele não existe.</span>
+    </div>
 
     <div *ngFor="let r of relatorios" class="relatorio">
         <div class="relatorioHeader">
             <p>{{r.id}}</p>
             <div>
                 <button class="relButton" (click)="atualizarRender(r.id)">Mostrar</button>
+                <button class="relButton" (click)="atualizarRelatorio(r.id)">Atualizar</button>               
                 <button class="relButton" (click)="deletarRelatorio(r.id)">Deletar</button>
             </div>
         </div>

@@ -30,7 +30,7 @@ export class RelatorioService {
     atualizar(relatorio: number): Observable<Relatorio> {
         return this.http.put<any>(this.taURL + "/relatorios/"+relatorio, { headers: this.headers }).pipe(
             retry(2),
-            map(res => { if (res.success) { return res.body; } else { throw new Error(res.failure); } })
+            map(res => { if (res.failure) { throw new Error(res.failure); } else { return res} })
         );
     }
     deletar(relatorio: number): Observable<string> {

@@ -17,6 +17,9 @@ export class RelatorioComponent implements OnInit {
     relatorios: Relatorio[] = [];
     render: Map<number, boolean> = new Map<number, boolean>();
     pesquisadores: Pesquisador[] = [];
+    relatorioJaCriado: Boolean = false;
+    relatorioJaDeletado: Boolean = false;
+    relatorioNaoAtualizado: Boolean = false;
 
  
 
@@ -45,7 +48,7 @@ export class RelatorioComponent implements OnInit {
                     }
                 },
                 error => {
-                    alert("Esse relatorio já foi criado. Mude os pesquisadores ou atualize o relatorio ja existente.")
+                    this.relatorioJaCriado = true;
 
                 }
             );
@@ -58,7 +61,7 @@ export class RelatorioComponent implements OnInit {
                     this.relatorios.splice(this.relatorios.findIndex( (rel) => {return rel.id == relatorioid}), 1)
                 },
                 error => {
-                    alert("O relatorio nao existe")
+                    this.relatorioJaDeletado = true;
                 }
             )
     }
@@ -66,10 +69,14 @@ export class RelatorioComponent implements OnInit {
         this.RelatorioService.atualizar(relatorioid)
             .subscribe(
                 ar => {
-                    //SUCESSO
+                    console.log(ar)
+                    let substituir = this.relatorios.findIndex( (rel) => {return rel.id == ar.id})
+                    if(substituir != -1){
+                        this.relatorios.splice(substituir, 1, ar)
+                    }
                 },
                 error => {
-                    //FALHOU
+                    console.log(error)
                 }
 
 
@@ -93,10 +100,12 @@ export class RelatorioComponent implements OnInit {
     getNomes(array: Pesquisador[]): string[]{
         return array.map(a => a.nome);
     } 
-   /*onMove(): void {
-        this.cpfduplicado = false;
-        this.githubduplicado = false;
-    }*/
+    removerAvisos(){
+        this.relatorioJaCriado = false;
+    }
+
+   onMove(): void {
+    }
 
     ngOnInit(): void {
         this.RelatorioService.getRelatorios()
