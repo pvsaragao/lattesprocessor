@@ -13,6 +13,12 @@ export class Grupo {
         this.integrantes = [];
     }
 
+    clone(): Grupo {
+        var grupo: Grupo = new Grupo();
+        grupo.copyFrom(this);
+        return grupo;
+      }
+
     copyFrom(from: Grupo) {
         this.nome = from.nome;
         this.integrantes = from.integrantes;

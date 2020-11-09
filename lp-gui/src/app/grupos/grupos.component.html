@@ -2,8 +2,20 @@
 <table>
     <tr>
         <td>Nome do grupo</td>
-        <td><input></td>
+        <td><input [(ngModel)]="grupo.nome"></td>
+        
     </tr>
-    
 </table>
-<button>Criar Grupo</button>
+<button onClick="criar()">Criar Grupo</button>
+
+<table>
+    <tr *ngFor="let g of grupos">
+        <td>{{g.nome}}</td>
+        <td>
+            <tr *ngFor="let p of g.integrantes">
+                <td>{{p.nome}}</td>
+            </tr>
+        </td>
+    </tr>
+</table>
+

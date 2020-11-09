@@ -19,6 +19,7 @@ import { ImportLattesComponent } from './pesquisador/importLattes.component';
 import { QualisComponent } from './qualis/qualis.component'
 import { QualisService } from './qualis/qualis.service';
 import { GruposComponent } from './grupos/grupos.component';
+import { GruposService } from './grupos/grupos.service';
 // add project imports
 
 @NgModule({
@@ -56,7 +57,7 @@ import { GruposComponent } from './grupos/grupos.component';
       }
     ]), BrowserAnimationsModule
   ],
-  providers: [QualisService, PesquisadorService, EstudosComparativosService],
+  providers: [QualisService, PesquisadorService, EstudosComparativosService, GruposService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
