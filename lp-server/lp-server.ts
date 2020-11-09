@@ -9,11 +9,14 @@ const fs = require('fs');
 import { QualisFactory } from './qualisfactory';
 import { Qualis } from '../common/qualis';
 import { CadastroDePesquisadores } from './cadastrodepesquisadores';
+import { CadastroDeGrupos } from './cadastrodegrupos';
 import { LattesFactory } from './lattesFactory';
 import { Pesquisador } from '../common/pesquisador';
+import { Grupo } from '../common/grupo';
 
 var lpserver = express();
 let cadatroPesq = new CadastroDePesquisadores();
+let cadastroGrupos = new CadastroDeGrupos();
 const lattesFactory = new LattesFactory(cadatroPesq);
 
 // add services here
@@ -171,6 +174,20 @@ lpserver.get('/estudos-comparativos/', (req: express.Request, res: express.Respo
   })
 
   res.send(ranking)
+})
+
+lpserver.get('/grupos', (req: express.Request, res: express.Response) => {
+  res.send(JSON.stringify(cadastroGrupos.getGrupos()));
+})
+
+lpserver.post('/grupos/grupo', (req: express.Request, res: express.Response) => {
+  let grupo: Grupo = <Grupo> req.body;
+  cadastroGrupos.addGrupo(grupo);
+  if (grupo) {
+    res.send({"success": "O grupo foi criado com sucesso"});
+  } else {
+    res.send({"failure": "O grupo não pode ser criado"});
+  }
 })
 
 var server = lpserver.listen(3000, function () {

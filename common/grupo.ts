@@ -2,7 +2,6 @@ import { Pesquisador } from "./pesquisador";
 
 export class Grupo {
     nome: string;
-    descricao: string;
     integrantes: Pesquisador[];
 
     constructor() {
@@ -11,8 +10,12 @@ export class Grupo {
 
     clean() {
         this.nome = "";
-        this.descricao = "";
         this.integrantes = [];
+    }
+
+    copyFrom(from: Grupo) {
+        this.nome = from.nome;
+        this.integrantes = from.integrantes;
     }
 }
 
