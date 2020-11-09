@@ -25,7 +25,13 @@ export class GruposService {
         return this.http.post<any>(this.lpURL + "/grupos/grupo", JSON.stringify(grupo), {headers: this.headers})
             .pipe(
                 retry(2),
-                map( res => {if (res.success) {return grupo;} else {return null;}})
+                map(res => {
+                    if (res.success) {
+                        return grupo;
+                    } else {
+                        return null;
+                    }
+                })
             );
     }
 

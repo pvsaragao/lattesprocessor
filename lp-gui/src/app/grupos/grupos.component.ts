@@ -8,8 +8,10 @@ import { GruposService } from './grupos.service';
   styleUrls: ['./grupos.component.css']
 })
 export class GruposComponent implements OnInit {
+  
   grupo: Grupo = new Grupo();
   grupos: Grupo[] = [];
+  nomeInvalido: boolean = false
   
   constructor(private gruposService: GruposService) {}
 
@@ -21,14 +23,18 @@ export class GruposComponent implements OnInit {
             this.grupos.push(gr);
             this.grupo = new Grupo();
           } else {
-
+            this.nomeInvalido = true
           }
         },
         msg => { alert(msg.message);}
       );
   }
 
-  ngOnInit() {
+  onMove(): void {
+    this.nomeInvalido = false
+  }
+
+  ngOnInit(): void {
     this.gruposService.getGrupos()
              .subscribe(
                gs => { this.grupos = gs; },

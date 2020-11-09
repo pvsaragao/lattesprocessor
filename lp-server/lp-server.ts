@@ -182,11 +182,11 @@ lpserver.get('/grupos', (req: express.Request, res: express.Response) => {
 
 lpserver.post('/grupos/grupo', (req: express.Request, res: express.Response) => {
   let grupo: Grupo = <Grupo> req.body;
-  cadastroGrupos.addGrupo(grupo);
+  grupo = cadastroGrupos.addGrupo(grupo);
   if (grupo) {
-    res.send({"success": "O grupo foi criado com sucesso"});
+    res.send({success: "O grupo foi criado com sucesso"});
   } else {
-    res.send({"failure": "O grupo não pode ser criado"});
+    res.send({failure: "O grupo não pode ser criado"});
   }
 })
 

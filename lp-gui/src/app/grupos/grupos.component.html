@@ -1,21 +1,45 @@
-<h3>Novo grupo</h3>
-<table>
-    <tr>
-        <td>Nome do grupo</td>
-        <td><input [(ngModel)]="grupo.nome"></td>
-        
-    </tr>
-</table>
-<button onClick="criar()">Criar Grupo</button>
+<html>
+<h1>Grupos</h1>
 
-<table>
-    <tr *ngFor="let g of grupos">
-        <td>{{g.nome}}</td>
-        <td>
-            <tr *ngFor="let p of g.integrantes">
-                <td>{{p.nome}}</td>
-            </tr>
-        </td>
-    </tr>
-</table>
+<hr>
+<div class="main">
 
+<div id="cadastro">
+    <h2>Novo grupo</h2>
+    <table>
+        <tr>
+            <td>Nome do grupo</td>
+            <td><input (click)="onMove()" [(ngModel)]="grupo.nome"></td>
+            <td><button (click)="criar(grupo)">Criar Grupo</button></td>
+            <td class="errorMsg" *ngIf="nomeInvalido">
+                Nome invalido
+            </td>
+        </tr>
+        <tr>
+            
+        </tr>
+    </table>
+    
+</div>
+
+<div id="grupos">
+    <h2>Grupos existentes</h2>
+    <table>
+        <tr *ngIf="grupos.length > 0">
+            <th>Nome</th>
+        </tr>
+        <tr *ngFor="let g of grupos">
+            <ul>
+                <li>{{g.nome}}</li>
+            </ul>
+            <td>
+                <tr *ngFor="let p of g.integrantes">
+                    <td>{{p.nome}}</td>
+                </tr>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+
+</html>

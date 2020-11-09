@@ -19,7 +19,7 @@ export class CadastroDeGrupos {
     }
 
     nomevalido(grupo: Grupo) {
-        return (!this.grupos.find(g => g.nome == grupo.nome) && grupo.nome != "");
+        return !(this.grupos.find(g => g.nome == grupo.nome)) && grupo.nome != "";
     }
 
     getGrupos() : Grupo[] {
