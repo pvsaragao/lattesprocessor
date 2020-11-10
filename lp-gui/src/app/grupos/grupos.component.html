@@ -33,12 +33,21 @@
                 <li>{{g.nome}}</li>
             </ul>
             <td>
-                <tr *ngFor="let p of g.integrantes">
-                    <td>{{p.nome}}</td>
+                <tr *ngFor="let p1 of g.integrantes">
+                    <td>{{p1.nome}}</td>
                 </tr>
             </td>
+            <td>
+                <select>
+                    <option></option>
+                    <option [(ngModel)]="p2" *ngFor="let p2 of pesquisadores">{{p2.nome}}</option>
+                </select>
+            </td>
+            
         </tr>
+        
     </table>
+    
 </div>
 </div>
 

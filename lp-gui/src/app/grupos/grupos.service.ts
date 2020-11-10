@@ -14,7 +14,7 @@ export class GruposService {
 
     constructor(private http: HttpClient) {}
 
-    getGrupos() {
+    getGrupos(): Observable<Grupo[]> {
         return this.http.get<Grupo[]>(this.lpURL + "/grupos")
             .pipe(
                 retry(2)

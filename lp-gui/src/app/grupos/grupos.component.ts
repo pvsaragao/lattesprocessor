@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Grupo } from '../../../../common/grupo';
+import { Pesquisador } from '../../../../common/pesquisador';
 import { GruposService } from './grupos.service';
+import { PesquisadorService } from '../pesquisador/pesquisador.service';
 
 @Component({
   selector: 'app-grupos',
@@ -12,8 +14,10 @@ export class GruposComponent implements OnInit {
   grupo: Grupo = new Grupo();
   grupos: Grupo[] = [];
   nomeInvalido: boolean = false
+  pesquisadores: Pesquisador[] = [];
   
-  constructor(private gruposService: GruposService) {}
+  constructor(private gruposService: GruposService, 
+              private pesquisadorService: PesquisadorService) {}
 
   criar(g: Grupo): void {
     this.gruposService.criar(g.clone())
@@ -40,7 +44,14 @@ export class GruposComponent implements OnInit {
                gs => { this.grupos = gs; },
                msg => { alert(msg.message); }
               );
-     }
+
+    this.pesquisadorService.getPesquisadores()
+              .subscribe(
+                ps => {this.pesquisadores = ps; },
+                msg => { alert(msg.message); }
+              );
+    }
+
   }
 
 
