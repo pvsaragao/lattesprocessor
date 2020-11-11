@@ -9,7 +9,7 @@
     <table>
         <tr>
             <td>Nome do grupo</td>
-            <td><input (click)="onMove()" [(ngModel)]="grupo.nome"></td>
+            <td><input name="namebox" (click)="onMove()" [(ngModel)]="grupo.nome"></td>
             <td><button (click)="criar(grupo)">Criar Grupo</button></td>
             <td class="errorMsg" *ngIf="nomeInvalido">
                 Nome invalido
@@ -24,19 +24,19 @@
 
 <div id="grupos">
     <h2>Grupos existentes</h2>
-    <div id="grupo" *ngFor="let g of grupos">
+    <div id="grupo" *ngFor="let g of grupos" name="grupolist">
     <table>
         
         <tr>
-            <h2>{{g.nome}}</h2>
+            <h2 name="nomelist">{{g.nome}}</h2>
             <h4>Integrantes</h4>
             <ol>
                 <li *ngFor="let p of g.integrantes">{{p.nome}}</li>
             </ol>
             <button (click)="addPesquisador(pesquisador, g)">Adicionar Pesquisador</button>
             <select (click)="onMove()" [(ngModel)]="pesquisador.nome">
-                <option *ngFor="let p of pesquisadores">
-                    {{p.nome}}
+                <option *ngFor="let p of pesquisadores" name="pesquisadorlist">
+                    <p name="nomelist">{{p.nome}}</p>
                 </option>
             </select>
             <td class="errorMsg" *ngIf="pesquisadorJaExistente">

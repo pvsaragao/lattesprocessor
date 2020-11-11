@@ -30,9 +30,7 @@ export class CadastroDeGrupos {
     addPesquisador(nome: String, pesq: Pesquisador): Grupo[] {
         let result = null;
         let index = this.grupos.findIndex(g => g.nome === nome);
-        console.log('Chegou req!');
         if (!this.findPesquisador(pesq, index)) {
-            console.log('N achou!');
             this.grupos[index].integrantes.push(pesq);
             result = this.grupos;
         }
@@ -41,7 +39,6 @@ export class CadastroDeGrupos {
 
     findPesquisador(pesq: Pesquisador,i: any) {
         if (this.grupos[i].integrantes.find(p => p.nome === pesq.nome)) {
-            console.log('Achou!')
             return true;
         }
         return false;
