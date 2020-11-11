@@ -13,6 +13,7 @@ import { CadastroDeGrupos } from './cadastrodegrupos';
 import { LattesFactory } from './lattesFactory';
 import { Pesquisador } from '../common/pesquisador';
 import { Grupo } from '../common/grupo';
+import e = require('express');
 
 var lpserver = express();
 let cadatroPesq = new CadastroDePesquisadores();
@@ -187,6 +188,17 @@ lpserver.post('/grupos/grupo', (req: express.Request, res: express.Response) => 
     res.send({success: "O grupo foi criado com sucesso"});
   } else {
     res.send({failure: "O grupo não pode ser criado"});
+  }
+})
+
+lpserver.put('/grupos/:nome', (req: express.Request, res: express.Response) => {
+  let nome = req.params.nome;
+  let pesquisador = <Pesquisador> req.body;
+  let grupos = cadastroGrupos.addPesquisador(nome, pesquisador);
+  if (grupos) {
+    res.send({success: "O pesquisador foi inserido no grupo com sucesso"})
+  } else {
+    res.send({failure: "O pesquisador não pode ser inserido no grupo"})
   }
 })
 

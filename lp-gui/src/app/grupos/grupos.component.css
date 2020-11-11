@@ -29,6 +29,18 @@ div#grupos {
     margin-left: 2px;
     display: inline-block;
     vertical-align: top;
+}
+
+div#grupo h4 {
+    margin-left: 10px;
+}
+
+div#grupo button {
+    margin-right: 10px;
+}
+
+div#grupo {
+    margin-top: 10px;
     border: 1px solid black;
 }
 

@@ -24,30 +24,28 @@
 
 <div id="grupos">
     <h2>Grupos existentes</h2>
+    <div id="grupo" *ngFor="let g of grupos">
     <table>
-        <tr *ngIf="grupos.length > 0">
-            <th>Nome</th>
-        </tr>
-        <tr *ngFor="let g of grupos">
-            <ul>
-                <li>{{g.nome}}</li>
-            </ul>
-            <td>
-                <tr *ngFor="let p1 of g.integrantes">
-                    <td>{{p1.nome}}</td>
-                </tr>
+        
+        <tr>
+            <h2>{{g.nome}}</h2>
+            <h4>Integrantes</h4>
+            <ol>
+                <li *ngFor="let p of g.integrantes">{{p.nome}}</li>
+            </ol>
+            <button (click)="addPesquisador(pesquisador, g)">Adicionar Pesquisador</button>
+            <select (click)="onMove()" [(ngModel)]="pesquisador.nome">
+                <option *ngFor="let p of pesquisadores">
+                    {{p.nome}}
+                </option>
+            </select>
+            <td class="errorMsg" *ngIf="pesquisadorJaExistente">
+                Erro, pesquisador ja existe neste grupo.
             </td>
-            <td>
-                <select>
-                    <option></option>
-                    <option [(ngModel)]="p2" *ngFor="let p2 of pesquisadores">{{p2.nome}}</option>
-                </select>
-            </td>
-            
         </tr>
         
     </table>
-    
+    </div>
 </div>
 </div>
 

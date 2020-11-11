@@ -1,4 +1,5 @@
 import { Grupo } from '../common/grupo';
+import { Pesquisador } from '../common/pesquisador';
 
 export class CadastroDeGrupos {
     grupos: Grupo[];
@@ -24,6 +25,26 @@ export class CadastroDeGrupos {
 
     getGrupos() : Grupo[] {
         return this.grupos;
+    }
+
+    addPesquisador(nome: String, pesq: Pesquisador): Grupo[] {
+        let result = null;
+        let index = this.grupos.findIndex(g => g.nome === nome);
+        console.log('Chegou req!');
+        if (!this.findPesquisador(pesq, index)) {
+            console.log('N achou!');
+            this.grupos[index].integrantes.push(pesq);
+            result = this.grupos;
+        }
+        return result;
+    }
+
+    findPesquisador(pesq: Pesquisador,i: any) {
+        if (this.grupos[i].integrantes.find(p => p.nome === pesq.nome)) {
+            console.log('Achou!')
+            return true;
+        }
+        return false;
     }
     
 }

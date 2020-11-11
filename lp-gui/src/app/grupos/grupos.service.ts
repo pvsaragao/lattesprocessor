@@ -35,4 +35,18 @@ export class GruposService {
             );
     }
 
+    addPesquisador(pesq: Pesquisador, grupo: Grupo) {
+        return this.http.put<any>(this.lpURL + "/grupos/" + grupo.nome, JSON.stringify(pesq), {headers: this.headers})
+            .pipe(
+                retry(2),
+                map(res => {
+                    if (res.success) {
+                        return grupo;
+                    } else {
+                        return null;
+                    }
+                })
+            )
+    }
+
 }
