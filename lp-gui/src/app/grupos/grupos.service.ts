@@ -50,12 +50,26 @@ export class GruposService {
     }
 
     addPesquisador(pesq: Pesquisador, grupo: Grupo) {
-        return this.http.put<any>(this.lpURL + "/grupos/delete/" + grupo.nome, JSON.stringify(pesq), {headers: this.headers})
+        return this.http.put<any>(this.lpURL + "/grupos/" + grupo.nome, JSON.stringify(pesq), {headers: this.headers})
             .pipe(
                 retry(2),
                 map(res => {
                     if (res.success) {
                         return grupo;
+                    } else {
+                        return null;
+                    }
+                })
+            );
+    }
+
+    adicionarPesquisadores(grupo: Grupo, grupoAdd: Grupo) {
+        return this.http.put<any>(this.lpURL + "/grupos/pesquisadores/" + grupo.nome, JSON.stringify(grupoAdd.integrantes), {headers: this.headers})
+            .pipe(
+                retry(2),
+                map(res => {
+                    if (res.success) {
+                        return grupoAdd;
                     } else {
                         return null;
                     }

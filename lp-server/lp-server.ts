@@ -196,9 +196,20 @@ lpserver.put('/grupos/:nome', (req: express.Request, res: express.Response) => {
   let pesquisador = <Pesquisador> req.body;
   let grupos = cadastroGrupos.addPesquisador(nome, pesquisador);
   if (grupos) {
-    res.send({success: "O pesquisador foi inserido no grupo com sucesso"})
+    res.send({success: "O pesquisador foi inserido no grupo com sucesso"});
   } else {
-    res.send({failure: "O pesquisador não pode ser inserido no grupo"})
+    res.send({failure: "O pesquisador não pode ser inserido no grupo"});
+  }
+})
+
+lpserver.put('/grupos/pesquisadores/:nome', (req: express.Request, res: express.Response) => {
+  let nome = req.params.nome;
+  let integrantesAdd = <Pesquisador[]> req.body;
+  integrantesAdd = cadastroGrupos.adicionarPesquisadores(integrantesAdd, nome);
+  if (integrantesAdd) {
+    return res.send({ success: "Os pesquisadores foram inseridos no grupo com sucesso"});
+  } else {
+    return res.send({ failure: "Os pesquisadores nao puderam ser inseridos no grupo"});
   }
 })
 
@@ -206,14 +217,14 @@ lpserver.delete('/grupos/delete/:id', (req: express.Request, res: express.Respon
   let nome = req.params.id;
   let grupo = cadastroGrupos.removerGrupo(nome);
   if (grupo) {
-    res.send({ success: "O grupo foi removido com sucesso"})
+    return res.send({ success: "O grupo foi removido com sucesso"});
   } else {
-    res.send({ failure: " O grupo nao pode ser inserido"})
+    return res.send({ failure: " O grupo nao pode ser inserido"});
   }
 })
 
 var server = lpserver.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+  console.log('Example app listening on port 3000!');
 })
 
 function closeServer(): void {

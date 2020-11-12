@@ -12,6 +12,7 @@ import { PesquisadorService } from '../pesquisador/pesquisador.service';
 export class GruposComponent implements OnInit {
   
   grupo: Grupo = new Grupo();
+  grupoAdd: Grupo = new Grupo();
   grupos: Grupo[] = [];
   nomeInvalido: boolean = false;
   pesquisadorJaExistente: boolean = false;
@@ -55,7 +56,7 @@ export class GruposComponent implements OnInit {
               );
   }
 
-  addPesquisador(p: Pesquisador, grupo: Grupo) {
+  addPesquisador(p: Pesquisador, grupo: Grupo): void {
     let pesq = this.pesquisadores.find(pesq => pesq.nome === p.nome);
     this.gruposService.addPesquisador(pesq, grupo)
               .subscribe(
@@ -71,7 +72,7 @@ export class GruposComponent implements OnInit {
               );
   }
   
-  removerGrupo(grupo: Grupo) {
+  removerGrupo(grupo: Grupo): void {
     this.gruposService.removerGrupo(grupo)
       .subscribe(
         gr => {
@@ -82,7 +83,22 @@ export class GruposComponent implements OnInit {
             //
           }
         }
-      )
+      );
+  }
+
+  addPesquisadores(grupo: Grupo, grupoAdd: Grupo): void {
+    grupoAdd = this.grupos.find(elem => elem.nome === grupoAdd.nome);
+    this.gruposService.adicionarPesquisadores(grupo, grupoAdd)
+      .subscribe(
+        gr => {
+          if (gr) {
+            let index = this.grupos.findIndex(elem => elem.nome === grupo.nome);
+            this.grupos[index].integrantes.concat(grupoAdd.integrantes);
+            this.grupoAdd = new Grupo();
+            this.ngOnInit();
+          }
+        }
+      );
   }
 }
 

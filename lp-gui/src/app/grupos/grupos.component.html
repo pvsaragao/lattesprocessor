@@ -33,6 +33,16 @@
         <tr>
             <div id="groupHeader">
                 <h2 name="nomelist">{{g.nome}}</h2>
+                <button *ngIf="grupos.length > 1" 
+                        id="add"
+                        (click)="addPesquisadores(g, grupoAdd)">
+                    Adicionar pesquisadores de outros grupos
+                </button>
+                <select *ngIf="grupos.length > 1" [(ngModel)]="grupoAdd.nome">
+                    <option *ngFor="let g2 of grupos">
+                        <p *ngIf="g2 != g">{{g2.nome}}</p>
+                    </option>
+                </select>
                 <button (click)="removerGrupo(g)">Excluir Grupo</button>
             </div>
             <h4 *ngIf="g.integrantes.length > 0">Integrantes</h4>

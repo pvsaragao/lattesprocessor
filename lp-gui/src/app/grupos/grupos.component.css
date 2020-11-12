@@ -8,6 +8,7 @@ div#cadastro h2 {
 
 div#cadastro {
     margin-left: 20px;
+    margin-bottom: 30px;
 }
 
 div#grupos h2 {
@@ -64,9 +65,16 @@ div#groupHeader {
 
 div#groupHeader button {
     margin-top: 20px;
-    margin-left: 400px;
+    margin-left: 100px;
     margin-bottom: 20px;
     background-color: #c91d06d5;
+}
+
+div#groupHeader button#add {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    background-color: blue;
 }
 
 button {

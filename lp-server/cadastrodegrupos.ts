@@ -50,5 +50,19 @@ export class CadastroDeGrupos {
         }
         return false;
     }
+
+    adicionarPesquisadores(integrantesAdd: Pesquisador[], nome: String): Pesquisador[] {
+        let index = this.grupos.findIndex(elem => elem.nome === nome);
+        integrantesAdd = integrantesAdd.filter(elem => {
+            if (!this.grupos[index].integrantes.find(e => e.nome === elem.nome)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+        this.grupos[index].integrantes = this.grupos[index].integrantes.concat(integrantesAdd);
+        return this.grupos[index].integrantes;
+        
+    }
     
 }

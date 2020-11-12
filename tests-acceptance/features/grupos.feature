@@ -7,10 +7,10 @@ Scenario: Formação bem-sucedida de um grupo
 # Scenario: Insercao bem-sucedida de usuários em um grupo
 #     Given eu estou na página de grupos
 #     And vejo o grupo “Inteligencia Artificial”
-#     And existem os alunos “Pedro”, “Lucas” e “João” no grupo
-#     When eu tento remover “Joao” do grupo “Inteligência Artificial”
+#     And existe o aluno “Pedro” no grupo
+#     When eu tento inserir “Joao” do grupo “Inteligência Artificial”
 #     Then eu posso ver uma mensagem de confirmação
-#     And no grupo “Inteligência Artificial” existem apenas os alunos “Pedro” e “Lucas”
+#     And no grupo “Inteligência Artificial” existem apenas os alunos “Pedro” e “Joao”
 
 # Scenario: Remoção bem-sucedida de um grupo
 #     Given eu estou na página de grupos
