@@ -1,3 +1,4 @@
+import e = require('express');
 import { Grupo } from '../common/grupo';
 import { Pesquisador } from '../common/pesquisador';
 
@@ -8,7 +9,7 @@ export class CadastroDeGrupos {
         this.grupos = [];
     }
 
-    addGrupo(g: Grupo) : Grupo {
+    addGrupo(g: Grupo): Grupo {
         let result = null;
         if (this.nomevalido(g)) {
             result = new Grupo();
@@ -19,12 +20,18 @@ export class CadastroDeGrupos {
         return result;
     }
 
-    nomevalido(grupo: Grupo) {
+    nomevalido(grupo: Grupo): boolean {
         return !(this.grupos.find(g => g.nome == grupo.nome)) && grupo.nome != "";
     }
 
     getGrupos() : Grupo[] {
         return this.grupos;
+    }
+
+    removerGrupo(nome: String): Grupo[] {
+        let index = this.grupos.findIndex(elem => elem.nome === nome);
+        let result = this.grupos.splice(index, 1);
+        return result;
     }
 
     addPesquisador(nome: String, pesq: Pesquisador): Grupo[] {

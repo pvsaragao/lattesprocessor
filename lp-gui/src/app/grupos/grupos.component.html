@@ -5,21 +5,24 @@
 <div class="main">
 
 <div id="cadastro">
+    
     <h2>Novo grupo</h2>
     <table>
         <tr>
             <td>Nome do grupo</td>
-            <td><input name="namebox" (click)="onMove()" [(ngModel)]="grupo.nome"></td>
+            <td>
+                <input name="namebox" 
+                       (click)="onMove()" 
+                       [(ngModel)]="grupo.nome">
+            </td>
             <td><button (click)="criar(grupo)">Criar Grupo</button></td>
             <td class="errorMsg" *ngIf="nomeInvalido">
                 Nome invalido
             </td>
         </tr>
-        <tr>
-            
-        </tr>
     </table>
     
+   
 </div>
 
 <div id="grupos">
@@ -28,17 +31,29 @@
     <table>
         
         <tr>
-            <h2 name="nomelist">{{g.nome}}</h2>
-            <h4>Integrantes</h4>
+            <div id="groupHeader">
+                <h2 name="nomelist">{{g.nome}}</h2>
+                <button (click)="removerGrupo(g)">Excluir Grupo</button>
+            </div>
+            <h4 *ngIf="g.integrantes.length > 0">Integrantes</h4>
             <ol>
-                <li *ngFor="let p of g.integrantes">{{p.nome}}</li>
+                <li *ngFor="let p of g.integrantes">
+                    {{p.nome}}
+                </li>
+                
             </ol>
-            <button (click)="addPesquisador(pesquisador, g)">Adicionar Pesquisador</button>
-            <select (click)="onMove()" [(ngModel)]="pesquisador.nome">
+            <button (click)="addPesquisador(pesquisador, g)"
+                    *ngIf="pesquisadores.length > 0">
+                Adicionar Pesquisador
+            </button>
+            <select *ngIf="pesquisadores.length > 0" 
+                    (click)="onMove()" 
+                    [(ngModel)]="pesquisador.nome">
                 <option *ngFor="let p of pesquisadores" name="pesquisadorlist">
                     <p name="nomelist">{{p.nome}}</p>
                 </option>
             </select>
+            
             <td class="errorMsg" *ngIf="pesquisadorJaExistente">
                 Erro, pesquisador ja existe neste grupo.
             </td>

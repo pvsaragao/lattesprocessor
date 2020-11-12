@@ -22,7 +22,7 @@ export class GruposComponent implements OnInit {
               private pesquisadorService: PesquisadorService) {}
 
   criar(g: Grupo): void {
-    this.gruposService.criar(g.clone())
+    this.gruposService.criarGrupo(g.clone())
       .subscribe(
         gr => {
           if (gr) {
@@ -64,13 +64,26 @@ export class GruposComponent implements OnInit {
                     let index = this.grupos.findIndex(g => g.nome === grupo.nome);
                     this.grupos[index].integrantes.push(p);
                     this.pesquisador = new Pesquisador();
-                    console.log('Funfou');
                   } else {
                     this.pesquisadorJaExistente = true;
                   }
                 }
               );
-  }  
+  }
+  
+  removerGrupo(grupo: Grupo) {
+    this.gruposService.removerGrupo(grupo)
+      .subscribe(
+        gr => {
+          if (gr) {
+            let index = this.grupos.findIndex(elem => elem.nome === grupo.nome);
+            this.grupos.splice(index, 1);
+          } else {
+            //
+          }
+        }
+      )
+  }
 }
 
 

@@ -202,6 +202,16 @@ lpserver.put('/grupos/:nome', (req: express.Request, res: express.Response) => {
   }
 })
 
+lpserver.delete('/grupos/delete/:id', (req: express.Request, res: express.Response) => {
+  let nome = req.params.id;
+  let grupo = cadastroGrupos.removerGrupo(nome);
+  if (grupo) {
+    res.send({ success: "O grupo foi removido com sucesso"})
+  } else {
+    res.send({ failure: " O grupo nao pode ser inserido"})
+  }
+})
+
 var server = lpserver.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })

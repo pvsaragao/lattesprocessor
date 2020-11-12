@@ -21,7 +21,7 @@ export class GruposService {
             );
     }
 
-    criar(grupo: Grupo): Observable<Grupo> {
+    criarGrupo(grupo: Grupo): Observable<Grupo> {
         return this.http.post<any>(this.lpURL + "/grupos/grupo", JSON.stringify(grupo), {headers: this.headers})
             .pipe(
                 retry(2),
@@ -35,8 +35,22 @@ export class GruposService {
             );
     }
 
+    removerGrupo(grupo: Grupo): Observable<any> {
+        return this.http.delete<any>(this.lpURL + "/grupos/delete/" + grupo.nome)
+            .pipe(
+                retry(2),
+                map(res => {
+                    if (res.success) {
+                        return grupo;
+                    } else {
+                        return null;
+                    }
+                })
+            );
+    }
+
     addPesquisador(pesq: Pesquisador, grupo: Grupo) {
-        return this.http.put<any>(this.lpURL + "/grupos/" + grupo.nome, JSON.stringify(pesq), {headers: this.headers})
+        return this.http.put<any>(this.lpURL + "/grupos/delete/" + grupo.nome, JSON.stringify(pesq), {headers: this.headers})
             .pipe(
                 retry(2),
                 map(res => {
