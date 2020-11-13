@@ -44,7 +44,7 @@ export class CadastroDeGrupos {
         return result;
     }
 
-    findPesquisador(pesq: Pesquisador,i: any) {
+    findPesquisador(pesq: Pesquisador, i: any) {
         if (this.grupos[i].integrantes.find(p => p.nome === pesq.nome)) {
             return true;
         }
