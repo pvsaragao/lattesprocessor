@@ -90,6 +90,8 @@ defineSupportCode(function ({ Given, When, Then }) {
     Then(/^a mensagem "([^\"]*)" é exibida$/, async (msg) => {
         if (msg == "Relatório atualizado com sucesso") msg = "relatorioAtualizou";
         else if (msg == "Relatorio já gerado, atualize o relatório") msg = "relatorioJaCriado";
+        else if (msg == "A data final deve ser maior que a data inicial.") msg = "dataFinalMenor";
+        else if (msg == "Data invalida.") msg = "datasInvalidas";
         await getMessages(msg);
     });
     

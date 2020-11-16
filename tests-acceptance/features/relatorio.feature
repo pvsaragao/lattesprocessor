@@ -37,3 +37,10 @@ Scenario: Não gerar relatórios baseados em intervalos de tempo duplicados
         And no campo "Ano inicial" coloco o valor "2000", e no campo "Ano final" coloco o valor "2020"
         When eu clico no botão “Gerar relatório”
         Then a mensagem "Relatorio já gerado, atualize o relatório" é exibida
+Scenario: Não gerar relatório com data inicial maior que a final
+        Given que estou ná página “Relatórios” 
+        And no campo "Ano inicial" coloco o valor "2021", e no campo "Ano final" coloco o valor "2020"
+        When eu clico no botão “Gerar relatório”
+        Then a mensagem "A data final deve ser maior que a data inicial." é exibida
+        And não vejo um relatório "Ano inicial" em "2021" e "Ano final" em "2020" na lista de relatorios
+
