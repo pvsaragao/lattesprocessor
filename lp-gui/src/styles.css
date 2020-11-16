@@ -1,4 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 html, body {
   height: 100%;
 }
@@ -6,5 +13,6 @@ html, body {
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
 }
 /*# sourceMappingURL=styles.css.map */

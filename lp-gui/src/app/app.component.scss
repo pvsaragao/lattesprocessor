@@ -1,8 +1,9 @@
 $navbar-color: #203354;
 
 .container {
-    width: 80%;
-    margin: auto;
+    width: 85%;
+    max-width: 65em;
+    margin: 0 auto;
 }
 
 .navbar {
@@ -11,4 +12,8 @@ $navbar-color: #203354;
     height: 60px;
     display: flex;
     align-items: center;
+}
+
+h1, h2, h3, p {
+    margin: 0;
 }
