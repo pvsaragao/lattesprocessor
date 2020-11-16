@@ -1,63 +1,39 @@
 Feature: gerar relatórios
           As a pesquisador
-          I want to gerar relatórios baseados em pesquisadores e/ou um intervalo de tempo determinado.
+          I want to gerar relatórios baseados em um intervalo de tempo determinado.
  		  So that eu posso analisar as publicações.
 
 Scenario: Relatório geral gerado com sucesso.
         Given que estou ná página “Relatórios” 
-        And temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas "A1", "A1", "B4", "Breno" com 3 artigos cadastrados com notas "A2", "A2", "A2", "Alice" com 4 artigos cadastrados com notas "A3", "A2", "A2", "A2".
-        When eu clico no botão “Gerar relatório”
-        Then vai ser gerado um relatório informando "Alice" como o pesquisador com mais artigos, "Breno" como o pesquisador com maior média entre os artigos e "Joao" como o pesquisador com mais notas máximas, e uma lista com todos os pesquisadores e suas estatisticas.	
-        And a mensagem “Relatório gerado com sucesso” é exibida.
-        And a opção para visualizar o relatório é exibida.
-Scenario: Deletar um relatório com sucesso.
-        Given que estou ná página “Relatórios” 
-        And temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas "A1", "A1", "B4", "Breno" com 3 artigos cadastrados com notas "A2", "A2", "A2", "Alice" com 4 artigos cadastrados com notas "A3", "A2", "A2", "A2".
-        And consigo ver a lista de relatórios gerados.
-        When eu clico no botão "Deletar" no relatório de ID "0"
-        And confirmo a exclusão clicando em "Deletar" mais uma vez
-        Then o relatório de ID "0" não está mais na lista
-Scenario: Atualizar um relatório
-        Given que estou ná página “Relatórios” 
-        And temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas "A1", "A1", "B4", "Breno" com 3 artigos cadastrados com notas "A2", "A2", "A2", "Alice" com 4 artigos cadastrados com notas "A3", "A2", "A2", "A2".
-        And consigo ver a lista de relatórios gerados.
-        When eu clico no botão "Atualizar" no relatório de ID "0"
-        Then o relatório de ID "0" vai ser atualizado com infomações atualizadas mostrando "Alice" como o pesquisador com mais artigos, "Breno" como o pesquisador com maior média entre os artigos e "Joao" como o pesquisador com mais notas máximas, e uma lista com todos os pesquisadores e suas estatisticas.	
-        And a mensagem “Relatório atualizado com sucesso” é exibida.
-        And a opção para visualizar o relatório é exibida.
+        And os campos "Data inicial" e "Data Final" não estão preenchidos.
+        And não vejo um relatório sem data definida na lista de relatorios.
+        When eu clico no botão “Gerar relatório”.
+        Then vejo um relatório sem data definida na lista de relatorios.	
 Scenario: Nao gerar relatorio duplicado.
         Given que estou ná página “Relatórios” 
-        And temos os pesquisadores: "Joao" com 3 artigos cadastrados com notas "A1", "A1", "B4", "Breno" com 3 artigos cadastrados com notas "A2", "A2", "A2", "Alice" com 4 artigos cadastrados com notas "A3", "A2", "A2", "A2".
-        And consigo ver a lista de relatórios gerados.
-        And o relatório Geral já foi gerado.
+        And os campos "Data inicial" e "Data Final" não estão preenchidos.
+        And vejo um relatório sem data definida na lista de relatorios.
         When eu clico no botão “Gerar relatório”
         Then a mensagem "Relatorio já gerado, atualize o relatório" é exibida.
-Scenario: Relatorio baseado em intervalo de tempo gerado com sucesso.
+Scenario: Atualizar um relatorio
         Given que estou ná página “Relatórios” 
-        And no campo "Ano inicial" coloco o valor 2000, e no campo "Ano final" coloco o valor 2020.
-        When eu clico no botão “Gerar relatório”
-        Then vai ser gerado um relatório com informações somente do intervalo de tempo de 2000 até 2020.
-        And a mensagem “Relatório gerado com sucesso” é exibida.
-        And a opção para visualizar o relatório é exibida.
-Scenario: Atualizar um relatorio baseado em intervalo de tempo.
-        Given que estou ná página “Relatórios” 
-        And consigo ver a lista de relatórios gerados.
-        And vejo um relatório de ID "1" com "Ano inicial" em 2000 e "Ano final" em 2020.
+        And vejo um relatório de ID "0" 
         When eu clico no botão "Atualizar"
-        Then o relatório vai ser atualizado com informações somente do intervalo de tempo de 2000 até 2020.
-        And a mensagem “Relatório atualizado com sucesso” é exibida.
-        And a opção para visualizar o relatório é exibida.
+        Then a mensagem “Relatório atualizado com sucesso” é exibida.
 Scenario: Deletar um relatório com sucesso.
         Given que estou ná página “Relatórios” 
-        And consigo ver a lista de relatórios gerados.
-        And vejo um relatório de ID "1" com "Ano inicial" em 2000 e "Ano final" em 2020.
-        When eu clico no botão "Deletar" no relatório de ID "1"
-        And confirmo a exclusão clicando em "Deletar" mais uma vez
-        Then o relatório de ID "1" não está mais na lista
+        And vejo um relatório de ID "0" 
+        When eu clico no botão "Deletar" no relatório de ID "0"
+        Then não vejo um relatório de ID "0" na lista de relatorios.
+Scenario: Relatorio baseado em intervalo de tempo gerado com sucesso.
+        Given que estou ná página “Relatórios” 
+        And no campo "Ano inicial" coloco o valor "2000", e no campo "Ano final" coloco o valor "2020".
+        And não vejo um relatório "Ano inicial" em "2000" e "Ano final" em "2020" na lista de relatorios.
+        When eu clico no botão “Gerar relatório”
+        Then vejo um relatório "Ano inicial" em "2000" e "Ano final" em "2020" na lista de relatorios.
 Scenario: Não gerar relatórios baseados em intervalos de tempo duplicados.
         Given que estou ná página “Relatórios” 
-        And consigo ver a lista de relatórios gerados.
-        And vejo um relatório de ID "1" com "Ano inicial" em 2000 e "Ano final" em 2020.
-        And no campo "Ano inicial" coloco o valor 2000, e no campo "Ano final" coloco o valor 2020.
+        And vejo um relatório "Ano inicial" em "2000" e "Ano final" em "2020" na lista de relatorios.
+        And no campo "Ano inicial" coloco o valor "2000", e no campo "Ano final" coloco o valor "2020".
         When eu clico no botão “Gerar relatório”
         Then a mensagem "Relatorio já gerado, atualize o relatório" é exibida.
