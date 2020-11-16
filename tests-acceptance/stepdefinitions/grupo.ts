@@ -19,9 +19,7 @@ let criarGrupo = async (nome) => {
     await element(by.buttonText('Criar Grupo')).click();
 }
 
-let adicionarPesquisadores = async (p1, p2, grupo) => {
 
-}
 
 defineSupportCode( ({ Given, When, Then }) => {
 
@@ -45,5 +43,7 @@ defineSupportCode( ({ Given, When, Then }) => {
     });
 
     //Cenario 2:
+
+    
 
 });
