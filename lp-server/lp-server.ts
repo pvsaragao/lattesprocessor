@@ -177,6 +177,8 @@ lpserver.get('/estudos-comparativos/', (req: express.Request, res: express.Respo
   res.send(ranking)
 })
 
+// GRUPOS
+
 lpserver.get('/grupos', (req: express.Request, res: express.Response) => {
   res.send(JSON.stringify(cadastroGrupos.getGrupos()));
 })
