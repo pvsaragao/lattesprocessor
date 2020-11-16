@@ -3,77 +3,103 @@ import { browser, $, element, ElementArrayFinder, by } from 'protractor';
 let chai = require('chai').use(require('chai-as-promised'));
 let expect = chai.expect;
 
-let sameCPF = ((elem, cpf) => elem.element(by.name('cpflist')).getText().then(text => text === cpf));
-let sameName = ((elem, name) => elem.element(by.name('nomelist')).getText().then(text => text === name));
+let sameDI = ((elem, dinicial) => elem.element(by.name('datainiciallist')).getText().then(text => text === dinicial));
+let sameDF = ((elem, dfinal) => elem.element(by.name('datafinallist')).getText().then(text => text === dfinal));
+let sameID = ((elem, id) => elem.element(by.name('idlist')).getText().then(text => text === id));
 
 let pAND = ((p, q) => p.then(a => q.then(b => a && b)))
 
-async function criarAluno(name, cpf) {
-    await $("input[name='namebox']").sendKeys(<string>name);
-    await $("input[name='cpfbox']").sendKeys(<string>cpf);
-    await element(by.buttonText('Adicionar')).click();
+async function getMessages(name){
+    var allmessages: ElementArrayFinder = element.all(by.name(name));
+    await assertTamanhoEqual(allmessages, 1);
+}
+
+async function inputInputs(di, df){
+    await $("input[name='datainicialbox']").sendKeys(<string>di);
+    await $("input[name='datafinalbox']").sendKeys(<string>df);
+}
+
+async function getRelatorioByDate(n, di, df) {
+    var allrelatorios: ElementArrayFinder = element.all(by.name('relatoriolist'));
+    var sameDIandDF = allrelatorios.filter(elem => pAND(sameDI(elem, di), sameDF(elem, df)));
+    await assertTamanhoEqual(sameDIandDF, n);
+}
+
+async function getRelatorioById(n, id) {
+    var allrelatorios: ElementArrayFinder = element.all(by.name('relatoriolist'));
+    var sameIDa = allrelatorios.filter(elem => sameID(elem, id));
+    await assertTamanhoEqual(sameIDa, n);
+}
+
+async function getRelatorioByIdAndClick(button, id) {
+    var allrelatorios: ElementArrayFinder = element.all(by.name('relatoriolist'));
+    var sameIDa = allrelatorios.filter(elem => sameID(elem, id));
+    await sameIDa.all(by.name(button)).click();
 }
 
 async function assertTamanhoEqual(set, n) {
     await set.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(n));
 }
 
-async function assertElementsWithSameCPFAndName(n, cpf, name) {
-    var allalunos: ElementArrayFinder = element.all(by.name('alunolist'));
-    var samecpfsandname = allalunos.filter(elem => pAND(sameCPF(elem, cpf), sameName(elem, name)));
-    await assertTamanhoEqual(samecpfsandname, n);
-}
 
-async function assertElementsWithSameCPF(n, cpf) {
-    var allalunos: ElementArrayFinder = element.all(by.name('alunolist'));
-    var samecpfs = allalunos.filter(elem => sameCPF(elem, cpf));
-    await assertTamanhoEqual(samecpfs, n);
-}
+
 
 defineSupportCode(function ({ Given, When, Then }) {
-    Given(/^I am at the students page$/, async () => {
+    Given(/^que estou ná página “Relatórios”$/, async () => {
         await browser.get("http://localhost:4200/");
-        await expect(browser.getTitle()).to.eventually.equal('TaGui');
-        await $("a[name='alunos']").click();
+        await expect(browser.getTitle()).to.eventually.equal('Lattes Processor');
+        await $("a[name='relatorios']").click();
     })
 
-    Given(/^I cannot see a student with CPF "(\d*)" in the students list$/, async (cpf) => {
-        await assertElementsWithSameCPF(0, cpf);
+    Given(/^os campos "Data inicial" e "Data Final" não estão preenchidos$/, async () => {
+        await inputInputs("", "");
     });
 
-    When(/^I try to register the student "([^\"]*)" with CPF "(\d*)"$/, async (name, cpf) => {
-        await criarAluno(name, cpf)
+    Given(/^não vejo um relatório sem data definida na lista de relatorios$/, async () => {
+        await getRelatorioByDate(0, "", "");
     });
 
-    Then(/^I can see "([^\"]*)" with CPF "(\d*)" in the students list$/, async (name, cpf) => {
-        await assertElementsWithSameCPFAndName(1, cpf, name);
+    Given(/^vejo um relatório sem data definida na lista de relatorios$/, async () => {
+        await getRelatorioByDate(1, "", "");
+    });
+    
+    Given(/^no campo "Ano inicial" coloco o valor "(\d*)", e no campo "Ano final" coloco o valor "(\d*)"$/, async (anoinicial, anofinal) => {
+        await inputInputs(anoinicial, anofinal);
+    });
+   
+    Given(/^não vejo um relatório "Ano inicial" em "(\d*)" e "Ano final" em "(\d*)" na lista de relatorios$/, async (anoinicial, anofinal) => {
+        await getRelatorioByDate(0, anoinicial, anofinal);
     });
 
-    Given(/^I can see a student with CPF "(\d*)" in the students list$/, async (cpf) => {
-        await criarAluno("Clarissa", cpf);
-        await assertElementsWithSameCPF(1, cpf);
+    Given(/^vejo um relatório "Ano inicial" em "(\d*)" e "Ano final" em "(\d*)" na lista de relatorios$/, async (anoinicial, anofinal) => {
+        await getRelatorioByDate(1, anoinicial, anofinal);
     });
 
-    Then(/^I cannot see "([^\"]*)" with CPF "(\d*)" in the students list$/, async (name, cpf) => {
-        await assertElementsWithSameCPFAndName(0, cpf, name);
+    Given(/^vejo um relatório de ID "(\d*)" na lista de relatorios$/, async (id) => {
+        await getRelatorioById(1, id);
     });
 
-    Then(/^I can see an error message$/, async () => {
-        var allmsgs: ElementArrayFinder = element.all(by.name('msgcpfexistente'));
-        await assertTamanhoEqual(allmsgs, 1);
+    When(/^eu clico no botão “Gerar relatório”$/, async () => {
+        await element(by.buttonText("Gerar relatorio")).click();
     });
 
-    When(/^I go to the metas page$/, async () => {
-        await $("a[name='metas']").click();
+    When(/^eu clico no botão "([^\"]*)" no relatório de ID "(\d*)"$/, async (button, id) => {
+        await getRelatorioByIdAndClick(button, id)
     });
-    When(/^I try to delete the student with CPF "(\d*)"$/, async (cpf) => {
-        var allalunos: ElementArrayFinder = element.all(by.name('alunolist'));
-        var samecpfs = allalunos.filter(elem => sameCPF(elem, cpf));
-        await samecpfs.all(by.name('delete')).click();
+
+    Then(/^a mensagem "([^\"]*)" é exibida$/, async (msg) => {
+        if (msg == "Relatório atualizado com sucesso") msg = "relatorioAtualizou";
+        else if (msg == "Relatorio já gerado, atualize o relatório") msg = "relatorioJaCriado";
+        await getMessages(msg);
     });
-    When(/^I go back to the students page$/, async () => {
-        await $("a[name='alunos']").click();
-    })
+    
+    Then(/^não vejo um relatório de ID "(\d*)" na lista de relatorios$/, async (id) => {
+        await getRelatorioById(0, id);
+    });
+    
+
+
+    
 
 
 
