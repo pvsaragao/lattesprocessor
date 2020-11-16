@@ -22,13 +22,20 @@ export class RelatorioComponent implements OnInit {
     relatorioNaoAtualizado: Boolean = false;
     dataFinalMenor: Boolean = false;
     datasInvalidas: Boolean = false;
+    relatorioAtualizou: Boolean = false;
 
  
 
     constructor(private RelatorioService: RelatorioService, private PesquisadorService: PesquisadorService) { }
   
 
-    montarRelatorio(): void {   
+    montarRelatorio(): void {
+    this.relatorioJaCriado = false;
+    this.relatorioJaDeletado = false;
+    this.relatorioAtualizou = false;
+    this.dataFinalMenor = false;
+    this.datasInvalidas = false;
+    this.relatorioNaoAtualizado = false;
     console.log('Montou')
     this.relatorio.pesquisadores = this.pesquisadores;
     this.criarRelatorio(this.relatorio)
@@ -92,6 +99,7 @@ export class RelatorioComponent implements OnInit {
         this.RelatorioService.atualizar(relatorioid)
             .subscribe(
                 ar => {
+                    this.relatorioAtualizou = true;
                     console.log(ar)
                     let substituir = this.relatorios.findIndex( (rel) => {return rel.id == ar.id})
                     if(substituir != -1){
