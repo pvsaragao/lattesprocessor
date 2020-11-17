@@ -12,12 +12,17 @@ import { PesquisadoresFactory } from './pesquisadoresFactory';
 
 import { QualisFactory } from './QualisFactory';
 
+import { Relatorio } from '../common/relatorio';
+import { RelatorioFactory } from './relatoriosFactory';
+
 var lpserver = express();
 
 var cadastroPesquisadores = new CadastroDePesquisadores();
 var pesqFactory = new PesquisadoresFactory(cadastroPesquisadores);
 
 let qualisFactory: QualisFactory = new QualisFactory();
+
+var relatorios: RelatorioFactory = new RelatorioFactory();
 
 var allowCrossDomain = function (req: any, res: any, next: any) {
   res.header('Access-Control-Allow-Origin', "*");
@@ -31,8 +36,6 @@ lpserver.use(allowCrossDomain);
 lpserver.use(bodyParser.json());
 
 // ========== REQUESTS ==========
-
-// add reqs here
 
 lpserver.get('/pesquisadores/', (req: express.Request, res: express.Response) => {
   res.send(JSON.stringify(cadastroPesquisadores.getPesquisadores()));
@@ -112,6 +115,47 @@ lpserver.delete('/qualis/apagar/', (req: express.Request, res: express.Response)
 
 lpserver.get('/qualis', (_, res: express.Response) => {
   res.status(200).json(qualisFactory.get())
+})
+
+lpserver.get('/relatorios', function (req: express.Request, res: express.Response) {
+  res.send(JSON.stringify(relatorios.getRelatorios()));
+})
+
+lpserver.post('/relatorios', function (req: express.Request, res: express.Response) {
+  var relatorio: Relatorio = <Relatorio>req.body;
+  console.log(relatorio);
+  var result = relatorios.addRelatorio(relatorio, qualisFactory.get());
+  if (result) {
+    res.send(result);
+  } else {
+    relatorios.findRelatorio(relatorio).generate(qualisFactory.qualis)
+    res.send({ "failure": "O relatorio ja foi gerado." });
+  }
+})
+
+lpserver.put('/relatorios/:id', function (req: express.Request, res: express.Response) {
+  var relaId = parseInt(req.params.id);
+  var relatorio = null;
+  if (!isNaN(relaId) && isFinite(relaId)) {
+    relatorio = relatorios.updateRelatorio(relaId, qualisFactory.get());
+  }
+  if (relatorio) {
+    res.send(relatorio)
+  } else {
+    res.send({ "failure": "O relatorio nao pode ser atualizado" });
+  }
+})
+
+lpserver.delete('/relatorios/:id', function (req: express.Request, res: express.Response) {
+  var relaId = parseInt(req.params.id);
+  if (!isNaN(relaId) && isFinite(relaId)) {
+    var retId = relatorios.deleteRelatorio(relaId);
+  }
+  if (retId >= 0) {
+    res.send({ "success": "O relatorio foi deletado com sucesso." });
+  } else {
+    res.send({ "failure": "O relatorio nao pode ser deletado" });
+  }
 })
 
 var server = lpserver.listen(3000, function () {

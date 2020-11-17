@@ -26,11 +26,12 @@ describe("A classe Pesquisador", () => {
         expect(pesquisador.nome).toBe("");
         expect(pesquisador.publicacoes.length).toBe(0);
 
-        var publicacao = new Publicacao("States as Specifications", "I Simpósio Brasileiro de Linguagens de Programação (SBLP 1996)");
+        var publicacao = new Publicacao("A System For Translating Executable VDM Specifications Into Lazy ML", "Software, Practice &amp; Experience (Print)", "00380644");
         pesquisador.addPublicacao(publicacao);
 
         var temp = pesquisador.publicacoes;
-        expect(temp[0].titulo).toBe("States as Specifications");
-        expect(temp[0].periodico).toBe("I Simpósio Brasileiro de Linguagens de Programação (SBLP 1996)");
+        expect(temp[0].titulo).toBe("A System For Translating Executable VDM Specifications Into Lazy ML");
+        expect(temp[0].periodico).toBe("Software, Practice &amp; Experience (Print)");
+        expect(temp[0].issn).toBe("00380644");
     })
 })

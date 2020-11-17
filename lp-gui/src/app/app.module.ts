@@ -15,6 +15,9 @@ import { PesquisadoresService } from './pesquisadores/pesquisadores.service';
 import { QualisComponent } from './qualis/qualis.component'
 import { QualisService } from './qualis/qualis.service';
 
+import { RelatorioComponent } from './relatorio/relatorio.component';
+import { RelatorioService } from './relatorio/relatorio.service';
+
 // add project imports
 
 @NgModule({
@@ -22,6 +25,7 @@ import { QualisService } from './qualis/qualis.service';
     AppComponent,
     PesquisadoresComponent,
     QualisComponent,
+    RelatorioComponent
   ],
   imports: [
     BrowserModule,
@@ -39,9 +43,13 @@ import { QualisService } from './qualis/qualis.service';
         path: 'qualis',
         component: QualisComponent
       },
+      {
+        path: 'relatorios',
+        component: RelatorioComponent
+      }
     ]), BrowserAnimationsModule
   ],
-  providers: [PesquisadoresService, QualisService],
+  providers: [PesquisadoresService, QualisService, RelatorioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
