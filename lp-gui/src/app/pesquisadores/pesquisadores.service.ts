@@ -14,13 +14,28 @@ export class PesquisadoresService {
     constructor(private http: HttpClient) { }
 
     uploadLattes(files: FileList): Observable<boolean> {
-
         let formData = new FormData();
         for (let i = 0; i < files.length; i++) {
             formData.append('xmlFiles', files[i]);
         }
 
         return this.http.post<any>(this.lpURL + '/pesquisador/adicionar', formData).pipe(
+            retry(2),
+            map(res => {
+                if (res.success) {
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+        );
+    }
+
+    updateLattes(file: File): Observable<boolean> {
+        let formData = new FormData();
+        formData.append('xmlFiles', file);
+
+        return this.http.post<any>(this.lpURL + '/pesquisador/atualizar', formData).pipe(
             retry(2),
             map(res => {
                 if (res.success) {

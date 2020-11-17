@@ -56,7 +56,30 @@ lpserver.post('/pesquisador/adicionar', upload.array('xmlFiles', 12), (req: expr
   res.send({
     failure: 'Houve um erro ao importar os arquivos',
   })
+});
 
+lpserver.post('/pesquisador/atualizar', upload.array('xmlFiles', 12), (req: express.Request, res: express.Response) => {
+  let error = false;
+
+  for (let i = 0; i < req.files.length; i++) {
+    let xml_string = fs.readFileSync(req.files[i].path, 'binary');
+    let p = pesqFactory.updateLattes(xml_string);
+
+    if (p === null) {
+      error = true;
+    }
+  }
+
+  if (!error) {
+    res.send({
+      success: 'Arquivos foram importados com sucesso',
+    })
+    return;
+  }
+
+  res.send({
+    failure: 'Houve um erro ao importar os arquivos',
+  })
 });
 
 var server = lpserver.listen(3000, function () {

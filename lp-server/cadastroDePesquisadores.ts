@@ -16,17 +16,35 @@ export class CadastroDePesquisadores {
     }
 
     addPesquisador(p: Pesquisador): Pesquisador {
-        var pesq = new Pesquisador();
+        let pesq = new Pesquisador();
         pesq.copyFrom(p);
 
-        if (!this.findPesquisador(pesq))
+        if (!this.findPesquisador(pesq)) {
             this.pesquisadores.push(p);
+        } else {
+            pesq = null;
+        }
+
+        return pesq;
+    }
+
+    updatePesquisador(p: Pesquisador): Pesquisador {
+        let pesq = new Pesquisador();
+        pesq.copyFrom(p);
+
+        if (this.findPesquisador(pesq)) {
+            let idx = this.pesquisadores.findIndex(e => e.nome === pesq.nome);
+            this.pesquisadores[idx] = p;
+            console.log("!!! ATUALIZADO !!!");
+        } else {
+            pesq = null;
+        }
 
         return pesq;
     }
 
     findPesquisador(p: Pesquisador): boolean {
-        var pesquisadorJaCadastrado = this.pesquisadores.find(a => a.nome === p.nome);
+        let pesquisadorJaCadastrado = this.pesquisadores.find(a => a.nome === p.nome);
 
         if (pesquisadorJaCadastrado)
             return true;

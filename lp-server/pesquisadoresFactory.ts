@@ -32,7 +32,7 @@ export class PesquisadoresFactory {
         return publicacao;
     }
 
-    importLattes(xml_string: string): Pesquisador {
+    lattesConstruct(xml_string: string): Pesquisador {
         let resp = null;
 
         let parser = new xml2js.Parser({ attrkey: "ATTR" });
@@ -61,14 +61,33 @@ export class PesquisadoresFactory {
                         tempPesquisador.addPublicacao(this.getChapter(c));
                     });
 
-                    resp = this.cadastroPesq.addPesquisador(tempPesquisador);
+                    resp = tempPesquisador;
                 } catch (error) {
-                    console.log(error);
-                    resp = null;
+                    console.log("Não foi possível importar o arquivo XML!");
                 }
             }
         });
 
         return resp;
+    }
+
+    importLattes(xml_string: string): Pesquisador {
+        let p = this.lattesConstruct(xml_string);
+
+        if (p === null) {
+            return null;
+        } else {
+            return this.cadastroPesq.addPesquisador(p);
+        }
+    }
+
+    updateLattes(xml_string: string): Pesquisador {
+        let p = this.lattesConstruct(xml_string);
+
+        if (p === null) {
+            return null;
+        } else {
+            return this.cadastroPesq.updatePesquisador(p);
+        }
     }
 }

@@ -9,7 +9,8 @@ import { PesquisadoresService } from './pesquisadores.service';
 })
 export class PesquisadoresComponent implements OnInit {
 
-  statusLattes: string = '';
+  pesquisadorCadastrado: string = '';
+  pesquisadorAtualizado: string = '';
   pesquisadores: Pesquisador[];
 
   constructor(private pesquisadorService: PesquisadoresService) { }
@@ -18,14 +19,36 @@ export class PesquisadoresComponent implements OnInit {
     this.pesquisadorService.uploadLattes(files).subscribe(
       (status) => {
         if (status === true) {
-          this.statusLattes = 'sucesso';
+          this.pesquisadorCadastrado = 'sucesso';
           this.pesquisadorService.getPesquisadores()
             .subscribe(
               ps => { this.pesquisadores = ps; },
               msg => { alert(msg.message); }
             );
         } else {
-          this.statusLattes = 'erro';
+          this.pesquisadorCadastrado = 'erro';
+        }
+      },
+
+      msg => {
+        alert(msg.message);
+      }
+    );
+
+  }
+
+  updateLattes(file: File): void {
+    this.pesquisadorService.updateLattes(file).subscribe(
+      (status) => {
+        if (status === true) {
+          this.pesquisadorAtualizado = 'sucesso';
+          this.pesquisadorService.getPesquisadores()
+            .subscribe(
+              ps => { this.pesquisadores = ps; },
+              msg => { alert(msg.message); }
+            );
+        } else {
+          this.pesquisadorAtualizado = 'erro';
         }
       },
 
@@ -37,7 +60,8 @@ export class PesquisadoresComponent implements OnInit {
   }
 
   onMove(): void {
-    this.statusLattes = '';
+    this.pesquisadorCadastrado = '';
+    this.pesquisadorAtualizado = '';
   }
 
   ngOnInit(): void {
