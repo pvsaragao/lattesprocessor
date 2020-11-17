@@ -30,7 +30,7 @@ async function buscarPesquisador(nome, n) {
 }
 
 async function fazerUpload(file, id) {
-    let fileDir = path.join(__dirname, '/support/' + <string>file)
+    let fileDir = path.join(__dirname, '/support_files/' + <string>file)
     await $(id).sendKeys(fileDir);
     await wait(500);
 }
