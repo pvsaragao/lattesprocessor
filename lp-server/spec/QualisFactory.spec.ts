@@ -15,11 +15,11 @@ describe("O cadastro de qualis", () => {
     })
 
     it("constroi e retorna um objeto Qualis a partir de um JSON corretamente", () => {
-        let file : string =  fs.readFileSync( path.join(__dirname,"..","..","..", "spec", "support", "qualis.xls"), 'binary');
+        let file : string =  fs.readFileSync( path.join(__dirname,"..","..","..", "spec", "support", "eventos.xlsx"), 'binary');
         qualisFactory.readXls("evento", 2020, file);
         qualisFactory.makeQualis();
         let qualis : Qualis []  = qualisFactory.get();
-        expect(qualis.length).toBe(3);
+        expect(qualis.length).toBe(14);
     })
 
     it("nao é armazenado objetos qualis por causa do tipo", () => {
