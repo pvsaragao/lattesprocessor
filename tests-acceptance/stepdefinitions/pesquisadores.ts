@@ -11,6 +11,30 @@ async function wait(ms) {
     });
 }
 
+async function checarTamanho(arr, n) {
+    await arr.then(elems => expect(Promise.resolve(elems.length)).to.eventually.equal(n));
+}
+
+async function checarMensagem(msg) {
+    let allpesquisadores: ElementArrayFinder = element.all(by.css('.msg'));
+
+    let pesq = allpesquisadores.filter(elem => elem.getText().then(n => n === msg));
+    await checarTamanho(pesq, 1);
+}
+
+async function buscarPesquisador(nome, n) {
+    let allpesquisadores: ElementArrayFinder = element.all(by.css('.nome'));
+
+    let pesq = allpesquisadores.filter(elem => elem.getText().then(n => n === nome));
+    await checarTamanho(pesq, n);
+}
+
+async function fazerUpload(file, id) {
+    let fileDir = path.join(__dirname, '/support/' + <string>file)
+    await $(id).sendKeys(fileDir);
+    await wait(500);
+}
+
 defineSupportCode(function ({ Given, When, Then }) {
     Given(/^que estou na página de pesquisadores$/, async () => {
         await browser.get("http://localhost:4200/");
@@ -18,27 +42,80 @@ defineSupportCode(function ({ Given, When, Then }) {
         await $("a[name='pesquisadores']").click();
     });
 
-    Given(/^o pesquisador "([^\"]*)" não está na lista de pesquisadores$/, async (name) => {
-        /* IMPLEMENTAR DA MANEIRA CORRETA, USANDO O NOME DO PESQUISADOR */
+    /* SCENARIO 1 */
+
+    Given(/^o pesquisador "([^\"]*)" não está cadastrado no sistema$/, async (name) => {
+        await buscarPesquisador(name, 0);
     });
 
-    When(/^eu seleciono a opção de upload escolhendo o arquivo "([^\"]*)"$/, async (fileName) => {
-        var fileDir = path.join(__dirname, '/support/' + <string>fileName)
-        await $("input[name='file']").sendKeys(fileDir);
-        await wait(500);
+    When(/^eu seleciono a opção de cadastrar escolhendo o arquivo "([^\"]*)"$/, async (fileName) => {
+        let btn = "input[name='cadastrar']";
+        await fazerUpload(fileName, btn);
+    });
+
+    Then(/^uma mensagem de confirmação "([^\"]*)" é exibida$/, async (msg) => {
+        await checarMensagem(msg);
     });
 
     Then(/^eu consigo ver o pesquisador "([^\"]*)" na lista de pesquisadores$/, async (name) => {
-        var allpesquisadores: ElementArrayFinder = element.all(by.css('.nome'));
-        await allpesquisadores;
+        await buscarPesquisador(name, 1);
+    });
 
-        var p1 = allpesquisadores.filter(elem =>
-            elem.getText().then(text => text === name));
+    /* REUTILIZANDO O PRIMEIRO GIVEN QUE É COMUM A TODOS OS CENÁRIOS */
 
-        await p1;
+    /* SCENARIO 2 */
+    Given(/^o pesquisador "([^\"]*)" está na lista de pesquisadores cadastrados no sistema$/, async (name) => {
+        await buscarPesquisador(name, 1);
+    });
 
-        await p1.then(elems => {
-            expect(elems.length).to.equal(1);
-        });
+    When(/^eu faço o upload do arquivo "([^\"]*)"$/, async (fileName) => {
+        let btn = "input[name='cadastrar']";
+        await fazerUpload(fileName, btn);
+    });
+
+    Then(/^a mensagem de erro "([^\"]*)" é exibida$/, async (msg) => {
+        await checarMensagem(msg);
+    });
+
+    Then(/^o pesquisador "([^\"]*)" não é cadastrado novamente no sistema$/, async (name) => {
+        await buscarPesquisador(name, 1);
+    });
+
+    /* SCENARIO 3 */
+    Given(/^o pesquisador "([^\"]*)" não está na lista de pesquisadores$/, async (name) => {
+        await buscarPesquisador(name, 0);
+    });
+
+    When(/^eu faço upload do arquivo "([^\"]*)"$/, async (fileName) => {
+        let btn = "input[name='cadastrar']";
+        await fazerUpload(fileName, btn);
+    });
+
+    Then(/^a mensagem "([^\"]*)" é exibida$/, async (msg) => {
+        await checarMensagem(msg);
+    });
+
+    Then(/^o pesquisador "([^\"]*)" não é cadastrado no sistema$/, async (name) => {
+        await buscarPesquisador(name, 0);
+    });
+
+    /* SCENARIO 4 (Atualizar currículo) */
+    /* FALTANDO IMPLEMENTAR TODA A FEATURE (server e GUI) */
+
+    Given(/^o pesquisador "([^\"]*)" está na lista de pesquisadores$/, async (name) => {
+        await buscarPesquisador(name, 1);
+    });
+
+    When(/^eu seleciono a opção de atualizar enviando o arquivo "([^\"]*)" com as novas publicações$/, async (fileName) => {
+        let btn = "input[name='atualizar']";
+        await fazerUpload(fileName, btn);
+    });
+
+    Then(/^a mensagem de confirmação "([^\"]*)" é exibida$/, async (msg) => {
+        await checarMensagem(msg);
+    });
+
+    Then(/^o pesquisador "([^\"]*)" está na lista de pesquisadores com as novas publicações$/, async (name) => {
+        await buscarPesquisador(name, 1);
     });
 })
