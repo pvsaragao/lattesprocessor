@@ -15,20 +15,11 @@ var cadastroPesquisadores = new CadastroDePesquisadores();
 var pesqFactory = new PesquisadoresFactory(cadastroPesquisadores);
 
 // add services here
-var allowCrossDomain = function (req: any, res: any, next: any) {
   res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-}
-
-lpserver.use(allowCrossDomain);
 
 lpserver.use(bodyParser.json());
 
 // ========== REQUESTS ==========
-
-// add reqs here
 
 lpserver.get('/pesquisadores/', (req: express.Request, res: express.Response) => {
   res.send(JSON.stringify(cadastroPesquisadores.getPesquisadores()));
