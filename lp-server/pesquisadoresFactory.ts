@@ -14,21 +14,23 @@ export class PesquisadoresFactory {
     getEvent(e: any): Publicacao {
         let tituloPublicacao = e['DADOS-BASICOS-DO-TRABALHO'][0].ATTR['TITULO-DO-TRABALHO'];
         let periodico = e['DETALHAMENTO-DO-TRABALHO'][0].ATTR['NOME-DO-EVENTO'];
-        let publicacao = new Publicacao(tituloPublicacao, periodico);
+        let publicacao = new Publicacao(tituloPublicacao, periodico, null);
         return publicacao;
     }
 
     getArticle(a: any): Publicacao {
         let tituloPublicacao = a['DADOS-BASICOS-DO-ARTIGO'][0].ATTR['TITULO-DO-ARTIGO'];
         let periodico = a['DETALHAMENTO-DO-ARTIGO'][0].ATTR['TITULO-DO-PERIODICO-OU-REVISTA'];
-        let publicacao = new Publicacao(tituloPublicacao, periodico);
+        let issnPublicacao = a['DETALHAMENTO-DO-ARTIGO'][0].ATTR['ISSN']
+        let publicacao = new Publicacao(tituloPublicacao, periodico, issnPublicacao);
         return publicacao;
     }
 
     getChapter(a: any): Publicacao {
         let tituloPublicacao = a['DADOS-BASICOS-DO-CAPITULO'][0].ATTR['TITULO-DO-CAPITULO-DO-LIVRO'];
         let periodico = a['DETALHAMENTO-DO-CAPITULO'][0].ATTR['TITULO-DO-LIVRO'];
-        let publicacao = new Publicacao(tituloPublicacao, periodico);
+        let isbnPublicacao = a['DETALHAMENTO-DO-CAPITULO'][0].ATTR['ISBN'];
+        let publicacao = new Publicacao(tituloPublicacao, periodico, isbnPublicacao);
         return publicacao;
     }
 
