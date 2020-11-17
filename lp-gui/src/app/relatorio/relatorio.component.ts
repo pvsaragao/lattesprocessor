@@ -30,6 +30,7 @@ export class RelatorioComponent implements OnInit {
   
 
     montarRelatorio(): void {
+        console.log(this.pesquisadores)
     this.relatorioJaCriado = false;
     this.relatorioJaDeletado = false;
     this.relatorioAtualizou = false;

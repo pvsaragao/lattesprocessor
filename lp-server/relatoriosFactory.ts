@@ -20,6 +20,8 @@ export class RelatorioFactory {
     
 
     addRelatorio(p: Relatorio, qualis: Qualis[]): Relatorio {
+        console.log(qualis)
+        console.log(p.pesquisadores)
         var rela = new Relatorio();
         rela.copyFrom(p);
         rela.generate(qualis)

@@ -8,6 +8,8 @@ function getNota(nota: string): number {
         return ( 9 - parseInt(nota.charAt(1)))
     }else if(nota.charAt(0) == 'b'){
         return ( 5 - parseInt(nota.charAt(1)))
+    }else if(nota.charAt(0) == 'c'){
+        return (-1)
     }else{
         return 0;
     }

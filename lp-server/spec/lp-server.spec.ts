@@ -17,16 +17,46 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
     pesq1.nome = p1
     pesq2.nome = p2
     pesq3.nome = p3
-    let pesq1p1 = new Publicacao();
-    let pesq1p2 = new Publicacao();
-    let pesq1p3 = new Publicacao();
-    let pesq2p1 = new Publicacao();
-    let pesq2p2 = new Publicacao();
-    let pesq2p3 = new Publicacao();
-    let pesq3p1 = new Publicacao();
-    let pesq3p2 = new Publicacao();
-    let pesq3p3 = new Publicacao();
-    let pesq3p4 = new Publicacao();
+    let a1 = "Publicacao A"
+    let b1 = "Publicacao B"
+    let c1 = "Publicacao C"
+    let a2 = "Publicacao AAA"
+    let b2 = "Publicacao BBB"
+    let c2 = "Publicacao CCC"
+    let a3 = "0001"
+    let b3 = "0002"
+    let c3 = "0003"
+    let a4 = "Publicacao D"
+    let b4 = "Publicacao E"
+    let c4 = "Publicacao F"
+    let a5 = "Publicacao DDD"
+    let b5 = "Publicacao EEE"
+    let c5 = "Publicacao FFF"
+    let a6 = "0004"
+    let b6 = "0005"
+    let c6 = "0006"
+    let a7 = "Publicacao G"
+    let b7 = "Publicacao H"
+    let c7 = "Publicacao I"
+    let a8 = "Publicacao GGG"
+    let b8 = "Publicacao HHH"
+    let c8 = "Publicacao III"
+    let a9 = "0007"
+    let b9 = "0008"
+    let c9 = "0009"
+    let a10 = "Publicacao J"
+    let b10 = "Publicacao JJJ"
+    let c10 = "0010"
+    let pesq1p1 = new Publicacao(a1, a2, a3);
+    let pesq1p2 = new Publicacao(b1, b2, b3);
+    let pesq1p3 = new Publicacao(c1, c2, c3);
+    let pesq2p1 = new Publicacao(a4, a5, a6);
+    let pesq2p2 = new Publicacao(b4, b5, b6);
+    let pesq2p3 = new Publicacao(c4, c5, c6);
+    let pesq3p1 = new Publicacao(a7, a8, a9);
+    let pesq3p2 = new Publicacao(b7, b8, b9);
+    let pesq3p3 = new Publicacao(c7, c8, c9);
+    let pesq3p4 = new Publicacao(a10, b10, c10);
     pesq1.publicacoes.push(pesq1p1)
     pesq1.publicacoes.push(pesq1p2)
     pesq1.publicacoes.push(pesq1p3)
@@ -37,48 +67,19 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
     pesq3.publicacoes.push(pesq3p2)
     pesq3.publicacoes.push(pesq3p3)
     pesq3.publicacoes.push(pesq3p4)
-    pesq1p1.titulo = "Publicacao A"
-    pesq1p2.titulo = "Publicacao B"
-    pesq1p3.titulo = "Publicacao C"
-    pesq1p1.periodico = "Publicacao AAA"
-    pesq1p2.periodico = "Publicacao BBB"
-    pesq1p3.periodico = "Publicacao CCC"
-    pesq1p1.issn = "0001"
-    pesq1p2.issn = "0002"
-    pesq1p3.issn = "0003"
-    pesq2p1.titulo = "Publicacao D"
-    pesq2p2.titulo = "Publicacao E"
-    pesq2p3.titulo = "Publicacao F"
-    pesq2p1.periodico = "Publicacao DDD"
-    pesq2p2.periodico = "Publicacao EEE"
-    pesq2p3.periodico = "Publicacao FFF"
-    pesq2p1.issn = "0004"
-    pesq2p2.issn = "0005"
-    pesq2p3.issn = "0006"
-    pesq3p1.titulo = "Publicacao G"
-    pesq3p2.titulo = "Publicacao H"
-    pesq3p3.titulo = "Publicacao I"
-    pesq3p1.periodico = "Publicacao GGG"
-    pesq3p2.periodico = "Publicacao HHH"
-    pesq3p3.periodico = "Publicacao III"
-    pesq3p1.issn = "0007"
-    pesq3p2.issn = "0008"
-    pesq3p3.issn = "0009"
-    pesq3p4.titulo = "Publicacao J"
-    pesq3p4.periodico = "Publicacao JJJ"
-    pesq3p4.issn = "0010"
+    
     var qualis: Qualis[] = [];
-    let pesq1q1 = new Qualis();
-    let pesq1q2 = new Qualis();
-    let pesq1q3 = new Qualis();
-    let pesq2q1 = new Qualis();
-    let pesq2q2 = new Qualis();
-    let pesq2q3 = new Qualis();
-    let pesq3q1 = new Qualis();
-    let pesq3q2 = new Qualis();
-    let pesq3q3 = new Qualis();
-    let pesq3q4 = new Qualis();
-    pesq1q1.montar("Publicacao A", 11, "Estudo", "0001", n1)
+    let pesq1q1 = new Qualis("Publicacao A", 11, "Estudo", "0001", n1);
+    let pesq1q2 = new Qualis("Publicacao B", 12, "Estudo", "0002", n2);
+    let pesq1q3 = new Qualis("Publicacao C", 13, "Estudo", "0003", n3);
+    let pesq2q1 = new Qualis("Publicacao D", 14, "Estudo", "0004", n4);
+    let pesq2q2 = new Qualis("Publicacao E", 15, "Estudo", "0005", n5);
+    let pesq2q3 = new Qualis("Publicacao F", 16, "Estudo", "0006", n6);
+    let pesq3q1 = new Qualis("Publicacao G", 17, "Estudo", "0007", n7);
+    let pesq3q2 = new Qualis("Publicacao H", 18, "Estudo", "0008", n8);
+    let pesq3q3 = new Qualis("Publicacao I", 19, "Estudo", "0009", n9);
+    let pesq3q4 = new Qualis("Publicacao J", 20, "Estudo", "0010", n10);
+    /*pesq1q1.montar("Publicacao A", 11, "Estudo", "0001", n1)
     pesq1q2.montar("Publicacao B", 12, "Estudo", "0002", n2)
     pesq1q3.montar("Publicacao C", 13, "Estudo", "0003", n3)
     pesq2q1.montar("Publicacao D", 14, "Estudo", "0004", n4)
@@ -87,7 +88,7 @@ function gerarRelatorio(p1: string, p2: string, p3: string, n1: string, n2: stri
     pesq3q1.montar("Publicacao G", 17, "Estudo", "0007", n7)
     pesq3q2.montar("Publicacao H", 18, "Estudo", "0008", n8)
     pesq3q3.montar("Publicacao I", 19, "Estudo", "0009", n9)
-    pesq3q4.montar("Publicacao J", 20, "Estudo", "0010", n10)
+    pesq3q4.montar("Publicacao J", 20, "Estudo", "0010", n10)*/
     qualis.push(pesq1q1)
     qualis.push(pesq1q2)
     qualis.push(pesq1q3)
@@ -120,16 +121,46 @@ function montarRelatorio(p1: string, p2: string, p3: string): Relatorio {
     pesq1.nome = p1
     pesq2.nome = p2
     pesq3.nome = p3
-    let pesq1p1 = new Publicacao();
-    let pesq1p2 = new Publicacao();
-    let pesq1p3 = new Publicacao();
-    let pesq2p1 = new Publicacao();
-    let pesq2p2 = new Publicacao();
-    let pesq2p3 = new Publicacao();
-    let pesq3p1 = new Publicacao();
-    let pesq3p2 = new Publicacao();
-    let pesq3p3 = new Publicacao();
-    let pesq3p4 = new Publicacao();
+    let a1 = "Publicacao A"
+    let b1 = "Publicacao B"
+    let c1 = "Publicacao C"
+    let a2 = "Publicacao AAA"
+    let b2 = "Publicacao BBB"
+    let c2 = "Publicacao CCC"
+    let a3 = "0001"
+    let b3 = "0002"
+    let c3 = "0003"
+    let a4 = "Publicacao D"
+    let b4 = "Publicacao E"
+    let c4 = "Publicacao F"
+    let a5 = "Publicacao DDD"
+    let b5 = "Publicacao EEE"
+    let c5 = "Publicacao FFF"
+    let a6 = "0004"
+    let b6 = "0005"
+    let c6 = "0006"
+    let a7 = "Publicacao G"
+    let b7 = "Publicacao H"
+    let c7 = "Publicacao I"
+    let a8 = "Publicacao GGG"
+    let b8 = "Publicacao HHH"
+    let c8 = "Publicacao III"
+    let a9 = "0007"
+    let b9 = "0008"
+    let c9 = "0009"
+    let a10 = "Publicacao J"
+    let b10 = "Publicacao JJJ"
+    let c10 = "0010"
+    let pesq1p1 = new Publicacao(a1, a2, a3);
+    let pesq1p2 = new Publicacao(b1, b2, b3);
+    let pesq1p3 = new Publicacao(c1, c2, c3);
+    let pesq2p1 = new Publicacao(a4, a5, a6);
+    let pesq2p2 = new Publicacao(b4, b5, b6);
+    let pesq2p3 = new Publicacao(c4, c5, c6);
+    let pesq3p1 = new Publicacao(a7, a8, a9);
+    let pesq3p2 = new Publicacao(b7, b8, b9);
+    let pesq3p3 = new Publicacao(c7, c8, c9);
+    let pesq3p4 = new Publicacao(a10, b10, c10);
     pesq1.publicacoes.push(pesq1p1)
     pesq1.publicacoes.push(pesq1p2)
     pesq1.publicacoes.push(pesq1p3)
@@ -140,36 +171,6 @@ function montarRelatorio(p1: string, p2: string, p3: string): Relatorio {
     pesq3.publicacoes.push(pesq3p2)
     pesq3.publicacoes.push(pesq3p3)
     pesq3.publicacoes.push(pesq3p4)
-    pesq1p1.titulo = "Publicacao A"
-    pesq1p2.titulo = "Publicacao B"
-    pesq1p3.titulo = "Publicacao C"
-    pesq1p1.periodico = "Publicacao AAA"
-    pesq1p2.periodico = "Publicacao BBB"
-    pesq1p3.periodico = "Publicacao CCC"
-    pesq1p1.issn = "0001"
-    pesq1p2.issn = "0002"
-    pesq1p3.issn = "0003"
-    pesq2p1.titulo = "Publicacao D"
-    pesq2p2.titulo = "Publicacao E"
-    pesq2p3.titulo = "Publicacao F"
-    pesq2p1.periodico = "Publicacao DDD"
-    pesq2p2.periodico = "Publicacao EEE"
-    pesq2p3.periodico = "Publicacao FFF"
-    pesq2p1.issn = "0004"
-    pesq2p2.issn = "0005"
-    pesq2p3.issn = "0006"
-    pesq3p1.titulo = "Publicacao G"
-    pesq3p2.titulo = "Publicacao H"
-    pesq3p3.titulo = "Publicacao I"
-    pesq3p1.periodico = "Publicacao GGG"
-    pesq3p2.periodico = "Publicacao HHH"
-    pesq3p3.periodico = "Publicacao III"
-    pesq3p1.issn = "0007"
-    pesq3p2.issn = "0008"
-    pesq3p3.issn = "0009"
-    pesq3p4.titulo = "Publicacao J"
-    pesq3p4.periodico = "Publicacao JJJ"
-    pesq3p4.issn = "0010"
     var relatorio = new Relatorio();
     relatorio.pesquisadores.push(pesq1);
     relatorio.pesquisadores.push(pesq2);
