@@ -12,10 +12,16 @@ import { MatButtonModule, MatIconModule } from '@angular/material';
 import { PesquisadoresComponent } from './pesquisadores/pesquisadores.component';
 import { PesquisadoresService } from './pesquisadores/pesquisadores.service';
 
+import { QualisComponent } from './qualis/qualis.component'
+import { QualisService } from './qualis/qualis.service';
+
+// add project imports
+
 @NgModule({
   declarations: [
     AppComponent,
     PesquisadoresComponent,
+    QualisComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,10 +34,14 @@ import { PesquisadoresService } from './pesquisadores/pesquisadores.service';
       {
         path: 'pesquisadores',
         component: PesquisadoresComponent
-      }
+      },
+      {
+        path: 'qualis',
+        component: QualisComponent
+      },
     ]), BrowserAnimationsModule
   ],
-  providers: [PesquisadoresService],
+  providers: [PesquisadoresService, QualisService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
